@@ -6,7 +6,9 @@ it('renders a clickable LoadMoreButton', () => {
   let clicked = false;
   const context = shallow(
     h(LoadMoreButton, {
-      theme: {},
+      theme: {
+        buttons: {},
+      },
       onClick() {
         clicked = true;
       },

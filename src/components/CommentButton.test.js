@@ -6,7 +6,9 @@ it('renders a clickable CommentButton', () => {
   let clicked = false;
   const context = shallow(
     h(CommentButton, {
-      theme: {},
+      theme: {
+        buttons: {},
+      },
       buttonLabelKey: 'reply',
       onClick() {
         clicked = true;

@@ -57,6 +57,7 @@ export class CommentsForm extends Component {
     :focus {
       outline: ${props.theme.outlineStyle};
     }`);
+
     this.textareaContainerStyle = c(`{
       border: 1px solid ${props.theme.borderColor};
       border-radius: 2px;
