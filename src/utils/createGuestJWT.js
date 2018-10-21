@@ -4,7 +4,7 @@ export default function createGuestJWT(username, email, apiKey) {
   var data = {
     apiKey,
     userId: 'guest',
-    userPic: NO_PIC_URL,
+    userPic: null,
     userUrl: null,
     userEmail: email,
     username,

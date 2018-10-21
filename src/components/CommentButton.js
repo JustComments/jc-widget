@@ -6,19 +6,19 @@ export class CommentButton extends Component {
     super();
     this.style = c(`{
       box-sizing: inherit;
-      color: ${theme.secondaryTextColor};
+      color: ${theme.buttons.secondaryColor};
       font-size: 14px;
       line-height: 17px;
       text-decoration: none;
       background: transparent;
       border: 0;
       padding: 0;
-      border-bottom: 1px dotted ${theme.secondaryTextColor};
+      border-bottom: 1px dotted ${theme.buttons.secondaryColor};
       cursor: pointer;
     }
     :hover {
-      color: ${theme.secondaryTextColorAlt};
-      border-bottom: 1px dotted ${theme.secondaryTextColorAlt};
+      color: ${theme.buttons.secondaryColorAlt};
+      border-bottom: 1px dotted ${theme.buttons.secondaryColorAlt};
     }
     :focus {
       outline: ${theme.outlineStyle};

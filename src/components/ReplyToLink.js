@@ -8,21 +8,21 @@ export class ReplyToLink extends Component {
         padding: 0;
         font-size: 12px;
         line-height: 1;
-        color: ${theme.secondaryTextColor};
+        color: ${theme.text.secondaryColor};
         text-decoration: none;
       }
       :hover {
         padding: 0;
-        color: ${theme.secondaryTextColorAlt};
+        color: ${theme.text.secondaryColorAlt};
       }
       :hover svg {
-        fill: ${theme.secondaryTextColorAlt};
+        fill: ${theme.text.secondaryColorAlt};
       }
       :focus {
         outline: ${theme.outlineStyle};
       }
       svg {
-        fill: ${theme.secondaryTextColor};
+        fill: ${theme.text.secondaryColor};
         vertical-align: middle;
         height: 11px;
       }`);

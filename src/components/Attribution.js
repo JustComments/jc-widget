@@ -7,18 +7,18 @@ export class Attribution extends Component {
     this.containerStyle = c(`{
       font-size: 13px;
       margin-top: 20px;
-      color: ${theme.secondaryTextColor};
+      color: ${theme.text.secondaryColor};
       text-align: center;
       box-sizing: inherit;
     }`);
     this.linkStyle = c(`{
       font-size: 13px;
-      color: ${theme.secondaryTextColor};
+      color: ${theme.text.secondaryColor};
       box-sizing: inherit;
       text-decoration: none;
     }
     :hover {
-      color: ${theme.secondaryTextColorAlt};
+      color: ${theme.text.secondaryColorAlt};
     }
     :focus {
       outline: ${theme.outlineStyle}

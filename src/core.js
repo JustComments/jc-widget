@@ -49,7 +49,7 @@ export function renderWidget(
     session.setJWT(data.jwt);
   } else if (!session.get('jwt')) {
     session.setIfMissing('userId', 'guest');
-    session.setIfMissing('userPic', NO_PIC_URL);
+    session.setIfMissing('userPic', null);
     session.setIfMissing('username', '');
     session.setIfMissing('userUrl', '');
     session.setIfMissing('userEmail', '');

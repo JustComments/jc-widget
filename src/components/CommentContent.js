@@ -11,7 +11,7 @@ export class CommentContent extends Component {
       overflow: hidden;
       box-sizing: inherit;
       margin: 0.5em 0px;
-      color: ${theme.primaryTextColor};
+      color: ${theme.text.primaryColor};
     }
     > div > *:first-child {
       margin-top: 0;
@@ -32,18 +32,18 @@ export class CommentContent extends Component {
       margin: 0;
       padding-left: 5px;
       margin-left: 5px;
-      border-left: 5px solid ${theme.primaryColor};
+      border-left: 5px solid ${theme.text.primaryColor};
     }
     a {
       box-sizing: inherit;
-      color: ${theme.primaryTextColor};
+      color: ${theme.text.primaryColor};
       font-size: 15px;
-      border-bottom: 1px dotted ${theme.primaryTextColor};
+      border-bottom: 1px dotted ${theme.text.primaryColor};
       cursor: pointer;
       text-decoration: none;
     }
     a:hover {
-      color: ${theme.primaryTextColorAlt};
+      color: ${theme.text.primaryColorAlt};
       background-color: transparent;
     }
     p {

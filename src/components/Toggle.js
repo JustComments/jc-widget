@@ -8,7 +8,7 @@ export class Toggle extends Component {
     this.switchStyle = c(`{
       width: 33px;
       height: 33px;
-      fill: ${theme.secondaryColor};
+      fill: ${theme.buttons.disabledBgColor};
       cursor: pointer;
       box-sizing: border-box;
     }
@@ -17,7 +17,7 @@ export class Toggle extends Component {
     }
     `);
     this.switchCheckedStyle = c(`{
-      fill: ${theme.primaryColor};
+      fill: ${theme.buttons.primaryBgColor};
     }`);
   }
   getClassName() {

@@ -5,6 +5,8 @@ import { supportsServiceWorkers } from '../utils/featureDetection';
 import { LocalStorage } from '../utils/localStorage';
 import { Toggle } from './Toggle';
 import { Conditional } from './Conditional';
+import { UserPic } from './UserPic';
+import { Center } from './Center';
 
 import substitute from '../utils/substitute';
 
@@ -31,9 +33,9 @@ export class CommentsForm extends Component {
       box-shadow: none;
       border-radius: 0;
 
-      color: ${props.theme.revPrimaryColor};
-      background-color: ${props.theme.primaryColor};
-      text-shadow: -1px 1px ${props.theme.primaryColor};
+      color: ${props.theme.buttons.primaryColor};
+      background-color: ${props.theme.buttons.primaryBgColor};
+      text-shadow: -1px 1px ${props.theme.buttons.primaryBgColor};
       border: none;
 
       font-family: inherit;
@@ -44,19 +46,19 @@ export class CommentsForm extends Component {
       height: 33px;
     }
     :hover {
-      background-color: ${props.theme.primaryColorAlt};
-      text-shadow: -1px 1px ${props.theme.primaryColorAlt};
+      background-color: ${props.theme.buttons.primaryColorAlt};
+      text-shadow: -1px 1px ${props.theme.buttons.primaryColorAlt};
       cursor: pointer;
     }
     :active {
-      background-color: ${props.theme.primaryColorAlt};
-      text-shadow: -1px 1px ${props.theme.primaryColorAlt};
+      background-color: ${props.theme.buttons.primaryColorAlt};
+      text-shadow: -1px 1px ${props.theme.buttons.primaryColorAlt};
     }
     :focus {
       outline: ${props.theme.outlineStyle};
     }`);
     this.textareaContainerStyle = c(`{
-      border: 1px solid ${props.theme.secondaryColor};
+      border: 1px solid ${props.theme.borderColor};
       border-radius: 2px;
       padding: 10px;
       position: relative;
@@ -69,7 +71,7 @@ export class CommentsForm extends Component {
       width: 100%;
       resize: vertical;
       margin: 0;
-      border: 1px solid ${props.theme.secondaryColor};
+      border: 1px solid ${props.theme.borderColor};
       border-radius: 2px;
       padding: 5px 10px;
       line-height: 22px;
@@ -77,19 +79,11 @@ export class CommentsForm extends Component {
       font-family: inherit;
       font-size: 15px;
       position: relative;
-      color: ${props.theme.primaryTextColor};
+      color: ${props.theme.text.primaryColor};
       background-color: ${props.theme.backgroundColor};
     }
     :invalid {
       box-shadow: none;
-    }`);
-
-    this.imgStyle = c(`{
-      display: block;
-      width: 40px;
-      height: 40px;
-      margin: 0 auto;
-      border-radius: ${props.theme.userPicBorderRadius};
     }`);
 
     this.textareaStyle = c(`{
@@ -106,7 +100,7 @@ export class CommentsForm extends Component {
       overflow: hidden;
       resize: none;
       min-height: 120px;
-      color: ${props.theme.primaryTextColor};
+      color: ${props.theme.text.primaryColor};
       background-color: ${props.theme.backgroundColor};
     }
     :invalid {
@@ -199,11 +193,7 @@ export class CommentsForm extends Component {
     return (
       <div className={containerStyle}>
         <div className={leftColumnStyle}>
-          <img
-            src={userPic || NO_PIC_URL}
-            className={this.imgStyle}
-            alt="your picture"
-          />
+          <UserPic theme={theme} src={userPic} alt="your picture" />
           <button
             className={loginViaStyle}
             title={'clear'}

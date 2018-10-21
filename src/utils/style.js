@@ -9,8 +9,8 @@ const classNo = (() => {
   };
 })();
 
-let allCss = '';
-let prevCss = 'default';
+let latestCss = '';
+let oldCss = 'default';
 
 function compileCss(css, className) {
   const parts = css.trim().match(regExp);
@@ -33,14 +33,13 @@ export function c(css, staticCss) {
   const className = `${classPrefix}${classNo()}`;
   const compiled = compileCss(css, className);
   const completeCss = compiled + (staticCss ? staticCss : '');
-  allCss += completeCss;
+  latestCss += completeCss;
   clsCache[css] = className;
   return className;
 }
 
 // class with media queries
 export function m(css, queries) {
-  // body...
   if (clsCache[css]) {
     return clsCache[css];
   }
@@ -51,7 +50,7 @@ export function m(css, queries) {
       return `${q.media}{${compileCss(q.css, className)}}`;
     }),
   ].join('\n');
-  allCss += completeCss;
+  latestCss += completeCss;
   clsCache[css] = className;
   return className;
 }
@@ -70,12 +69,16 @@ const getStyleTag = (() => {
 })();
 
 export function sync() {
-  const el = getStyleTag();
-  if (prevCss === allCss) {
+  if (oldCss === latestCss) {
     return;
   }
-  prevCss = allCss;
-  if (el.styleSheet) el.styleSheet.cssText = allCss;
-  // Support for IE
-  else el.appendChild(document.createTextNode(allCss)); // Support for the rest
+  const el = getStyleTag();
+  const oldNode = el.childNodes[0];
+  const newNode = document.createTextNode(latestCss);
+  if (oldNode) {
+    el.replaceChild(newNode, oldNode);
+  } else {
+    el.appendChild(newNode);
+  }
+  oldCss = latestCss;
 }

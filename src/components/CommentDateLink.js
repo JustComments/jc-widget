@@ -9,16 +9,16 @@ export class CommentDateLink extends Component {
       background-color: initial;
       font-size: 12px;
       line-height: 1;
-      color: ${theme.secondaryTextColor};
+      color: ${theme.text.secondaryColor};
       text-decoration: none;
     }
     :hover {
       padding: 0;
       background-color: initial;
-      color: ${theme.secondaryTextColorAlt};
+      color: ${theme.text.secondaryColorAlt};
     }
     :hover .icon {
-      fill: ${theme.secondaryTextColorAlt};
+      fill: ${theme.text.secondaryColorAlt};
     }
     :focus {
       outline: ${theme.outlineStyle};

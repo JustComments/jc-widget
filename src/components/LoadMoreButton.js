@@ -14,8 +14,8 @@ export class LoadMoreButton extends Component {
       border-radius: 0;
 
       color: #fff;
-      background-color: ${theme.primaryColor};
-      text-shadow: -1px 1px ${theme.primaryColor};
+      background-color: ${theme.buttons.primaryColor};
+      text-shadow: -1px 1px ${theme.buttons.primaryColor};
       border: none;
 
       font-family: inherit;
@@ -23,13 +23,13 @@ export class LoadMoreButton extends Component {
       box-sizing: inherit;
     }
     :hover {
-      background-color: ${theme.primaryColorAlt};
-      text-shadow: -1px 1px ${theme.primaryColorAlt};
+      background-color: ${theme.buttons.primaryColorAlt};
+      text-shadow: -1px 1px ${theme.buttons.primaryColorAlt};
       cursor: pointer;
     }
     :active {
-      background-color: ${theme.primaryColorAlt};
-      text-shadow: -1px 1px ${theme.primaryColorAlt};
+      background-color: ${theme.buttons.primaryColorAlt};
+      text-shadow: -1px 1px ${theme.buttons.primaryColorAlt};
     }`);
   }
   render(props, state) {

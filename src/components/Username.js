@@ -12,12 +12,12 @@ export class Username extends Component {
       line-height: 1;
       font-weight: 700;
       text-decoration: none;
-      color: ${theme.primaryTextColor};
+      color: ${theme.text.primaryColor};
       display: inline-block;
     }
     :hover {
       padding: 0;
-      color: ${theme.primaryTextColorAlt};
+      color: ${theme.text.primaryColorAlt};
     }
     :focus {
       outline: ${theme.outlineStyle};
@@ -28,7 +28,7 @@ export class Username extends Component {
       font-size: 15px;
       line-height: 1;
       font-weight: 700;
-      color: ${theme.primaryTextColor};
+      color: ${theme.text.primaryColor};
       display: inline-block;
     }`);
   }

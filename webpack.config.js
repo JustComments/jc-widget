@@ -14,9 +14,6 @@ const plugins = [
   new webpack.DefinePlugin({
     ENDPOINT: JSON.stringify(process.env.ENDPOINT || 'localhost:3000'),
     PROTO: JSON.stringify(process.env.PROTO || 'http'),
-    NO_PIC_URL: JSON.stringify(
-      process.env.NO_PIC_URL || 'https://just-comments.com/widget/no-pic.png',
-    ),
     GUEST_SECRET: JSON.stringify(process.env.GUEST_SECRET || 'guest'),
     PUSH_URL: JSON.stringify(
       process.env.PUSH_URL || 'http://localhost:8080/push.html',

@@ -12,31 +12,55 @@ import { c, sync } from '../utils/style';
 import { Conditional } from './Conditional';
 
 const defaultTheme = {
-  primaryColor: '#2f5984', // for UI elements
-  revPrimaryColor: 'white',
-  primaryColorAlt: '#21405e', // for UI elements when active/hovered
-  secondaryColor: '#dedede', // for UI elements, minor details like border
-  primaryTextColor: '#333', // for the main text e.g. comment / author
-  primaryTextColorAlt: '#135784', // when hovered/focused
-  secondaryTextColor: '#595959', // for minor text elements such as links
-  secondaryTextColorAlt: '#135784', // when hovered/focused
-  backgroundColor: 'white', // background
-  outlineStyle: '2px dotted #595959', //outline
-  userPicBorderRadius: '50%', // radius
+  buttons: {
+    primaryColor: 'white',
+    primaryBgColor: '#2f5984',
+    primaryColorAlt: '#21405e',
+    secondaryColor: '#595959',
+    secondaryBgColor: '#333',
+    secondaryColorAlt: '#135784',
+    disabledBgColor: '#D3D3D3',
+  },
+  text: {
+    primaryColor: '#333',
+    primaryColorAlt: '#135784',
+    secondaryColor: '#595959',
+    secondaryColorAlt: '#135784',
+  },
+  borderColor: '#dedede',
+  backgroundColor: 'white',
+  outlineStyle: '2px dotted #595959',
+  avatar: {
+    borderRadius: '50%',
+    backgroundColor: '#D3D3D3',
+    color: 'grey',
+  },
 };
 
 const darkTheme = {
-  primaryColor: 'rgba(0,0,0,.4)', // for UI elements
-  revPrimaryColor: 'white',
-  primaryColorAlt: 'rgba(0,0,0,.4)', // for UI elements when active/hovered
-  secondaryColor: 'rgba(0,0,0,.1)', // for UI elements, minor details like border
-  primaryTextColor: 'hsla(0, 0%, 100%, .8)', // for the main text e.g. comment / author
-  primaryTextColorAlt: 'hsla(0, 0%, 100%, .8)', // when hovered/focused
-  secondaryTextColor: 'hsla(0, 0%, 100%, .6)', // for minor text elements such as links
-  secondaryTextColorAlt: 'hsla(0, 0%, 100%, .6)', // when hovered/focused
-  backgroundColor: '#2c2c57', // background
-  outlineStyle: '2px dotted #595959', //outline
-  userPicBorderRadius: '50%', // radius
+  buttons: {
+    primaryColor: 'white',
+    primaryBgColor: 'rgba(0,0,0,.4)',
+    primaryColorAlt: 'rgba(0,0,0,.6)',
+    secondaryColor: 'hsla(0, 0%, 100%, .6)',
+    secondaryBgColor: 'transparent',
+    secondaryColorAlt: 'hsla(0, 0%, 100%, .3)',
+    disabledBgColor: 'grey',
+  },
+  text: {
+    primaryColor: 'hsla(0, 0%, 100%, .8)',
+    primaryColorAlt: 'hsla(0, 0%, 100%, .4)',
+    secondaryColor: 'hsla(0, 0%, 100%, .6)',
+    secondaryColorAlt: 'hsla(0, 0%, 100%, .3)',
+  },
+  borderColor: '#2c2c57',
+  backgroundColor: '#2c2c57',
+  outlineStyle: '2px dotted #595959',
+  avatar: {
+    borderRadius: '50%',
+    backgroundColor: '#D3D3D3',
+    color: 'grey',
+  },
 };
 
 export class Widget extends Component {
@@ -57,7 +81,7 @@ export class Widget extends Component {
       font-size: 1rem;
       line-height: 1.6;
       box-sizing: border-box;
-      color: ${this.theme.primaryTextColor};
+      color: ${this.theme.text.primaryColor};
     }`);
   }
 

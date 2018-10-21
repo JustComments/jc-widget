@@ -31,6 +31,7 @@ class Session {
         }
       });
       this.checkJWTValidity();
+      this.checkUserPic();
     }
   }
 
@@ -48,6 +49,17 @@ class Session {
         this.set('jwt', '');
         this.set('loginProvider', '');
         return;
+      }
+    }
+  }
+
+  checkUserPic() {
+    if (this.userPic) {
+      if (!!!this.userPic) {
+        this.userPic = null;
+      }
+      if (this.userPic === 'https://just-comments.com/widget/no-pic.png') {
+        this.userPic = null;
       }
     }
   }
