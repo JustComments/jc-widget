@@ -1,15 +1,16 @@
 import commentsInThreads from '../utils/commentsInThreads';
 import { sortByStrAttr, revSortByStrAttr, keyBy } from '../utils/_';
 import { qs } from './utils/qs';
+import { fetch } from './utils/fetch';
 
-export default function getComments(
+export function getComments(
   url,
   apiKey,
   itemId,
   { sort, pageSize } = { sort: 'asc', pageSize: 100 },
   lastKey,
 ) {
-  const request = new Request(
+  return fetch(
     `${url}?${qs({
       apiKey,
       itemId,
@@ -19,27 +20,12 @@ export default function getComments(
       pageUrl: window.location.href,
     })}`,
     { method: 'GET' },
-  );
-  return fetch(request)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((json) => {
-      return {
-        lastKey: json.lastKey,
-        comments: buldThreads(json, sort),
-      };
-    })
-    .catch((err) => {
-      console.error(
-        'Failed to load comments. Check that your have enough credits on your account.',
-        err,
-      );
-      throw err;
-    });
+  ).then((json) => {
+    return {
+      lastKey: json.lastKey,
+      comments: buldThreads(json, sort),
+    };
+  });
 }
 
 function buldThreads(json, sort) {

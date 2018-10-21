@@ -12,21 +12,6 @@ import { Conditional } from './Conditional';
 import { openPopup } from '../utils/popup';
 import { c, m } from '../utils/style';
 
-const levelStyles = {};
-
-for (let i = 1; i <= 5; i++) {
-  levelStyles[i] = m(`{ margin-left: calc(54px * ${i}); }`, [
-    {
-      media: `@media (min-width: 320px) and (max-width: 480px)`,
-      css: `{ margin-left: calc(10px * ${i}); }`,
-    },
-    {
-      media: `@media (min-width: 1px) and (max-width: 320px)`,
-      css: `{ margin-left: calc(5px * ${i}); }`,
-    },
-  ]);
-}
-
 export class Comment extends Component {
   constructor({ theme }) {
     super();
@@ -41,7 +26,7 @@ export class Comment extends Component {
     }`,
       `@keyframes jcHighlightComment {
       0% {
-        background: ${theme.backgroundColor};
+        background: #ebf7ed;
       }
       100% {
         background: none;
@@ -295,3 +280,22 @@ const replyFormStyle = c(`{
 const footerStyle = c(`{
   line-height: 1;
 }`);
+
+const levelStyles = buildStylesForCommentLevels();
+
+function buildStylesForCommentLevels(argument) {
+  const levelStyles = {};
+  for (let i = 1; i <= 5; i++) {
+    levelStyles[i] = m(`{ margin-left: calc(54px * ${i}); }`, [
+      {
+        media: `@media (min-width: 320px) and (max-width: 480px)`,
+        css: `{ margin-left: calc(10px * ${i}); }`,
+      },
+      {
+        media: `@media (min-width: 1px) and (max-width: 320px)`,
+        css: `{ margin-left: calc(5px * ${i}); }`,
+      },
+    ]);
+  }
+  return levelStyles;
+}

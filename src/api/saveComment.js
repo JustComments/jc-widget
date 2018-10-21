@@ -1,22 +1,8 @@
-const BASE_URL = `${PROTO}://${ENDPOINT}`;
+import { fetch } from './utils/fetch';
+import { getUserLocale, getUserTimezone } from './utils/userInfo';
 
-function getUserLocale() {
-  try {
-    return window.navigator.language;
-  } catch (err) {
-    return 'en_US';
-  }
-}
-
-function getUserTimezone() {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone;
-  } catch (err) {
-    return 'UTC';
-  }
-}
-
-export default function saveComment(
+export function saveComment(
+  url,
   apiKey,
   itemId,
   originalItemId,
@@ -33,7 +19,7 @@ export default function saveComment(
     emailNotifications,
   }, // comment data
 ) {
-  const request = new Request(`${BASE_URL}/comments/create?apiKey=${apiKey}`, {
+  return fetch(`${url}?apiKey=${apiKey}`, {
     method: 'POST',
     mode: 'cors',
     redirect: 'follow',
@@ -59,16 +45,8 @@ export default function saveComment(
       locale: getUserLocale(),
       timezone: getUserTimezone(),
     }),
+  }).then((comment) => {
+    comment.replyToComment = replyToComment;
+    return comment;
   });
-  return fetch(request)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((comment) => {
-      comment.replyToComment = replyToComment;
-      return comment;
-    });
 }

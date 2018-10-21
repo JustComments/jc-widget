@@ -3,10 +3,10 @@ import './auth';
 import { h, render, Component } from 'preact';
 import extractDataFromURL from './utils/extractDataFromURL';
 import { Widget } from './components/Widget';
-import getComments from './api/getComments';
-import saveComment from './api/saveComment';
-import twitterCallback from './api/twitterCallback';
-import twitterRedirect from './api/twitterRedirect';
+import { getComments } from './api/getComments';
+import { saveComment } from './api/saveComment';
+import { twitterCallback } from './api/twitterCallback';
+import { twitterRedirect } from './api/twitterRedirect';
 import scrollparent from 'scrollparent';
 import isBot from './utils/isBot';
 import { get as getSession, checkJWTValidity } from './utils/session';
@@ -114,17 +114,20 @@ function buildApi(
     : () => Promise.resolve({ comments: [] });
   const boundSaveComment = saveComment.bind(
     null,
+    `${BASE_URL}/comments/create`,
     apiKey,
     effectiveItemId,
     originalItemId,
   );
   const boundTwitterCallback = twitterCallback.bind(
     null,
+    `${BASE_URL}/auth/twitter/callback`,
     apiKey,
     effectiveItemId,
   );
   const boundTwitterRedirect = twitterRedirect.bind(
     null,
+    TWITTER_START_URL,
     apiKey,
     effectiveItemId,
   );

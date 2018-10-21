@@ -49,27 +49,30 @@ function removeURLParameter(url, parameter) {
   }
 }
 
+function getJumpToComment() {
+  const hash = window.location.hash;
+  const hasHashSign = hash.trim() !== '';
+  if (hasHashSign) {
+    const isCommentPointer = hash.startsWith('#jc');
+    if (isCommentPointer) {
+      return hash.substring(3);
+    }
+  }
+  return null;
+}
+
 export default function extractDataFromURL(ignoreQuery) {
-  let jumpToComment = null;
   const href = window.location.href;
   const pathname = window.location.pathname;
-  const hash = window.location.hash;
   const hostname = window.location.hostname;
   const search = window.location.search;
   const itemPort = window.location.port;
   const itemProtocol = window.location.protocol;
-  const hasHashSign = hash.trim() !== '';
   const rewrittenPath = rewritePath(pathname);
   const itemId = `${hostname}${rewrittenPath}${
     ignoreQuery ? '' : removeCommonParams(search)
   }`;
-
-  if (hasHashSign) {
-    const isCommentPointer = hash.startsWith('#jc');
-    if (isCommentPointer) {
-      jumpToComment = hash.substring(3);
-    }
-  }
+  const jumpToComment = getJumpToComment();
 
   return {
     itemId,
