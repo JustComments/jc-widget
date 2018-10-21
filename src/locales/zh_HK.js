@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   comments: '評論',
   writeAComment: '寫低你嘅評論…',
   send: '發表',
@@ -8,7 +8,8 @@ module.exports =  {
   loadingComments: '正在加載評論',
   networkError: '由於網絡出錯關係，請重試',
   loadMoreButton: '按下顯示更多評論',
-  ctrlEnterToSend: '支援快捷鍵 Ctrl + Enter 直接發表你的評論，支持 Markdown 格式',
+  ctrlEnterToSend:
+    '支援快捷鍵 Ctrl + Enter 直接發表你的評論，支持 Markdown 格式',
   share: '分享',
   reply: '回覆',
   replyTo: '回覆 %{name}',

@@ -35,7 +35,12 @@ export class Username extends Component {
   render(props, state) {
     const { link, username } = props;
     return link ? (
-      <a className={this.linkStyle} href={link} rel={'noopener'} target={'_blank'}>
+      <a
+        className={this.linkStyle}
+        href={link}
+        rel={'noopener'}
+        target={'_blank'}
+      >
         <span>{username}</span>
       </a>
     ) : (
@@ -45,4 +50,3 @@ export class Username extends Component {
     );
   }
 }
-

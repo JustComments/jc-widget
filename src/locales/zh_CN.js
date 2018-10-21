@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   comments: '评论',
   writeAComment: '写评论',
   send: '发送',

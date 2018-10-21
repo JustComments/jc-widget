@@ -2,128 +2,129 @@ import { LocalStorage } from './localStorage';
 import jwtDecode from 'jwt-decode';
 import createGuestJWT from './createGuestJWT';
 
-let _cache = null;
+export class Session {
+  constructor(sessionStorage) {
+    this.sessionStorage = sessionStorage;
+    this.sessionKey = 'jcSession';
+    this.allowedAttributes = [
+      'username',
+      'userEmail',
+      'userId',
+      'userPic',
+      'userUrl',
+      'jwt',
+      'loginProvider',
+      'website',
+      'subscription',
+      'notifications',
+      'emailNotifications',
+    ];
+    this.loadSessionData();
+  }
 
-const attrs = [
-  'username',
-  'userEmail',
-  'userId',
-  'userPic',
-  'userUrl',
-  'jwt',
-  'loginProvider',
-  'website',
-  'subscription',
-  'notifications',
-  'emailNotifications',
-];
-
-class Session {
-  load() {
-    if (LocalStorage.supported()) {
-      attrs.forEach((attr) => {
-        this[attr] = LocalStorage.get(`jc_${attr}`);
-        if (this[attr] === 'false') {
-          this[attr] = false;
+  loadSessionData() {
+    try {
+      const rawData = sessionStorage.getItem(this.sessionKey);
+      const data = JSON.parse(rawData);
+      this.data = Object.keys(data).reduce((acc, key) => {
+        if (this.isAllowedAttribute(key)) {
+          acc[key] = data[key];
         }
-        if (this[attr] === 'true') {
-          this[attr] = true;
-        }
-      });
-      this.checkJWTValidity();
-      this.checkUserPic();
+        return acc;
+      }, {});
+    } catch (err) {
+      console.log(
+        'JustComments error: error during reading session storage',
+        err,
+      );
+      this.data = {};
     }
   }
 
-  checkJWTValidity() {
-    if (this.jwt) {
-      const { exp } = jwtDecode(this.jwt);
-      if (!exp) {
-        this.set('jwt', '');
-        this.set('loginProvider', '');
-        return;
-      }
-      const now = Math.floor(new Date().getTime() / 1000);
-      console.log('jwt is valid for', exp - now, 'seconds');
-      if (exp - now < 3600) {
-        this.set('jwt', '');
-        this.set('loginProvider', '');
-        return;
-      }
-    }
-  }
-
-  checkUserPic() {
-    if (this.userPic) {
-      if (!!!this.userPic) {
-        this.userPic = null;
-      }
-      if (this.userPic === 'https://just-comments.com/widget/no-pic.png') {
-        this.userPic = null;
-      }
-    }
-  }
-
-  clear() {
-    attrs.forEach((attr) => {
-      this.set(attr, '');
-    });
+  isAllowedAttribute(key) {
+    return this.allowedAttributes.indexOf(key) !== -1;
   }
 
   set(attr, val) {
-    this[attr] = val;
-    LocalStorage.set('jc_' + attr, val);
+    if (!this.isAllowedAttribute(attr)) {
+      throw new Error(
+        'JustComments error: Trying to set unsupported attribute',
+      );
+    }
+    this.data[attr] = val;
+    this.saveSessionData();
   }
 
   setIfMissing(attr, val) {
-    if (!this[attr]) {
-      this[attr] = val;
-      LocalStorage.set('jc_' + attr, val);
+    if (!this.data[attr]) {
+      this.set(attr, val);
     }
   }
 
   get(attr, defaultValue = '') {
-    return this[attr] || defaultValue;
-  }
-
-  isAuthorized() {
-    return !!this.jwt;
-  }
-
-  setJWT(jwt, loginProvider) {
-    const { userId, userPic, username, userUrl, userEmail } = jwtDecode(jwt);
-    this.set('userId', userId);
-    this.set('userPic', userPic);
-    this.set('username', username);
-    this.set('userUrl', userUrl);
-    this.set('userEmail', userEmail);
-    this.set('jwt', jwt);
-    this.set('loginProvider', loginProvider);
-  }
-
-  getJWT() {
-    if (!this.jwt) {
-      return createGuestJWT(this.username, this.userEmail, this.apiKey);
-    } else {
-      return this.jwt;
+    if (!this.isAllowedAttribute(attr)) {
+      throw new Error(
+        'JustComments error: trying to get unsupported attribute',
+      );
     }
+    return this.data[attr] || defaultValue;
   }
 
-  static get() {
-    if (!_cache) {
-      _cache = new Session();
-      _cache.load();
+  clear() {
+    this.data = {};
+    this.saveSessionData();
+  }
+
+  saveSessionData() {
+    try {
+      this.sessionStorage.setItem(this.sessionKey, JSON.stringify(this.data));
+    } catch (err) {
+      console.log(
+        'JustComments error: error during writing session storage',
+        err,
+      );
     }
-    return _cache;
   }
 
   clone() {
-    const t = new Session();
-    attrs.forEach((attr) => {
-      t[attr] = this[attr];
-    });
-    return t;
+    return new Session(this.sessionStorage);
+  }
+
+  isAuthenticated() {
+    return !!this.get('jwt', false);
   }
 }
 
-export default Session;
+export function get() {
+  return new Session(window.sessionStorage);
+}
+
+export function checkJWTValidity(session) {
+  const jwt = session.get('jwt');
+  if (jwt) {
+    const { exp } = jwtDecode(jwt);
+    if (!exp) {
+      session.set('jwt', '');
+      session.set('loginProvider', '');
+      return;
+    }
+    const now = Math.floor(new Date().getTime() / 1000);
+    console.log('JustComments info: jwt is valid for', exp - now, 'seconds');
+    if (exp - now < 3600) {
+      session.set('jwt', '');
+      session.set('loginProvider', '');
+      return;
+    }
+  }
+}
+
+export function setJWT(session, jwt, loginProvider) {
+  const { userId, userPic, username, userUrl, userEmail } = jwtDecode(jwt);
+  session.set('userId', userId);
+  session.set('userPic', userPic);
+  session.set('username', username);
+  session.set('userUrl', userUrl);
+  session.set('userEmail', userEmail);
+  session.set('jwt', jwt);
+  session.set('loginProvider', loginProvider);
+}

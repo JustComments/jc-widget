@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   comments: 'Comentários',
   writeAComment: 'Escreve um comentário',
   send: 'Enviar',
@@ -16,5 +16,5 @@ module.exports =  {
   commentRemovedByModerator: 'Este comentário foi removido por um moderador.',
   usernameRemoved: 'removido',
   toggleNotifications: 'recebe notificações de comentários',
-  website: 'Website (opcional)'
+  website: 'Website (opcional)',
 };

@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   comments: 'Commentaires',
   writeAComment: 'Écrire un commentaire',
   send: 'Envoyer',

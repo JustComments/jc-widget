@@ -4,9 +4,11 @@ export default function getCommentUrl(comment) {
   const currentSearch = window.location.currentSearch;
 
   const commentUrl = comment.commentUrl;
-  if (commentUrl.indexOf(currentHostname) !== -1
-    && commentUrl.indexOf(currentPathname) !== -1
-    && commentUrl.indexOf(currentSearch ? currentSearch : '') !== -1) {
+  if (
+    commentUrl.indexOf(currentHostname) !== -1 &&
+    commentUrl.indexOf(currentPathname) !== -1 &&
+    commentUrl.indexOf(currentSearch ? currentSearch : '') !== -1
+  ) {
     return commentUrl;
   }
 

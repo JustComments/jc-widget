@@ -1,4 +1,4 @@
-module.exports =  {
+module.exports = {
   comments: 'Комментарии',
   writeAComment: 'Написать комментарий',
   send: 'Отправить',
@@ -8,7 +8,8 @@ module.exports =  {
   loadingComments: 'загружаю комментарии',
   networkError: 'Произошла ошибка, попробуйте еще раз.',
   loadMoreButton: 'нажми, чтобы загрузить больше комментариев',
-  ctrlEnterToSend: 'Используй Ctrl + Enter, чтобы отправить комментарий (Markdown подерживается)',
+  ctrlEnterToSend:
+    'Используй Ctrl + Enter, чтобы отправить комментарий (Markdown подерживается)',
   share: 'поделиться',
   reply: 'ответить',
   replyTo: 'Напиши свой ответ на комментарий %{name}',
@@ -16,5 +17,5 @@ module.exports =  {
   commentRemovedByModerator: 'Комментарий удален модератором.',
   usernameRemoved: 'скрыто модератором',
   toggleNotifications: 'включить уведомления об ответах на этот комментарий',
-  website: 'Веб-сайт (необязательно)'
+  website: 'Веб-сайт (необязательно)',
 };

@@ -10,6 +10,7 @@ import { Recaptcha } from './Recaptcha';
 import jwtDecode from 'jwt-decode';
 import { c, sync } from '../utils/style';
 import { Conditional } from './Conditional';
+import { setJWT } from '../utils/session';
 
 const defaultTheme = {
   buttons: {
@@ -96,7 +97,7 @@ export class Widget extends Component {
     const { allowGuests, disableSocialLogin, disableLoadMore, sort } = props;
     const { session, loading, comments, lastKey, jumpToComment } = state;
     const shouldRenderForm =
-      session.isAuthorized() || (!session.isAuthorized() && allowGuests);
+      session.isAuthenticated() || (!session.isAuthenticated() && allowGuests);
 
     const count = comments.filter(
       (c) =>
@@ -179,7 +180,7 @@ export class Widget extends Component {
         onHighlight={(jumpToComment) =>
           this.setState({ jumpToComment, jumped: false })
         }
-        disableReply={!allowGuests && !session.isAuthorized()}
+        disableReply={!allowGuests && !session.isAuthenticated()}
         renderReplyForm={(onClose) => {
           return this.renderCommentsForm({
             onClose,
@@ -209,7 +210,7 @@ export class Widget extends Component {
           disableSocialLogin={disableSocialLogin}
           loginProvider={session.get('loginProvider')}
           userPic={session.get('userPic')}
-          guestForm={allowGuests && !session.isAuthorized()}
+          guestForm={allowGuests && !session.isAuthenticated()}
           replyToComment={replyToComment}
           username={session.get('username')}
           email={session.get('userEmail')}
@@ -231,7 +232,7 @@ export class Widget extends Component {
             });
           }}
           onLogin={(newJwt) => {
-            session.setJWT(newJwt, 'twitter');
+            setJWT(session, newJwt, 'twitter');
             this.setState({
               session: session.clone(),
             });
@@ -317,7 +318,7 @@ export class Widget extends Component {
     const { saveComment, itemProtocol, itemPort, allowGuests } = this.props;
     const { session } = this.state;
 
-    if (!session.isAuthorized() && allowGuests) {
+    if (!session.isAuthenticated() && allowGuests) {
       session.set('username', username);
       session.set('userEmail', email);
       session.set('website', website);
@@ -326,7 +327,7 @@ export class Widget extends Component {
     session.set('notifications', notifications);
     session.set('emailNotifications', emailNotifications);
 
-    return saveComment(session.getJWT(), {
+    return saveComment(session.get('jwt'), {
       itemProtocol,
       itemPort,
       message: text,
