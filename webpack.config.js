@@ -10,6 +10,7 @@ Object.keys(localizedBundles).forEach((bundleKey) => {
 });
 
 module.exports = function(env, args) {
+  const skipReports = args.skipReports || true;
   const plugins = [
     new webpack.DefinePlugin({
       ENDPOINT: JSON.stringify(args.endpoint || 'localhost:3000'),
@@ -77,7 +78,7 @@ module.exports = function(env, args) {
             'timeago.js/locales/' + bundle.timeAgoLocale,
           ),
           new I18nPlugin(bundle.translations),
-          ...(env.production
+          ...(!skipReports
             ? [
                 new BundleAnalyzerPlugin({
                   analyzerMode: 'static',
@@ -100,7 +101,7 @@ module.exports = function(env, args) {
       },
       plugins: [
         ...plugins,
-        ...(env.production
+        ...(!skipReports
           ? [
               new BundleAnalyzerPlugin({
                 analyzerMode: 'static',

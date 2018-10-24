@@ -15,19 +15,6 @@ Checkout the project and install dependencies:
 npm install
 ```
 
-## Configuration
-
-The following environmental variables can configure the widget:
-
-```
-ENDPOINT=...      # endpoint pointing to a compatible API
-PROTO=...         # protocol for the endpoint
-GUEST_SECRET      # the key which would identify gues users
-PUSH_URL          # URL to set up push notifications
-SELF_URL          # URL of the core.js
-TWITTER_START_URL # URL to start Twitter login flow
-```
-
 ## Running in development mode
 
 ```sh
@@ -37,5 +24,11 @@ npm start # starts a server at localhost:3333
 ## Build
 
 ```sh
-npm run build
+npm run build -- \
+  --endpoint=.. \
+  --proto=http \
+  --guestSecret=... \
+  --pushUrl=... \
+  --selfUrl=... \
+  --twitterStartUrl=...
 ```
