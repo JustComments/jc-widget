@@ -44,7 +44,7 @@ export class Toggle extends Component {
       <svg
         className={this.getClassName()}
         onClick={this.onToggle.bind(this)}
-        onKeyPres={this.onKeyPress.bind(this)}
+        onKeyPress={this.onKeyPress.bind(this)}
         aria-checked={this.state.checked}
         tabindex="0"
         x="0px"

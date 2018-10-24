@@ -1,5 +1,6 @@
 const regExp = /^((.*?){(.|\n)*?}$)/gm;
 const classPrefix = 'jcGenCls';
+const class2Prefix = 'jcGen2Cls';
 const clsCache = {};
 
 const classNo = (() => {
@@ -12,47 +13,52 @@ const classNo = (() => {
 let latestCss = '';
 let oldCss = 'default';
 
-function compileCss(css, className) {
+function compileCss(css, classNames) {
   const parts = css.trim().match(regExp);
   if (!parts) {
     throw new Error(`${css} does not match regexp`);
   }
   return parts
     .map((p) => p.trim())
-    .map(
-      (p) => (p.startsWith(':') ? `.${className}${p}` : `.${className} ${p}`),
-    )
+    .map((p) => {
+      const specifier = classNames.map((c) => `.${c}`).join('');
+      return p.startsWith(':') ? `${specifier}${p}` : `${specifier} ${p}`;
+    })
     .join('\n');
 }
 
 // class
 export function c(css, staticCss) {
   if (clsCache[css]) {
-    return clsCache[css];
+    return clsCache[css].join(' ');
   }
-  const className = `${classPrefix}${classNo()}`;
-  const compiled = compileCss(css, className);
+  const no = classNo();
+  const classNames = [`${classPrefix}${no}`, `${class2Prefix}${no}`];
+  const compiled = compileCss(css, classNames);
   const completeCss = compiled + (staticCss ? staticCss : '');
   latestCss += completeCss;
-  clsCache[css] = className;
-  return className;
+  clsCache[css] = classNames;
+  return classNames.join(' ');
 }
 
 // class with media queries
 export function m(css, queries) {
   if (clsCache[css]) {
-    return clsCache[css];
+    return clsCache[css].join(' ');
   }
-  const className = `${classPrefix}${classNo()}`;
+  const classNames = [
+    `${classPrefix}${classNo()}`,
+    `${class2Prefix}${classNo()}`,
+  ];
   const completeCss = [
-    compileCss(css, className),
+    compileCss(css, classNames),
     ...queries.map((q) => {
-      return `${q.media}{${compileCss(q.css, className)}}`;
+      return `${q.media}{${compileCss(q.css, classNames)}}`;
     }),
   ].join('\n');
   latestCss += completeCss;
-  clsCache[css] = className;
-  return className;
+  clsCache[css] = classNames;
+  return classNames.join(' ');
 }
 
 const getStyleTag = (() => {
