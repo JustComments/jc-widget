@@ -4,7 +4,7 @@
   "description": "Just Comments widget",
   "scripts": {
     "test": "jest",
-    "build": "rm -f dist/* && webpack-cli -p --config webpack.config.js --env.production",
+    "build": "rm -rf dist/* && webpack-cli -p --config webpack.config.js --env.production",
     "watch": "webpack-cli --watch --config webpack.config.js --env.development",
     "start": "concurrently \"bls start\" \"npm run watch\"",
     "prettier": "prettier --write 'src/**/*.js'"
