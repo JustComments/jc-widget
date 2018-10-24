@@ -9,7 +9,7 @@ import { twitterCallback } from './api/twitterCallback';
 import { twitterRedirect } from './api/twitterRedirect';
 import scrollparent from 'scrollparent';
 import isBot from './utils/isBot';
-import { get as getSession, checkJWTValidity } from './utils/session';
+import { get as getSession, checkJWTValidity, setJWT } from './utils/session';
 import isInViewport from './utils/isInViewport';
 import { onReady } from './utils/onReady';
 import { findWidgetElement } from './utils/findWidgetElement';
@@ -46,16 +46,19 @@ export function renderWidget(
 
   const session = getSession();
   if (data.jwt) {
-    session.setJWT(data.jwt);
-  } else if (!session.get('jwt')) {
-    session.setIfMissing('userId', 'guest');
-    session.setIfMissing('userPic', null);
-    session.setIfMissing('username', '');
-    session.setIfMissing('userUrl', '');
-    session.setIfMissing('userEmail', '');
-    session.setIfMissing('website', '');
+    setJWT(session, data.jwt);
+  } else {
+    if (session.get('jwt')) {
+      checkJWTValidity(session);
+    } else {
+      session.setIfMissing('userId', 'guest');
+      session.setIfMissing('userPic', null);
+      session.setIfMissing('username', '');
+      session.setIfMissing('userUrl', '');
+      session.setIfMissing('userEmail', '');
+      session.setIfMissing('website', '');
+    }
   }
-  checkJWTValidity(session);
 
   const api = buildApi(
     data.apiKey,
@@ -87,6 +90,7 @@ export function renderWidget(
       enableWebsite: data.enableWebsite,
       enableEmailNotifications: data.enableEmailNotifications,
       theme: data.theme,
+      apiKey: data.apiKey,
     }),
     widget,
   );

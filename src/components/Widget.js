@@ -3,14 +3,16 @@ import extractDataFromURL from '../utils/extractDataFromURL';
 import createGuestJWT from '../utils/createGuestJWT';
 import commentsInThreads from '../utils/commentsInThreads';
 import { CommentsForm } from './CommentsForm';
-import { LoadMoreButton } from './LoadMoreButton';
 import { Comment } from './Comment';
+import { LoadMoreButton } from './LoadMoreButton';
 import { Attribution } from './Attribution';
 import { Recaptcha } from './Recaptcha';
 import jwtDecode from 'jwt-decode';
 import { c, sync } from '../utils/style';
 import { Conditional } from './Conditional';
 import { setJWT } from '../utils/session';
+import { CommentCollection } from '../models/CommentCollection';
+import { Comment as CommentModel } from '../models/Comment';
 
 const defaultTheme = {
   buttons: {
@@ -68,13 +70,11 @@ export class Widget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
-      loading: true,
-      comments: [],
-      lastKey: null,
-      jumpToComment: props.jumpToComment,
-      jumped: false,
       session: props.session,
+      jumpToComment: props.jumpToComment,
+      commentCollection: new CommentCollection([], null, 'asc'),
+      loading: true,
+      jumped: false,
     };
     this.theme = props.theme === 'dark' ? darkTheme : defaultTheme;
     this.commentsStyle = c(`{
@@ -95,22 +95,15 @@ export class Widget extends Component {
 
   render(props, state) {
     const { allowGuests, disableSocialLogin, disableLoadMore, sort } = props;
-    const { session, loading, comments, lastKey, jumpToComment } = state;
+    const { session, loading, commentCollection, jumpToComment } = state;
     const shouldRenderForm =
       session.isAuthenticated() || (!session.isAuthenticated() && allowGuests);
-
-    const count = comments.filter(
-      (c) =>
-        !c.hidden ||
-        (c.hidden &&
-          c.nestedCommentsContent.filter((nc) => !nc.hidden).length > 0),
-    ).length;
-
     const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
     const shouldRenderFormAfter = shouldRenderForm && sort === 'asc';
+    const count = commentCollection.count();
     return (
       <div className={this.commentsStyle}>
-        <CommentsHeader count={count} hasMore={!!lastKey} />
+        <CommentsHeader count={count} hasMore={commentCollection.hasMore()} />
         <Conditional
           if={shouldRenderFormBefore}
           do={() => this.renderCommentsForm({ session })}
@@ -121,13 +114,13 @@ export class Widget extends Component {
           do={() => {
             return (
               <div key="content" className={contentStyle}>
-                {comments.map(this.renderComment.bind(this))}
+                {commentCollection.map(this.renderComment.bind(this))}
                 <Conditional
                   if={count == 0}
                   do={() => <p>{__('noComments')}</p>}
                 />
                 <Conditional
-                  if={lastKey && !disableLoadMore}
+                  if={commentCollection.hasMore() && !disableLoadMore}
                   do={() => (
                     <LoadMoreButton
                       theme={this.theme}
@@ -161,14 +154,9 @@ export class Widget extends Component {
   }
 
   renderComment(comment) {
-    const jumpToComment = this.state.jumpToComment;
+    const { jumpToComment, session } = this.state;
     const allowGuests = this.props.allowGuests;
-    if (
-      comment.hidden &&
-      (comment.nestedCommentsContent || []).every(
-        (nested) => nested.hidden === true,
-      )
-    ) {
+    if (comment.isThreadHidden()) {
       return null;
     }
     return (
@@ -257,11 +245,11 @@ export class Widget extends Component {
 
   componentDidMount() {
     const { getComments } = this.props;
-    getComments(this.state.lastKey).then((json) => {
+    const { commentCollection } = this.state;
+    getComments(commentCollection.getCursor()).then((commentCollection) => {
       this.setState({
         loading: false,
-        comments: json.comments,
-        lastKey: json.lastKey,
+        commentCollection,
       });
     });
     sync();
@@ -269,11 +257,11 @@ export class Widget extends Component {
 
   loadMore() {
     const { getComments } = this.props;
-    getComments(this.state.lastKey).then((json) => {
+    const { commentCollection } = this.state;
+    getComments(commentCollection.getCursor()).then((loadedComments) => {
       this.setState({
         loading: false,
-        comments: this.state.comments.concat(json.comments),
-        lastKey: json.lastKey,
+        commentCollection: commentCollection.merge(loadedComments),
       });
     });
   }
@@ -327,7 +315,11 @@ export class Widget extends Component {
     session.set('notifications', notifications);
     session.set('emailNotifications', emailNotifications);
 
-    return saveComment(session.get('jwt'), {
+    const jwt = session.get('jwt')
+      ? session.get('jwt')
+      : createGuestJWT(username, email, this.props.apiKey);
+    console.log(jwt);
+    return saveComment(jwt, {
       itemProtocol,
       itemPort,
       message: text,
@@ -340,26 +332,17 @@ export class Widget extends Component {
           ? session.get('subscription')
           : null,
       emailNotifications,
-    })
-      .then((comment) => {
-        this.setState({
-          comments: commentsInThreads(
-            [...this.state.comments, comment],
-            this.props.sort,
-          ),
-          jumpToComment: comment.commentId,
-          jumped: false,
-        });
-      })
-      .catch((err) => {
-        if (err.message.startsWith('403')) {
-          this.setState({
-            isAuthorized: false,
-            jwt: undefined,
-          });
-        }
-        throw err;
+    }).then((comment) => {
+      this.setState({
+        commentCollection: this.state.commentCollection.addComment(
+          new CommentModel({
+            ...comment,
+          }),
+        ),
+        jumpToComment: comment.commentId,
+        jumped: false,
       });
+    });
   }
 
   onLoadMore() {

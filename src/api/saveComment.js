@@ -45,8 +45,5 @@ export function saveComment(
       locale: getUserLocale(),
       timezone: getUserTimezone(),
     }),
-  }).then((comment) => {
-    comment.replyToComment = replyToComment;
-    return comment;
   });
 }

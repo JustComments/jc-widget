@@ -1,16 +1,9 @@
 import { revSortByStrAttr, sortByStrAttr, sortByNumAttr } from './_';
 
 export default function commentsInThreads(allComments, sort) {
-  const sorted =
-    sort === 'asc'
-      ? sortByStrAttr(allComments, 'createdAt')
-      : revSortByStrAttr(allComments, 'createdAt');
-  const tree = listToTree(sorted, {
-    idKey: 'commentId',
-    parentKey: 'replyTo',
-    childrenKey: 'children',
-  });
-  traverseTree(tree);
+  const sortFn = sort === 'asc' ? sortByStrAttr : revSortByStrAttr;
+  const sorted = sortFn(allComments, 'createdAt');
+  traverseTree(listToTree(sorted));
   return sortByNumAttr(sorted, 'sortKey').map((c) => {
     delete c.children;
     if (c.level > 5) {

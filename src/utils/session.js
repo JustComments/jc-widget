@@ -25,7 +25,7 @@ export class Session {
   loadSessionData() {
     try {
       const rawData = sessionStorage.getItem(this.sessionKey);
-      const data = JSON.parse(rawData);
+      const data = rawData ? JSON.parse(rawData) : {};
       this.data = Object.keys(data).reduce((acc, key) => {
         if (this.isAllowedAttribute(key)) {
           acc[key] = data[key];
@@ -126,5 +126,5 @@ export function setJWT(session, jwt, loginProvider) {
   session.set('userUrl', userUrl);
   session.set('userEmail', userEmail);
   session.set('jwt', jwt);
-  session.set('loginProvider', loginProvider);
+  session.setIfMissing('loginProvider', loginProvider);
 }

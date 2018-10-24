@@ -6,8 +6,7 @@ import { Username } from './Username';
 import { ReplyToLink } from './ReplyToLink';
 import { CommentDateLink } from './CommentDateLink';
 import { CommentContent } from './CommentContent';
-import getCommentUrl from '../utils/getCommentUrl';
-import ago from '../utils/ago';
+
 import { Conditional } from './Conditional';
 import { openPopup } from '../utils/popup';
 import { c, m } from '../utils/style';
@@ -15,11 +14,16 @@ import { c, m } from '../utils/style';
 export class Comment extends Component {
   constructor({ theme }) {
     super();
+
     this.state = {
       displayReplyForm: false,
       displayShareLinks: false,
-      shareUrl: null,
     };
+
+    this.onShareButtonClick = this.onShareButtonClick.bind(this);
+    this.onTwitterShareClick = this.onTwitterShareClick.bind(this);
+    this.onFbShareClick = this.onFbShareClick.bind(this);
+
     this.highlightStyle = c(
       `{
       animation: jcHighlightComment 3s;
@@ -35,18 +39,23 @@ export class Comment extends Component {
     );
   }
 
+  getContainerStyle() {
+    const { comment, highlight } = this.props;
+    return (
+      containerStyle +
+      ' ' +
+      (highlight ? this.highlightStyle : '') +
+      ' ' +
+      (levelStyles[comment.getLevel()] ? levelStyles[comment.getLevel()] : '')
+    );
+  }
+
   render(props, state) {
-    const { comment, highlight, renderReplyForm, disableReply } = props;
+    const { comment, renderReplyForm, disableReply } = props;
     const { displayReplyForm } = state;
     return (
       <div
-        className={
-          containerStyle +
-          ' ' +
-          (highlight ? this.highlightStyle : '') +
-          ' ' +
-          (levelStyles[comment.level] ? levelStyles[comment.level] : '')
-        }
+        className={this.getContainerStyle()}
         key={comment.commentId}
         id={'jc' + comment.commentId}
       >
@@ -62,9 +71,7 @@ export class Comment extends Component {
               theme={props.theme}
               link={comment.userUrl}
               username={
-                comment.hidden
-                  ? __('usernameRemoved')
-                  : String(comment.username)
+                comment.isHidden() ? __('usernameRemoved') : comment.username
               }
             />
             <CommentDateLink
@@ -73,26 +80,28 @@ export class Comment extends Component {
                 this.props.onHighlight(comment.commentId);
               }}
               rawDate={comment.createdAt}
-              date={ago(comment.createdAt)}
-              link={getCommentUrl(comment)}
+              date={comment.getCreatedAgo()}
+              link={comment.getCommentUrl()}
             />
             <Conditional
-              if={comment.replyToComment}
+              if={comment.hasReplyTo()}
               do={() => (
                 <ReplyToLink
                   theme={props.theme}
                   onClick={() => {
-                    this.props.onHighlight(comment.replyToComment.commentId);
+                    this.props.onHighlight(
+                      comment.getReplyToComment().commentId,
+                    );
                   }}
                   className={linkStyle}
-                  link={getCommentUrl(comment.replyToComment)}
-                  text={comment.replyToComment.username}
+                  link={comment.getReplyToComment().getCommentUrl()}
+                  text={comment.getReplyToComment().username}
                 />
               )}
             />
           </div>
           <Conditional
-            if={comment.hidden}
+            if={comment.isHidden()}
             do={() => (
               <span className={messageHiddenStyle}>
                 {__('commentRemovedByModerator')}
@@ -100,7 +109,7 @@ export class Comment extends Component {
             )}
           />
           <Conditional
-            if={!comment.hidden}
+            if={!comment.isHidden()}
             do={() => (
               <CommentContent
                 theme={props.theme}
@@ -116,7 +125,7 @@ export class Comment extends Component {
           />
           <div className={footerStyle}>
             <Conditional
-              if={!comment.hidden && !disableReply}
+              if={!comment.isHidden() && !disableReply}
               do={() => (
                 <CommentButton
                   theme={props.theme}
@@ -131,13 +140,13 @@ export class Comment extends Component {
               )}
             />
             <Conditional
-              if={!comment.hidden}
+              if={!comment.isHidden()}
               do={() => (
                 <CommentButton
                   theme={props.theme}
                   className={buttonStyle}
                   label={__('share')}
-                  onClick={() => this.share(getCommentUrl(comment))}
+                  onClick={this.onShareButtonClick}
                 />
               )}
             />
@@ -152,13 +161,7 @@ export class Comment extends Component {
                   theme={props.theme}
                   className={shareButtonStyle}
                   label={'Twitter'}
-                  onClick={() =>
-                    openPopup(
-                      `https://twitter.com/intent/tweet?url=${
-                        this.state.shareUrl
-                      }`,
-                    )
-                  }
+                  onClick={this.onTwitterShareClick}
                 />
               )}
             />
@@ -169,13 +172,7 @@ export class Comment extends Component {
                   theme={props.theme}
                   className={shareButtonStyle}
                   label={'Facebook'}
-                  onClick={() =>
-                    openPopup(
-                      `http://facebook.com/sharer.php?s=100&p[url]=${
-                        this.state.shareUrl
-                      }`,
-                    )
-                  }
+                  onClick={this.onFbShareClick}
                 />
               )}
             />
@@ -195,10 +192,25 @@ export class Comment extends Component {
     );
   }
 
-  share(url) {
+  onTwitterShareClick() {
+    openPopup(
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        this.props.comment.getCommentUrl(),
+      )}`,
+    );
+  }
+
+  onFbShareClick() {
+    openPopup(
+      `http://facebook.com/sharer.php?s=100&p[url]=${encodeURIComponent(
+        this.props.comment.getCommentUrl(),
+      )}`,
+    );
+  }
+
+  onShareButtonClick() {
     this.setState({
       displayShareLinks: !this.state.displayShareLinks,
-      shareUrl: encodeURIComponent(url),
     });
   }
 }

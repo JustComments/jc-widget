@@ -9,13 +9,12 @@ export class LoadMoreButton extends Component {
       margin-top: 1rem;
       padding: 3px 9px;
       line-height: 1.8;
-      appearance: none;
       box-shadow: none;
       border-radius: 0;
 
-      color: #fff;
-      background-color: ${theme.buttons.primaryColor};
-      text-shadow: -1px 1px ${theme.buttons.primaryColor};
+      color: ${theme.buttons.primaryColor};
+      background-color: ${theme.buttons.primaryBgColor};
+      text-shadow: -1px 1px ${theme.buttons.primaryBgColor};
       border: none;
 
       font-family: inherit;
