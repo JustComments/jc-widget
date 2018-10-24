@@ -11,21 +11,22 @@ Object.keys(localizedBundles).forEach((bundleKey) => {
 
 module.exports = function(env, args) {
   const skipReports = args.skipReports || true;
+  const locale = args.locale || null;
+  const host = 'http://localhost';
+  const defineParams = {
+    API_ENDPOINT: args.endpoint || `${host}:3000`,
+    CORE_URL: args.selfUrl || `${host}:3333/dist/core.js`,
+    GUEST_SECRET: args.guestSecret || 'guest',
+    PUSH_URL: args.pushUrl || `${host}:8080/push.html`,
+    TWITTER_URL: args.twitterUrl || `${host}:8080/twitter-start.html`,
+  };
   const plugins = [
-    new webpack.DefinePlugin({
-      ENDPOINT: JSON.stringify(args.endpoint || 'localhost:3000'),
-      PROTO: JSON.stringify(args.proto || 'http'),
-      GUEST_SECRET: JSON.stringify(args.guestSecret || 'guest'),
-      PUSH_URL: JSON.stringify(
-        args.pushUrl || 'http://localhost:8080/push.html',
-      ),
-      SELF_URL: JSON.stringify(
-        args.selfUrl || 'http://localhost:3333/dist/core.js',
-      ),
-      TWITTER_START_URL: JSON.stringify(
-        args.twitterStartUrl || 'http://127.0.0.1:8080/twitter-start.html',
-      ),
-    }),
+    new webpack.DefinePlugin(
+      Object.keys(defineParams).reduce((acc, key) => {
+        acc[key] = JSON.stringify(defineParams[key]);
+        return acc;
+      }, defineParams),
+    ),
   ];
 
   const standardOptions = {
@@ -59,8 +60,15 @@ module.exports = function(env, args) {
     },
   };
 
+  const bundleKeys = Object.keys(localizedBundles).filter((bundleKey) => {
+    if (!locale) {
+      return true;
+    }
+    return bundleKey === locale;
+  });
+
   return [
-    ...Object.keys(localizedBundles).map((bundleKey) => {
+    ...bundleKeys.map((bundleKey) => {
       const bundle = localizedBundles[bundleKey];
       return {
         entry: ['./src/core.js'],

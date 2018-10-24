@@ -17,7 +17,7 @@ function loadCoreOnce(bundleLocale) {
   if (!loaded) {
     loaded = true;
     var s = document.createElement('script');
-    s.setAttribute('src', SELF_URL.replace('.js', `.${bundleLocale}.js`));
+    s.setAttribute('src', CORE_URL.replace('.js', `.${bundleLocale}.js`));
     document.body.appendChild(s);
   }
 }

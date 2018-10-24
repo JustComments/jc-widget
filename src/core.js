@@ -16,7 +16,7 @@ import { findWidgetElement } from './utils/findWidgetElement';
 import { bootstrapRecaptcha } from './components/Recaptcha';
 import { onceVisible } from './utils/scroll';
 
-const BASE_URL = `${PROTO}://${ENDPOINT}`;
+const BASE_URL = API_ENDPOINT;
 
 export function renderWidget(
   widget,
@@ -131,7 +131,7 @@ function buildApi(
   );
   const boundTwitterRedirect = twitterRedirect.bind(
     null,
-    TWITTER_START_URL,
+    TWITTER_URL,
     apiKey,
     effectiveItemId,
   );

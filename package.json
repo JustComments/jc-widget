@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest",
     "build": "rm -rf dist/* && webpack-cli -p --config webpack.config.js --env.production",
-    "watch": "webpack-cli --watch --config webpack.config.js --env.development",
+    "watch": "webpack-cli --watch --config webpack.config.js --env.development --locale=en",
     "start": "concurrently \"bls start\" \"npm run watch\"",
     "prettier": "prettier --write 'src/**/*.js'"
   },
