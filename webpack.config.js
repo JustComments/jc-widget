@@ -81,7 +81,7 @@ module.exports = function(env, args) {
             ? [
                 new BundleAnalyzerPlugin({
                   analyzerMode: 'static',
-                  reportFilename: `size.${bundle.textLocale}.html`,
+                  reportFilename: `reports/size.${bundle.textLocale}.html`,
                 }),
               ]
             : []),
@@ -104,7 +104,7 @@ module.exports = function(env, args) {
           ? [
               new BundleAnalyzerPlugin({
                 analyzerMode: 'static',
-                reportFilename: `size.html`,
+                reportFilename: `reports/size.html`,
               }),
             ]
           : []),
