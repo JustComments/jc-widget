@@ -26,9 +26,8 @@ npm start # starts a server at localhost:3333
 ```sh
 npm run build -- \
   --endpoint=.. \
-  --proto=http \
   --guestSecret=... \
   --pushUrl=... \
-  --selfUrl=... \
-  --twitterStartUrl=...
+  --coreUrl=... \
+  --twitterUrl=...
 ```

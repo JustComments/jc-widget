@@ -15,7 +15,7 @@ module.exports = function(env, args) {
   const host = 'http://localhost';
   const defineParams = {
     API_ENDPOINT: args.endpoint || `${host}:3000`,
-    CORE_URL: args.selfUrl || `${host}:3333/dist/core.js`,
+    CORE_URL: args.coreUrl || `${host}:3333/dist/core.js`,
     GUEST_SECRET: args.guestSecret || 'guest',
     PUSH_URL: args.pushUrl || `${host}:8080/push.html`,
     TWITTER_URL: args.twitterUrl || `${host}:8080/twitter-start.html`,
