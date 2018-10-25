@@ -8,5 +8,5 @@ it('should generate styles', () => {
     :pseudo {
       border: 1px solid black;
     }`),
-  ).toEqual(`jcGenCls1`);
+  ).toEqual(`jcGenCls1 jcGen2Cls1`);
 });

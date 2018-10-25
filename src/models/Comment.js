@@ -6,8 +6,8 @@ timeago.register('locale', locale);
 export class Comment {
   constructor(data) {
     this.data = data;
-    this.highlighted = false;
     this.level = 0;
+    this.sortKey = null;
     this.nestedCommentsModels = [];
     this.replyToComment = null;
     this.ago = timeago();
@@ -107,13 +107,13 @@ export class Comment {
   getCommentUrl() {
     const currentHostname = window.location.hostname;
     const currentPathname = window.location.pathname;
-    const currentSearch = window.location.currentSearch;
+    const currentSearch = window.location.currentSearch || '';
 
     const commentUrl = this.commentUrl;
     if (
       commentUrl.indexOf(currentHostname) !== -1 &&
       commentUrl.indexOf(currentPathname) !== -1 &&
-      commentUrl.indexOf(currentSearch ? currentSearch : '') !== -1
+      commentUrl.indexOf(currentSearch) !== -1
     ) {
       return commentUrl;
     }
