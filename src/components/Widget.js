@@ -66,6 +66,11 @@ const darkTheme = {
   },
 };
 
+const themes = {
+  default: defaultTheme,
+  dark: darkTheme,
+};
+
 export class Widget extends Component {
   constructor(props) {
     super(props);
@@ -76,7 +81,7 @@ export class Widget extends Component {
       loading: true,
       jumped: false,
     };
-    this.theme = props.theme === 'dark' ? darkTheme : defaultTheme;
+    this.theme = themes[props.theme] || window[props.theme];
     this.commentsStyle = c(`{
       margin: 0 auto;
       font-size: 1rem;
