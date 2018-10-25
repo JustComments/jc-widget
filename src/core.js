@@ -174,7 +174,7 @@ function readWidgetData(widget) {
   }
 
   const pageId = widget.dataset.pageid;
-  const theme = widget.dataset.theme;
+  const theme = widget.dataset.theme || 'default';
   return {
     jwt,
     apiKey,
