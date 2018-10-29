@@ -1,4 +1,3 @@
-import scrollparent from 'scrollparent';
 import isBot from './utils/isBot';
 import extractDataFromURL from './utils/extractDataFromURL';
 import isInViewport from './utils/isInViewport';

@@ -14,7 +14,7 @@ export function onceVisible(el, fn) {
     fn();
     return;
   }
-  const scrollable = scrollparent(widget);
+  const scrollable = scrollparent(el);
   const scrollContainers = !scrollable.parentElement
     ? [window]
     : [window, scrollable];
