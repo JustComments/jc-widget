@@ -16,9 +16,7 @@ export class CommentContent extends Component {
     > div > *:first-child {
       margin-top: 0;
     }
-    > div > *:last-child {
-      margin-bottom: 0;
-    }
+
     ul {
       box-sizing: inherit;
       margin: 0;
@@ -47,7 +45,7 @@ export class CommentContent extends Component {
       background-color: transparent;
     }
     p {
-      margin: 0.5em 0px;
+      margin: 0.5em 0;
       box-sizing: inherit;
     }
     pre {

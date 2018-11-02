@@ -13,12 +13,11 @@ export class CommentButton extends Component {
       background: transparent;
       border: 0;
       padding: 0;
-      border-bottom: 1px dotted ${theme.buttons.secondaryColor};
       cursor: pointer;
+      text-transform: capitalize;
     }
     :hover {
       color: ${theme.buttons.secondaryColorAlt};
-      border-bottom: 1px dotted ${theme.buttons.secondaryColorAlt};
     }
     :focus {
       outline: ${theme.outlineStyle};

@@ -10,7 +10,7 @@ Object.keys(localizedBundles).forEach((bundleKey) => {
 });
 
 module.exports = function(env, args) {
-  const skipReports = args.skipReports || true;
+  const skipReports = args.skipReports !== 'false';
   const locale = args.locale || null;
   const host = 'http://localhost';
   const defineParams = {
