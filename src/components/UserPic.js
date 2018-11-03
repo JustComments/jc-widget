@@ -4,7 +4,7 @@ import { Center } from './Center';
 import { UserPicImg } from './UserPicImg';
 
 export class UserPic extends Component {
-  constructor({ theme }) {
+  constructor({ theme, src }) {
     super();
     this.style = c(`{
       display: block;
@@ -16,13 +16,16 @@ export class UserPic extends Component {
       padding: 0;
       margin: 0;
     }`);
+    this.state = {
+      src,
+    };
   }
 
   render({ href, src, username, theme }) {
     const content = (
       <Center>
         <UserPicImg
-          src={src}
+          src={this.state.src}
           alt={`picture of ${username}`}
           onError={() => this.setState({ src: undefined })}
           theme={theme}
