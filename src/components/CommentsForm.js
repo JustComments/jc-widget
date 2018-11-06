@@ -188,21 +188,24 @@ export class CommentsForm extends Component {
       loginProvider,
       enableWebsite,
       enableEmailNotifications,
+      disableProfilePictures,
       theme,
     } = props;
     const { errors } = state;
     return (
       <div className={containerStyle}>
-        <div className={leftColumnStyle}>
-          <UserPic theme={theme} src={userPic} alt="your picture" />
-          <button
-            className={loginViaStyle}
-            title={'clear'}
-            onClick={() => this.props.onLogout()}
-          >
-            {this.renderLoginProvider(loginProvider)}
-          </button>
-        </div>
+        {!disableProfilePictures ? (
+          <div className={leftColumnStyle}>
+            <UserPic theme={theme} src={userPic} alt="your picture" />
+            <button
+              className={loginViaStyle}
+              title={'clear'}
+              onClick={() => this.props.onLogout()}
+            >
+              {this.renderLoginProvider(loginProvider)}
+            </button>
+          </div>
+        ) : null}
         <form
           className={rightColumnStyle + ' ' + formStyle}
           ref={(ref) => {

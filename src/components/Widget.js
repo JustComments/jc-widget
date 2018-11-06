@@ -51,7 +51,7 @@ const darkTheme = {
     disabledBgColor: 'grey',
   },
   text: {
-    primaryColor: 'hsla(0, 0%, 100%, .8)',
+    primaryColor: 'hsla(0, 0%, 100%, 1)',
     primaryColorAlt: 'hsla(0, 0%, 100%, .4)',
     secondaryColor: 'hsla(0, 0%, 100%, .6)',
     secondaryColorAlt: 'hsla(0, 0%, 100%, .3)',
@@ -160,7 +160,7 @@ export class Widget extends Component {
 
   renderComment(comment) {
     const { jumpToComment, session } = this.state;
-    const allowGuests = this.props.allowGuests;
+    const { allowGuests, disableProfilePictures } = this.props;
     if (comment.isThreadHidden()) {
       return null;
     }
@@ -169,6 +169,7 @@ export class Widget extends Component {
         key={comment.commentId}
         comment={comment}
         theme={this.theme}
+        disableProfilePictures={disableProfilePictures}
         highlight={jumpToComment === comment.commentId}
         onHighlight={(jumpToComment) =>
           this.setState({ jumpToComment, jumped: false })
@@ -192,6 +193,7 @@ export class Widget extends Component {
       disableSocialLogin,
       enableWebsite,
       enableEmailNotifications,
+      disableProfilePictures,
     } = this.props;
     return (
       <div className={formStyle}>
@@ -243,6 +245,7 @@ export class Widget extends Component {
             });
           }}
           checkCaptcha={this.checkCaptcha.bind(this)}
+          disableProfilePictures={disableProfilePictures}
         />
       </div>
     );

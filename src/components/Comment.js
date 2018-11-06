@@ -51,7 +51,12 @@ export class Comment extends Component {
   }
 
   render(props, state) {
-    const { comment, renderReplyForm, disableReply } = props;
+    const {
+      comment,
+      renderReplyForm,
+      disableReply,
+      disableProfilePictures,
+    } = props;
     const { displayReplyForm } = state;
     return (
       <div
@@ -59,12 +64,14 @@ export class Comment extends Component {
         key={comment.commentId}
         id={'jc' + comment.commentId}
       >
-        <UserPic
-          theme={props.theme}
-          href={comment.userUrl}
-          src={comment.userPic}
-          username={comment.username}
-        />
+        {!disableProfilePictures ? (
+          <UserPic
+            theme={props.theme}
+            href={comment.userUrl}
+            src={comment.userPic}
+            username={comment.username}
+          />
+        ) : null}
         <div className={bodyStyle}>
           <div className={headerStyle}>
             <Username
