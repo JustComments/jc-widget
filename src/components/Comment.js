@@ -56,6 +56,7 @@ export class Comment extends Component {
       renderReplyForm,
       disableReply,
       disableProfilePictures,
+      disableShareButton,
     } = props;
     const { displayReplyForm } = state;
     return (
@@ -147,7 +148,7 @@ export class Comment extends Component {
               )}
             />
             <Conditional
-              if={!comment.isHidden()}
+              if={!comment.isHidden() && !disableShareButton}
               do={() => (
                 <CommentButton
                   theme={props.theme}

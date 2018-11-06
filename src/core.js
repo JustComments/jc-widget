@@ -92,6 +92,7 @@ export function renderWidget(
       theme: data.theme,
       apiKey: data.apiKey,
       disableProfilePictures: data.disableProfilePictures,
+      disableShareButton: data.disableShareButton,
     }),
     widget,
   );
@@ -153,6 +154,7 @@ function readWidgetData(widget) {
   const disableLoadMore = widget.dataset.disableloadmore === 'true';
   const disableProfilePictures =
     widget.dataset.disableprofilepictures === 'true';
+  const disableShareButton = widget.dataset.disablesharebutton === 'true';
   const ignoreQuery = widget.dataset.ignorequery === 'true';
   const hideAttribution = widget.dataset.hideattribution === 'true';
   const enableWebsite = widget.dataset.enablewebsite === 'true';
@@ -194,6 +196,7 @@ function readWidgetData(widget) {
     recaptchaSitekey,
     theme,
     disableProfilePictures,
+    disableShareButton,
   };
 }
 

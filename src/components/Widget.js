@@ -160,7 +160,11 @@ export class Widget extends Component {
 
   renderComment(comment) {
     const { jumpToComment, session } = this.state;
-    const { allowGuests, disableProfilePictures } = this.props;
+    const {
+      allowGuests,
+      disableProfilePictures,
+      disableShareButton,
+    } = this.props;
     if (comment.isThreadHidden()) {
       return null;
     }
@@ -175,6 +179,7 @@ export class Widget extends Component {
           this.setState({ jumpToComment, jumped: false })
         }
         disableReply={!allowGuests && !session.isAuthenticated()}
+        disableShareButton={disableShareButton}
         renderReplyForm={(onClose) => {
           return this.renderCommentsForm({
             onClose,
