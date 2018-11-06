@@ -26,6 +26,7 @@ export class ReplyToLink extends Component {
         fill: ${theme.text.secondaryColor};
         vertical-align: middle;
         height: 11px;
+        width: 11px;
       }
     `);
   }
