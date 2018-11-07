@@ -92,7 +92,7 @@ export class Comment extends Component {
               link={comment.getCommentUrl()}
             />
             <Conditional
-              if={comment.hasReplyTo()}
+              if={comment.hasReplyTo() && comment.getReplyToComment()}
               do={() => (
                 <ReplyToLink
                   theme={props.theme}
