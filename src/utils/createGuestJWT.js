@@ -1,3 +1,5 @@
+import { Base64 } from 'js-base64';
+
 const GUEST_KEY = 'jcGuest123';
 
 export default function createGuestJWT(username, email, apiKey) {
@@ -9,5 +11,5 @@ export default function createGuestJWT(username, email, apiKey) {
     userEmail: email,
     username,
   };
-  return `${GUEST_KEY}===${JSON.stringify(data)}`;
+  return `${GUEST_KEY}===${Base64.encode(JSON.stringify(data))}`;
 }
