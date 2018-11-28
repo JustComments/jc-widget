@@ -17,12 +17,12 @@ export function saveComment(
     itemPort,
     subscription,
     emailNotifications,
-  }, // comment data
+  },
 ) {
+  // comment data
   return fetch(`${url}?apiKey=${apiKey}`, {
     method: 'POST',
     mode: 'cors',
-    redirect: 'follow',
     headers: new Headers({
       'Content-Type': 'application/json',
       Authorization: ['Bearer', jwt].join(' '),
