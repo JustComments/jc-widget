@@ -57,7 +57,7 @@
   "dependencies": {
     "js-base64": "2.4.9",
     "jwt-decode": "2.2.0",
-    "preact": "8.3.1",
+    "preact": "8.4.2",
     "scrollparent": "2.0.1",
     "timeago.js": "3.0.2"
   }
