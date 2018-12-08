@@ -6,10 +6,5 @@ module.exports = {
     '\\.(css|less)$': 'identity-obj-proxy',
     TIMEAGO_LOCALE: 'timeago.js/locales/en',
   },
-  globals: {
-    __: function __(key) {
-      // defined by i18n-webpack-plugin during build
-      return key;
-    },
-  },
+  setupFiles: ['./jest.setup.js'],
 };
