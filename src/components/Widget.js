@@ -108,7 +108,11 @@ export class Widget extends Component {
     const count = commentCollection.count();
     return (
       <div className={this.commentsStyle}>
-        <CommentsHeader count={count} hasMore={commentCollection.hasMore()} />
+        <CommentsHeader
+          theme={this.theme}
+          count={count}
+          hasMore={commentCollection.hasMore()}
+        />
         <Conditional
           if={shouldRenderFormBefore}
           do={() => this.renderCommentsForm({ session })}
@@ -364,12 +368,30 @@ export class Widget extends Component {
 }
 
 class CommentsHeader extends Component {
+  constructor(props, ...args) {
+    super(props, ...args);
+    const { theme } = props;
+    this.headerStyle = c(`{
+      font-size: inherit;
+      box-sizing: inherit;
+      color: ${theme.text.primaryColor};
+    }`);
+    this.headerH3Style = c(`{
+      font-size: 22px;
+      box-sizing: inherit;
+      line-height: 1.4;
+      margin: .5em 0;
+      font-weight: bold;
+      color: ${theme.text.primaryColor};
+    }`);
+  }
+
   render({ count, hasMore }) {
     const text = __('comments');
     const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;
     return (
-      <div className={`${headerStyle} jcCommentsHeader`}>
-        <h3 className={headerH3Style}>
+      <div className={`${this.headerStyle} jcCommentsHeader`}>
+        <h3 className={this.headerH3Style}>
           {text}
           {countText}
         </h3>
@@ -427,19 +449,6 @@ const loadingStyle = c(
   }
 }`,
 );
-
-const headerStyle = c(`{
-  font-size: inherit;
-  box-sizing: inherit;
-}`);
-
-const headerH3Style = c(`{
-  font-size: 22px;
-  box-sizing: inherit;
-  line-height: 1.4;
-  margin: .5em 0;
-  font-weight: bold;
-}`);
 
 const formStyle = c(`{
   padding-top: 15px;
