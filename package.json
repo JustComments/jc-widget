@@ -41,7 +41,7 @@
     "buildless-ejs-transform": "0.0.3",
     "concurrently": "4.1.0",
     "css-loader": "2.0.0",
-    "husky": "1.2.0",
+    "husky": "1.2.1",
     "i18n-webpack-plugin": "1.0.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "23.6.0",
