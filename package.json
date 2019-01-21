@@ -55,7 +55,7 @@
     "webpack-cli": "3.1.2"
   },
   "dependencies": {
-    "js-base64": "2.5.0",
+    "js-base64": "2.5.1",
     "jwt-decode": "2.2.0",
     "preact": "8.4.2",
     "scrollparent": "2.0.1",
