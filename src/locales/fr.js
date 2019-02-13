@@ -4,7 +4,7 @@ module.exports = {
   send: 'Envoyer',
   sending: 'Envoyé',
   name: 'Votre nom',
-  email: 'Votre émail (optionnel)',
+  email: 'Votre e-mail (optionnel)',
   loadingComments: 'Les commentaires se sont chargés',
   networkError: 'Une erreur de réseau est survenue. Veuillez réessayer.',
   loadMoreButton: 'Appuyez pour charger les autres commentaires',
@@ -15,8 +15,7 @@ module.exports = {
   noComments: 'Soyez le premier à commenter',
   commentRemovedByModerator: 'Le commentaire a été supprimé par le modérateur.',
   usernameRemoved: 'supprimé',
-  toggleNotificationsPush: 'recevoir des notifications concernant les réponses',
-  toggleNotificationsEmail:
-    'recevoir des notifications concernant les réponses',
+  toggleNotificationsPush: 'Être informé des réponses via notification web',
+  toggleNotificationsEmail: 'Être informé des réponses par e-mail',
   website: 'site Internet (optionnel)',
 };
