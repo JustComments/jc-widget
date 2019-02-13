@@ -15,6 +15,7 @@ module.exports = {
   noComments: '最初 コメントを投稿しよう！',
   commentRemovedByModerator: 'このコメントは 管理者により 削除されました',
   usernameRemoved: '削除しました',
-  toggleNotifications: '返信通知を設定する',
+  toggleNotificationsPush: '返信通知を設定する',
+  toggleNotificationsEmail: '返信通知を設定する',
   website: 'ウエブサイト',
 };

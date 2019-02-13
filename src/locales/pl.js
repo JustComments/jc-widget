@@ -15,7 +15,8 @@ module.exports = {
   noComments: 'Bądź pierwszym który skomentuje.',
   commentRemovedByModerator: 'Komentarz został usunięty przez moderatora.',
   usernameRemoved: 'oddalony',
-  toggleNotifications: 'otrzymywać powiadomienia o odpowiedziach',
+  toggleNotificationsPush: 'otrzymywać powiadomienia o odpowiedziach',
+  toggleNotificationsEmail: 'otrzymywać powiadomienia o odpowiedziach',
   website: 'Strona Internetowa (Opcjonalnie)',
   networkError: 'Network Error',
 };

@@ -331,7 +331,7 @@ export class CommentsForm extends Component {
                     <Toggle
                       theme={theme}
                       svg={envelopeIcon}
-                      title={__('toggleNotifications')}
+                      title={__('toggleNotificationsEmail')}
                       checked={this.state.emailNotifications}
                       onChange={(checked) => {
                         this.onEmailNotifications(checked);
@@ -346,7 +346,7 @@ export class CommentsForm extends Component {
                     <Toggle
                       theme={theme}
                       svg={bellIcon}
-                      title={__('toggleNotifications')}
+                      title={__('toggleNotificationsPush')}
                       checked={this.state.notifications}
                       onChange={(checked) => {
                         this.onPushNotifications(checked);

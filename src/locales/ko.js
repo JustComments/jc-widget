@@ -16,6 +16,7 @@ module.exports = {
   noComments: '첫 댓글을 남기자',
   commentRemovedByModerator: '관리자가 이 댓글을 삭제했습니다.',
   usernameRemoved: '삭제했음',
-  toggleNotifications: '답글 알림을 받습니다.',
+  toggleNotificationsPush: '답글 알림을 받습니다.',
+  toggleNotificationsEmail: '답글 알림을 받습니다.',
   website: '웹 사이트',
 };

@@ -16,6 +16,7 @@ module.exports = {
   noComments: '來寫下第一條評論吧',
   commentRemovedByModerator: '此評論已被管理員移除。',
   usernameRemoved: '已被移除',
-  toggleNotifications: '接收別人回覆您的通知',
+  toggleNotificationsPush: '接收別人回覆您的通知',
+  toggleNotificationsEmail: '接收別人回覆您的通知',
   website: 'Website',
 };

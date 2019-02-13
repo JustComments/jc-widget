@@ -15,6 +15,7 @@ module.exports = {
   noComments: 'Bli den första att kommentera.',
   commentRemovedByModerator: 'Kommentaren har blivit borttagen av moderatorn.',
   usernameRemoved: 'Borttagen',
-  toggleNotifications: 'Få notifikationer om svar',
+  toggleNotificationsPush: 'Få notifikationer om svar',
+  toggleNotificationsEmail: 'Få notifikationer om svar',
   website: 'Hemsida (valfritt)',
 };
