@@ -15,6 +15,7 @@ module.exports = {
   noComments: 'Sei der erste der kommentiert.',
   commentRemovedByModerator: 'Der Kommentar wurde vom Moderator entfernt.',
   usernameRemoved: 'entfernt',
-  toggleNotifications: 'Benachrichtigungen über Antworten erhalten',
+  toggleNotificationsPush: 'Benachrichtigungen über Antworten erhalten',
+  toggleNotificationsEmail: 'Benachrichtigungen über Antworten erhalten',
   website: 'Website (optional)',
 };

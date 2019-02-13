@@ -15,6 +15,7 @@ module.exports = {
   noComments: '第一个留言',
   commentRemovedByModerator: '留言被管理员删除.',
   usernameRemoved: '已删除',
-  toggleNotifications: '收到回复通知',
+  toggleNotificationsPush: '收到回复通知',
+  toggleNotificationsEmail: '收到回复通知',
   website: 'Website',
 };

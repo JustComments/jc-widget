@@ -16,6 +16,9 @@ module.exports = {
   noComments: 'Оставь первый комментарий.',
   commentRemovedByModerator: 'Комментарий удален модератором.',
   usernameRemoved: 'скрыто модератором',
-  toggleNotifications: 'включить уведомления об ответах на этот комментарий',
+  toggleNotificationsPush:
+    'включить push-уведомления об ответах на этот комментарий',
+  toggleNotificationsEmail:
+    'включить email-уведомления об ответах на этот комментарий',
   website: 'Веб-сайт (необязательно)',
 };
