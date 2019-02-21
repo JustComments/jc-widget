@@ -6,6 +6,7 @@ exports.mapping = {
   ko: 'ko',
   pl: 'pl',
   pt: 'pt',
+  pt_BR: 'pt_BR',
   ru: 'ru',
   zh: 'zh_CN',
   sv: 'sv',
@@ -41,6 +42,10 @@ exports.bundles = {
   },
   pt: {
     textLocale: 'pt',
+    timeAgoLocale: 'pt_BR',
+  },
+  pt_BR: {
+    textLocale: 'pt_BR',
     timeAgoLocale: 'pt_BR',
   },
   ru: {
