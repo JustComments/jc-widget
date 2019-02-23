@@ -55,9 +55,6 @@ export class CommentContent extends Component {
       box-sizing: inherit;
     }
     pre code {
-      font-size: 13px;
-      font-family: monospace;
-      line-height: 1.6;
       box-sizing: inherit;
     }`);
   }
