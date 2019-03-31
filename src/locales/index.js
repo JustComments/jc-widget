@@ -1,6 +1,7 @@
 exports.mapping = {
   de: 'de',
   en: 'en',
+  fa: 'fa',
   fr: 'fr',
   ja: 'ja',
   ko: 'ko',
@@ -8,11 +9,11 @@ exports.mapping = {
   pt: 'pt',
   pt_BR: 'pt_BR',
   ru: 'ru',
-  zh: 'zh_CN',
   sv: 'sv',
+  zh: 'zh_CN',
   zh_CN: 'zh_CN',
-  zh_TW: 'zh_TW',
   zh_HK: 'zh_HK',
+  zh_TW: 'zh_TW',
 };
 
 exports.bundles = {
@@ -23,6 +24,10 @@ exports.bundles = {
   en: {
     textLocale: 'en',
     timeAgoLocale: 'en',
+  },
+  fa: {
+    textLocale: 'fa',
+    timeAgoLocale: 'fa',
   },
   fr: {
     textLocale: 'fr',
