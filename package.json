@@ -28,12 +28,12 @@
     "arrowParens": "always"
   },
   "devDependencies": {
-    "@babel/cli": "7.2.3",
-    "@babel/core": "7.4.0",
+    "@babel/cli": "7.4.3",
+    "@babel/core": "7.4.3",
     "@babel/plugin-syntax-object-rest-spread": "7.2.0",
     "@babel/plugin-transform-react-jsx": "7.3.0",
-    "@babel/polyfill": "7.4.0",
-    "@babel/preset-env": "7.4.2",
+    "@babel/polyfill": "7.4.3",
+    "@babel/preset-env": "7.4.3",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.1.0",
     "babel-loader": "8.0.5",
