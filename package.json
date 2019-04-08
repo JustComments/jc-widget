@@ -52,7 +52,7 @@
     "style-loader": "0.23.1",
     "webpack": "4.29.6",
     "webpack-bundle-analyzer": "3.2.0",
-    "webpack-cli": "3.2.3"
+    "webpack-cli": "3.3.0"
   },
   "dependencies": {
     "js-base64": "2.5.1",
