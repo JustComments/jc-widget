@@ -37,7 +37,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.7.1",
     "babel-loader": "8.0.5",
-    "buildless": "0.0.9",
+    "buildless": "0.0.10",
     "buildless-ejs-transform": "0.0.3",
     "concurrently": "4.1.0",
     "css-loader": "2.1.1",
