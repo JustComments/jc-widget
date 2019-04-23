@@ -25,6 +25,7 @@ export class CommentsForm extends Component {
     this.state.emailNotifications = props.emailNotifications;
     this.state.errors = null;
     this.state.blocked = false;
+    this.state.dirty = false;
 
     this.sendStyle = c(`{
       display: inline-block;
@@ -106,6 +107,10 @@ export class CommentsForm extends Component {
     }
     :invalid {
       box-shadow: none;
+    }`);
+
+    this.dirtyStyle = c(`:invalid {
+      border: 1px solid red;
     }`);
   }
 
@@ -191,7 +196,7 @@ export class CommentsForm extends Component {
       disableProfilePictures,
       theme,
     } = props;
-    const { errors } = state;
+    const { errors, dirty } = state;
     return (
       <div className={containerStyle}>
         {!disableProfilePictures ? (
@@ -220,7 +225,9 @@ export class CommentsForm extends Component {
                   placeholder={__('name')}
                   aria-label={__('name')}
                   value={state.username}
-                  className={`${this.jcTextInputStyle} jcTextInput`}
+                  className={`${this.jcTextInputStyle} ${
+                    dirty ? this.dirtyStyle : ''
+                  } jcTextInput`}
                   required={true}
                   max={255}
                   onInput={(e) => this.setState({ username: e.target.value })}
@@ -246,7 +253,10 @@ export class CommentsForm extends Component {
                   placeholder={__('email')}
                   aria-label={__('email')}
                   value={state.email}
-                  className={`${this.jcTextInputStyle} jcTextInput`}
+                  type={'email'}
+                  className={`${this.jcTextInputStyle} ${
+                    dirty ? this.dirtyStyle : ''
+                  } jcTextInput`}
                   max={255}
                   onInput={(e) => this.setState({ email: e.target.value })}
                 />
@@ -262,7 +272,9 @@ export class CommentsForm extends Component {
                   aria-label={__('website')}
                   type={'url'}
                   value={state.website}
-                  className={`${this.jcTextInputStyle} jcTextInput`}
+                  className={`${this.jcTextInputStyle} ${
+                    dirty ? this.dirtyStyle : ''
+                  } jcTextInput`}
                   onInput={(e) => this.setState({ website: e.target.value })}
                 />
               </div>
