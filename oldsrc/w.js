@@ -1,14 +1,11 @@
+import isBot from './utils/isBot';
+import extractDataFromURL from './utils/extractDataFromURL';
+import isInViewport from './utils/isInViewport';
+import handleBootstrapParams from './utils/handleBootstrapParams';
 import { mapping, bundles } from './locales';
-import {
-  onReady,
-  findWidgetElement,
-  scrollIntoView,
-  onceVisible,
-  handleBootstrapParams,
-  isInViewport,
-  extractDataFromURL,
-  isBot,
-} from './utils';
+import { onReady } from './utils/onReady';
+import { findWidgetElement } from './utils/findWidgetElement';
+import { scrollIntoView, onceVisible } from './utils/scroll';
 
 handleBootstrapParams();
 

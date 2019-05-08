@@ -23,7 +23,8 @@
         "pragma": "h"
       }
     ],
-    "@babel/plugin-proposal-object-rest-spread"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
   ],
   "env": {
     "test": {
@@ -37,7 +38,7 @@
                 "safari >= 7"
               ]
             },
-            "modules": "commonjs"
+            "modules": false
           }
         ]
       ]

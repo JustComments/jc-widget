@@ -1,3 +1,3 @@
-import handleBootstrapParams from './utils/handleBootstrapParams';
+import { handleBootstrapParams } from './utils';
 
 handleBootstrapParams();

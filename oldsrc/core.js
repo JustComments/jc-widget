@@ -1,24 +1,20 @@
 import './auth';
 
-import { Provider } from 'redux-zero/preact';
-import createStore from 'redux-zero';
-import scrollparent from 'scrollparent';
 import { h, render, Component } from 'preact';
-
-import {
-  extractDataFromURL,
-  isBot,
-  getSession,
-  checkJWTValidity,
-  setJWT,
-  isInViewport,
-  onReady,
-  findWidgetElement,
-  onceVisible,
-} from './utils';
-import Widget from './widget';
-import { API } from './api';
-import { bootstrapRecaptcha } from './recaptcha';
+import extractDataFromURL from './utils/extractDataFromURL';
+import { Widget } from './components/Widget';
+import { getComments } from './api/getComments';
+import { saveComment } from './api/saveComment';
+import { twitterCallback } from './api/twitterCallback';
+import { twitterRedirect } from './api/twitterRedirect';
+import scrollparent from 'scrollparent';
+import isBot from './utils/isBot';
+import { get as getSession, checkJWTValidity, setJWT } from './utils/session';
+import isInViewport from './utils/isInViewport';
+import { onReady } from './utils/onReady';
+import { findWidgetElement } from './utils/findWidgetElement';
+import { bootstrapRecaptcha } from './components/Recaptcha';
+import { onceVisible } from './utils/scroll';
 
 const BASE_URL = API_ENDPOINT;
 
@@ -64,33 +60,25 @@ export function renderWidget(
     }
   }
 
-  const api = new API({
-    apiKey: data.apiKey,
-    pageSize: data.pageSize,
-    sort: data.sort,
+  const api = buildApi(
+    data.apiKey,
     effectiveItemId,
     itemId,
+    data.pageSize,
+    data.sort,
     fetchData,
-  });
+  );
+  const subscription = null;
 
-  const initialState = {
-    jumpToComment,
-    api,
-    session,
-    subscription: null,
-    comments: [],
-    cursor: null,
-    jumped: false,
-    loading: false,
-    comments: [],
-    loading: false,
-    form: {
-      errors: {},
-      dirty: false,
-      pushNotifications: !!session.get('subscription'),
-      userPic: session.get('userPic'),
-    },
-    config: {
+  return render(
+    h(Widget, {
+      getComments: api.getComments,
+      saveComment: api.saveComment,
+      twitterCallback: api.twitterCallback,
+      twitterRedirect: api.twitterRedirect,
+      subscription,
+      jumpToComment,
+      session,
       itemProtocol: itemProtocol,
       itemPort: itemPort,
       recaptchaSitekey: data.recaptchaSitekey,
@@ -105,17 +93,57 @@ export function renderWidget(
       apiKey: data.apiKey,
       disableProfilePictures: data.disableProfilePictures,
       disableShareButton: data.disableShareButton,
-    },
-  };
-
-  const store = createStore(initialState);
-
-  return render(
-    <Provider store={store}>
-      <Widget />
-    </Provider>,
+    }),
     widget,
   );
+}
+
+function buildApi(
+  apiKey,
+  effectiveItemId,
+  originalItemId,
+  pageSize,
+  sort,
+  fetchData,
+) {
+  const boundGetComments = fetchData
+    ? getComments.bind(
+        null,
+        `${BASE_URL}/comments/find`,
+        apiKey,
+        effectiveItemId,
+        {
+          pageSize: pageSize,
+          sort: sort,
+        },
+      )
+    : () => Promise.resolve({ comments: [] });
+  const boundSaveComment = saveComment.bind(
+    null,
+    `${BASE_URL}/comments/create`,
+    apiKey,
+    effectiveItemId,
+    originalItemId,
+  );
+  const boundTwitterCallback = twitterCallback.bind(
+    null,
+    `${BASE_URL}/auth/twitter/callback`,
+    apiKey,
+    effectiveItemId,
+  );
+  const boundTwitterRedirect = twitterRedirect.bind(
+    null,
+    TWITTER_URL,
+    apiKey,
+    effectiveItemId,
+  );
+
+  return {
+    getComments: boundGetComments,
+    saveComment: boundSaveComment,
+    twitterCallback: boundTwitterCallback,
+    twitterRedirect: boundTwitterRedirect,
+  };
 }
 
 function readWidgetData(widget) {

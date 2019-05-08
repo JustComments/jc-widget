@@ -15,7 +15,7 @@ module.exports = function(env, args) {
   const host = 'http://localhost';
   const defineParams = {
     API_ENDPOINT: args.endpoint || `${host}:3000`,
-    CORE_URL: args.coreUrl || `${host}:3333/dist/core.js`,
+    CORE_URL: args.coreUrl || `${host}:3333/dist/core2.js`,
     GUEST_SECRET: args.guestSecret || 'guest',
     PUSH_URL: args.pushUrl || `${host}:8080/push.html`,
     TWITTER_URL: args.twitterUrl || `${host}:8080/twitter-start.html`,
@@ -50,8 +50,28 @@ module.exports = function(env, args) {
             {
               loader: 'css-loader',
               options: {
+                // importLoaders: 1,
                 modules: true,
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('postcss-autoreset')({
+                    rulesMatcher: (rule) => rule.selector.match(/^[.]\w+$/),
+                    reset: {
+                      margin: 0,
+                      padding: 0,
+                      borderRadius: 0,
+                      textAlign: 'left',
+                    },
+                  }),
+                  require('autoprefixer')({
+                    browsers: ['last 2 versions', 'safari >= 7'],
+                  }),
+                ],
               },
             },
           ],
@@ -73,7 +93,7 @@ module.exports = function(env, args) {
       return {
         entry: ['./src/core.js'],
         output: {
-          filename: `core.${bundle.textLocale}.js`,
+          filename: `core2.${bundle.textLocale}.js`,
           path: path.resolve(__dirname, 'dist'),
         },
         plugins: [
@@ -100,8 +120,8 @@ module.exports = function(env, args) {
     }),
     {
       entry: {
-        w: './src/w.js',
-        auth: './src/auth.js',
+        w2: './src/w.js',
+        auth2: './src/auth.js',
       },
       output: {
         filename: `[name].js`,
