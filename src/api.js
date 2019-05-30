@@ -23,8 +23,15 @@ export class API {
     )}&itemId=${encodeURIComponent(this.opts.effectiveItemId)}`;
   }
 
-  authPopup() {
-    const redirectUrl = this.twitterRedirect(window.location.href);
+  facebookRedirect(callbackUrl) {
+    return `${FB_URL}#apiKey=${encodeURIComponent(
+      this.opts.apiKey,
+    )}&callbackUrl=${encodeURIComponent(
+      callbackUrl,
+    )}&itemId=${encodeURIComponent(this.opts.effectiveItemId)}`;
+  }
+
+  authPopup(redirectUrl) {
     const popup = window.open(
       '',
       '_blank',
@@ -113,7 +120,7 @@ export class API {
   getComments(cursor) {
     return fetch(
       `${BASE_URL}/v2/comments?${qs({
-        lastKey: JSON.stringify(cursor),
+        lastKey: cursor,
         pageUrl: window.location.href,
         apiKey: this.opts.apiKey,
         pageId: this.opts.effectiveItemId,

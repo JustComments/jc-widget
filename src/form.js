@@ -82,15 +82,11 @@ class Form extends Component {
     onWebsiteInput,
     onTextInput,
   }) {
-    const textareaPlaceholder =
-      (replyToComment
-        ? substitute(__('replyTo'), {
-            name: replyToComment.username,
-          })
-        : __('writeAComment')) +
-      ' (' +
-      __('ctrlEnterToSend') +
-      ')';
+    const textareaPlaceholder = replyToComment
+      ? substitute(__('replyTo'), {
+          name: replyToComment.username,
+        })
+      : `${__('writeAComment')} (${__('ctrlEnterToSend')})`;
     return (
       <div
         className={cls(s.form, {
@@ -109,7 +105,7 @@ class Form extends Component {
                         {userPic ? <img src={userPic} /> : <Anonymous />}
                       </div>
                     )}
-                    <label className={cls(s.primaryText, s.font18)}>
+                    <label className={cls(s.fontBody1)}>
                       Comment annonymously
                     </label>
                   </div>
@@ -120,14 +116,18 @@ class Form extends Component {
                     required={true}
                     max={255}
                     onInput={onUsernameInput}
-                    className={cls(s.inpt, { [s.dirty]: form.dirty })}
+                    className={cls(s.inpt, s.fontBody2, {
+                      [s.dirty]: form.dirty,
+                    })}
                   />
                   <input
                     type="email"
                     placeholder={__('email')}
                     aria-label={__('email')}
                     value={form.email}
-                    className={cls(s.inpt, { [s.dirty]: form.dirty })}
+                    className={cls(s.inpt, s.fontBody2, {
+                      [s.dirty]: form.dirty,
+                    })}
                     max={255}
                     onInput={onEmailInput}
                   />
@@ -137,7 +137,9 @@ class Form extends Component {
                       aria-label={__('website')}
                       type="url"
                       value={form.website}
-                      className={cls(s.inpt, { [s.dirty]: form.dirty })}
+                      className={cls(s.inpt, s.fontBody2, {
+                        [s.dirty]: form.dirty,
+                      })}
                       onInput={onWebsiteInput}
                     />
                   )}
@@ -146,19 +148,19 @@ class Form extends Component {
               {showSocial && (
                 <div className={s.middle}>
                   <div className={s.line} />
-                  <div className={s.word}>or</div>
+                  <div className={cls(s.word, s.fontBody1)}>or</div>
                 </div>
               )}
               {showSocial && (
                 <div className={s.right}>
-                  <div className={cls(s.primaryText, s.font18)}>
+                  <div className={cls(s.fontBody1)}>
                     Login to leave a comment with social media
                   </div>
                   <button
                     tabindex="0"
                     role="button"
                     onClick={onFacebookLogin}
-                    className={s.btn}
+                    className={cls(s.btn, s.fontButton4)}
                     type="button"
                   >
                     <FacebookIcon />
@@ -167,7 +169,7 @@ class Form extends Component {
                     tabindex="0"
                     role="button"
                     onClick={onTwitterLogin}
-                    className={s.btn}
+                    className={cls(s.btn, s.fontButton4)}
                     type="button"
                   >
                     <TwitterIcon />
@@ -183,7 +185,7 @@ class Form extends Component {
           )}
           <div className={s.row}>
             <textarea
-              className={cls(s.inpt, { [s.dirty]: form.dirty })}
+              className={cls(s.inpt, s.fontBody2, { [s.dirty]: form.dirty })}
               placeholder={textareaPlaceholder}
               aria-label={textareaPlaceholder}
               value={form.text}
@@ -205,7 +207,7 @@ class Form extends Component {
               })}
             </div>
           )}
-          <div className="row last">
+          <div className={cls(s.row, s.last)}>
             <button
               tabindex={0}
               role={'button'}

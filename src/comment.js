@@ -86,11 +86,14 @@ class Comment extends Component {
     this.props.shareOnTwitter(this.props.comment.commentId);
   };
 
-  render({ comment, commentsIndex, first }) {
+  render({ comment, commentsIndex, first, level }) {
     return (
       <div
         key={comment.commentId}
-        className={cls(s.comment, { [s.first]: first })}
+        className={cls(s.comment, s.fontBody2, {
+          [s.first]: first,
+          [s.deep]: level >= 5,
+        })}
         id={`jc${comment.commentId}`}
       >
         <div className={cls(s.bubble, { [s.active]: comment.active })}>
@@ -99,18 +102,20 @@ class Comment extends Component {
           </div>
           <div className={s.title}>
             <div>
-              <span className={s.username}>{comment.username}</span>
+              <span className={cls(s.username, s.fontHeading4)}>
+                {comment.username}
+              </span>
               <br />
               <a
                 onClick={this.onCommentLinkClick}
                 href={getCommentUrl(comment)}
-                className={s.date}
+                className={cls(s.date, s.fontBody3)}
               >
                 {getCommentDate(comment)}
               </a>
               {comment.replyTo && commentsIndex && (
                 <a
-                  className={s.date}
+                  className={cls(s.date, s.fontBody3)}
                   onClick={this.onReplyCommentLinkClick}
                   href={getCommentUrl(commentsIndex[comment.replyTo])}
                 >
@@ -127,7 +132,7 @@ class Comment extends Component {
           </div>
           {!comment.collapsed && (
             <div
-              className={s.content}
+              className={cls(s.content, s.fontBody2)}
               dangerouslySetInnerHTML={{ __html: comment.htmlContent }}
             />
           )}
@@ -136,12 +141,12 @@ class Comment extends Component {
           <div className={s.reply}>
             <button
               onClick={this.onToggleCommentForm}
-              className={s['link-btn']}
+              className={cls(s['link-btn'], s.fontButton2)}
             >
               Reply
             </button>
           </div>
-          <div className={s.like}>
+          {/*<div className={s.like}>
             <button onClick={this.onToggleLikeMenu} className={s['link-btn']}>
               Like
             </button>
@@ -173,9 +178,12 @@ class Comment extends Component {
                 </button>
               </div>
             )}
-          </div>
+          </div>*/}
           <div className={s.more}>
-            <button onClick={this.onToggleMenu} className={s['link-btn']}>
+            <button
+              onClick={this.onToggleMenu}
+              className={cls(s['link-btn'], s.fontButton2)}
+            >
               ⋯
             </button>
             {comment.menuOpened && (
@@ -183,37 +191,36 @@ class Comment extends Component {
                 <div>
                   <button
                     onClick={this.onCopyToClipboard}
-                    className={s['menu-button']}
+                    className={cls(s['menu-button'], s.fontBody3)}
                   >
                     copy link
                   </button>
                 </div>
                 <div>
-                  <button onClick={this.shareOnFb} className={s['menu-button']}>
+                  <button
+                    onClick={this.shareOnFb}
+                    className={cls(s['menu-button'], s.fontBody3)}
+                  >
                     share on <FacebookIcon />
                   </button>
                 </div>
                 <div>
                   <button
                     onClick={this.shareOnTwitter}
-                    className={s['menu-button']}
+                    className={cls(s['menu-button'], s.fontBody3)}
                   >
                     <span>share on</span> <TwitterIcon />
                   </button>
                 </div>
-                {/*<div>
-                  <button className={s.menu-button}>report</button>
-                </div>*/}
               </div>
             )}
           </div>
-          <div className={s.rating} />
         </div>
 
         {comment.formOpened && <Form replyToComment={comment} />}
         {!comment.collapsed &&
           (comment.nested || []).map((c, i) => (
-            <WrapperComment first={i === 0} comment={c} />
+            <WrapperComment level={level + 1} first={i === 0} comment={c} />
           ))}
       </div>
     );

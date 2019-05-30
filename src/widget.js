@@ -4,6 +4,7 @@ import { Connect } from 'redux-zero/preact';
 import { actions } from './actions';
 
 import s from './style.css';
+import cls from 'classnames';
 
 import Form from './form';
 import Comment from './comment';
@@ -20,9 +21,10 @@ import { createGuestJWT } from './utils';
 //  X attribution style
 //  X base-font variables
 //  X mobile styles
-//  - post CSS and styles
-//  - active state for the comment
+//  X post CSS and styles
+//  X active state for the comment
 //  - facebook login
+//  - translations
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -84,9 +86,9 @@ class Widget extends Component {
     return (
       <div className={s.widget}>
         {shouldRenderFormBefore && <Form />}
-        {loading && <div>loading</div>}
+        {loading && <div>{__('loadingComments  ')}</div>}
         {!loading && (
-          <div className={s.header}>
+          <div className={cls(s.header, s.fontHeading2)}>
             <span>
               {__('comments')}
               {countText}
@@ -95,9 +97,18 @@ class Widget extends Component {
         )}
         {!loading && count === 0 && <p>{__('noComments')}</p>}
         {comments.map((c) => (
-          <Comment comment={c} />
+          <Comment comment={c} level={0} />
         ))}
-        {cursor && !disableLoadMore && <div>more button</div>}
+        {cursor && !disableLoadMore && (
+          <div className={s.loadMore}>
+            <button
+              onClick={this.loadMore}
+              className={cls(s.btn, s.primary, s.large, s.fontButton1)}
+            >
+              {__('loadMoreButton')}
+            </button>
+          </div>
+        )}
         {recaptchaSitekey && (
           <Recaptcha
             sitekey={recaptchaSitekey}
@@ -110,11 +121,11 @@ class Widget extends Component {
     );
   }
 
-  componentDidMount() {
+  loadMore = () => {
     this.props.loadComments();
-  }
+  };
 
-  loadMore() {
+  componentDidMount() {
     this.props.loadComments();
   }
 
@@ -125,7 +136,7 @@ class Widget extends Component {
 
 const Attribution = () => {
   return (
-    <div className={s.attribution}>
+    <div className={cls(s.attribution, s.fontBody3)}>
       <span>powered by &nbsp;</span>
       <a href="https://just-comments.com" target="_blank">
         just-comments.com

@@ -32,26 +32,17 @@ export const actions = (store) => ({
       loading: true,
     });
 
-    state.api.getComments(state.cursor).then(({ comments, cursor }) => {
-      store.setState({
-        loading: false,
-        ...withComments(comments, (comments) => {
-          return updateByIdWithReset(
-            comments,
-            state.jumpToComment,
-            (c) => ({
-              ...c,
-              active: true,
-            }),
-            (c) => ({
-              ...c,
-              active: false,
-            }),
-          );
-        }),
-        cursor,
+    state.api
+      .getComments(state.cursor)
+      .then(({ comments: newComments, cursor }) => {
+        store.setState({
+          loading: false,
+          ...withComments([...state.comments, ...newComments], (comments) => {
+            return comments;
+          }),
+          cursor,
+        });
       });
-    });
   },
 
   sendComment: (state, formRef, replyToComment) => {
@@ -180,11 +171,21 @@ export const actions = (store) => ({
       },
     });
   },
-  onFacebookLogin: (state) => {},
+  onFacebookLogin: (state) => {
+    const { api, session } = state;
+
+    api.authPopup(api.facebookRedirect(window.location.href)).then((jwt) => {
+      setJWT(session, jwt, 'fb');
+      store.setState({
+        session: session.clone(),
+      });
+    });
+  },
+
   onTwitterLogin: (state) => {
     const { api, session } = state;
 
-    api.authPopup().then((jwt) => {
+    api.authPopup(api.twitterRedirect(window.location.href)).then((jwt) => {
       setJWT(session, jwt, 'twitter');
       store.setState({
         session: session.clone(),
