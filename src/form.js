@@ -146,9 +146,10 @@ class Form extends Component {
                 </div>
               </div>
               {showSocial && (
-                <div className={s.middle}>
+                <div className={s.separator}>
                   <div className={s.line} />
                   <div className={cls(s.word, s.fontBody1)}>or</div>
+                  <div className={s.line} />
                 </div>
               )}
               {showSocial && (
@@ -210,11 +211,11 @@ class Form extends Component {
           <div className={cls(s.row, s.last)}>
             <button
               tabindex={0}
-              role={'button'}
+              role="button"
               onClick={this.onSend}
               disabled={form.blocked ? 'disabled' : ''}
               type="button"
-              className={cls(s.btn, s.small, s.primary)}
+              className={cls(s.btn, s.small, s.primary, s.fontButton4)}
             >
               <ReplyIcon />
               <span>{form.blocked ? __('sending') : __('send')}</span>

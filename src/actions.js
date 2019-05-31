@@ -174,7 +174,7 @@ export const actions = (store) => ({
   onFacebookLogin: (state) => {
     const { api, session } = state;
 
-    api.authPopup(api.facebookRedirect(window.location.href)).then((jwt) => {
+    api.authFbPopup(api.facebookRedirect(window.location.href)).then((jwt) => {
       setJWT(session, jwt, 'fb');
       store.setState({
         session: session.clone(),

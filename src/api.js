@@ -64,6 +64,32 @@ export class API {
     return promise;
   }
 
+  authFbPopup(redirectUrl) {
+    const popup = window.open(
+      '',
+      '_blank',
+      'location=yes,height=600,width=800,scrollbars=yes,status=yes',
+    );
+    let resolve = undefined;
+    const promise = new Promise((r) => {
+      resolve = r;
+    });
+
+    LocalStorage.set('jcAuth', true);
+    const handler = (e) => {
+      if (e.key === 'jcOauthToken' && e.newValue) {
+        const tokenVerifier = e.newValue;
+        window.removeEventListener('storage', handler);
+        const jwt = LocalStorage.get('jcOauthToken');
+        resolve(jwt);
+      }
+    };
+    window.addEventListener('storage', handler);
+    popup.location.href = redirectUrl;
+    popup.focus();
+    return promise;
+  }
+
   pushPopup() {
     const popup = window.open(
       '',

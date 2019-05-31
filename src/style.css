@@ -1,10 +1,49 @@
 :global(.just-comments) {
-  --primary-color: 105, 121, 248;
+  --border-color: #ecebed;
+
   --primary-bg-color: #ffffff;
+  --secondary-bg-color: #ecebed;
+  --secondary-bg-color-lighter: #ecebed33;
+
+  --primary-color: #2b39a0;
+  --primary-color-lighter: #6979f81a;
+  --primary-color-light: #6979f80d;
+
+  --primary-button-color: #ffffff;
+  --primary-button-bg-color: #2b39a0;
+  --primary-button-hover-color: #2b39a0;
+  --primary-button-hover-bg-color: #ffffff;
+  --primary-button-border: 2px solid var(--primary-button-bg-color);
+
   --primary-text-color: #1a051d;
-  --secondary-text-color: #b6b1bb;
-  --divider-color: 236, 235, 237;
-  --outline-style: 3px rgb(var(--primary-color)) dashed;
+  --secondary-text-color: #66606b;
+
+  --outline-style: 3px var(--primary-color) dashed;
+  --outline-offset: 3px;
+}
+
+:global(.just-comments.dark) {
+  --border-color: #2c2c57;
+
+  --primary-bg-color: #3f3356;
+  --secondary-bg-color: #ecebed;
+  --secondary-bg-color-lighter: #ecebed33;
+
+  --primary-color: #e61d0f;
+  --primary-color-lighter: #e61d0f1a;
+  --primary-color-light: #e61d0f0d;
+
+  --primary-button-color: #ffffff;
+  --primary-button-bg-color: rgba(0, 0, 0, 0.4);
+  --primary-button-hover-color: #ffffff;
+  --primary-button-hover-bg-color: rgba(0, 0, 0, 0.6);
+  --primary-button-border: 0;
+
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #d0cddc;
+
+  --outline-style: 3px var(--primary-color) dashed;
+  --outline-offset: 3px;
 }
 
 .fontHeading1 {
@@ -88,7 +127,6 @@
   max-width: 800px;
   box-sizing: border-box;
   padding: 5px;
-  background-color: var(--primary-bg-color);
 }
 
 .widget * {
@@ -104,11 +142,12 @@
   background-color: var(--primary-bg-color);
   border-radius: 6px;
   border-style: solid;
-  border: 1px solid #ecebed;
+  border: 1px solid var(--border-color);
   box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
   box-sizing: border-box;
   height: 48px;
   padding: 12px 16px;
+  color: var(--primary-text-color);
 }
 
 .inpt::placeholder {
@@ -116,10 +155,8 @@
 }
 
 .inpt:focus {
-  outline-style: dashed;
-  outline-width: 3px;
-  outline-offset: 2px;
-  outline-color: rgb(var(--primary-color));
+  outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .inpt.dirty:invalid {
@@ -139,7 +176,7 @@
 }
 
 .btn .icon {
-  fill: var(--primary-bg-color);
+  fill: var(--primary-button-color);
   width: 13px;
   height: 13px;
   margin-right: 7px;
@@ -147,6 +184,7 @@
 
 .btn:focus {
   outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .btn.small {
@@ -161,27 +199,26 @@
 
 .btn.primary {
   border-radius: 6px;
-  border: 2px solid rgb(var(--primary-color));
-  background: rgb(var(--primary-color));
-  color: var(--primary-bg-color);
+  border: var(--primary-button-border);
+  background: var(--primary-button-bg-color);
+  color: var(--primary-button-color);
 }
 
 .btn.primary:hover {
-  background-color: var(--primary-bg-color);
-  border-color: rgb(var(--primary-color));
-  color: rgb(var(--primary-color));
+  background-color: var(--primary-button-hover-bg-color);
+  border-color: var(--primary-button-bg-color);
+  color: var(--primary-button-hover-color);
 }
 
 .link-btn:hover .icon {
-  fill: rgb(var(--primary-color));
+  fill: var(--primary-button-hover-color);
 }
 
 .btn.primary:hover .icon {
-  fill: rgb(var(--primary-color));
+  fill: var(--primary-button-hover-color);
 }
 
 .form {
-  background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
   margin-left: 86px;
 }
@@ -220,31 +257,29 @@
   opacity: 0.75;
 }
 
-.middle {
+.separator {
   position: relative;
   width: 35px;
   margin-left: 14px;
   margin-right: 14px;
+  margin-bottom: 25px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
 }
 
 .line {
-  position: absolute;
-  left: calc(50%);
-  top: 0;
-  bottom: 0;
   width: 1px;
-  background-color: var(--secondary-text-color);
-  z-index: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  background-color: var(--border-color);
   box-shadow: 1 0 rgba(0, 0, 0, 0.25);
 }
 
 .word {
   color: var(--primary-text);
-  background-color: var(--primary-bg-color);
   width: 35px;
   height: 57px;
   text-align: center;
@@ -259,7 +294,7 @@
 
 .comment .menu {
   background-color: var(--primary-bg-color);
-  border: 1px solid rgba(var(--divider-color), 1);
+  border: 1px solid var(--border-color);
   width: 120px;
   text-align: right;
   padding: 10px 0;
@@ -299,11 +334,12 @@
 
 .comment .menu .menu-button:focus {
   outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .comment .menu .menu-button:hover {
-  color: rgba(var(--primary-color), 1);
-  background-color: rgba(var(--primary-color), 0.1);
+  color: var(--primary-color);
+  background-color: var(--primary-color-lighter);
 }
 
 .comment .buttons .reply {
@@ -333,17 +369,18 @@
   text-align: left;
   padding: 0;
   margin: 0;
-  background: var(--primary-bg-color);
-  color: rgb(var(--primary-color));
+  background: transparent;
+  color: var(--primary-color);
   border: 1px solid transparent;
 }
 
 .link-btn:focus {
   outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .link-btn:hover {
-  border-bottom: 1px solid rgb(var(--primary-color));
+  border-bottom: 1px solid var(--primary-color);
 }
 
 .btn.toggle {
@@ -353,7 +390,7 @@
 }
 
 .btn.toggle.on {
-  fill: rgb(var(--primary-color));
+  fill: var(--primary-color);
 }
 
 /* End Button Style */
@@ -381,7 +418,7 @@
 }
 
 .header {
-  border-bottom: 1px solid rgba(var(--divider-color), 1);
+  border-bottom: 1px solid var(--border-color);
   color: var(--primary-text-color);
   padding: 43px 0 10px 0;
   margin-bottom: 33px;
@@ -402,15 +439,15 @@
 }
 
 .comment .bubble {
-  background-color: rgba(var(--divider-color), 0.4);
-  border: 1px solid rgba(var(--divider-color), 1);
+  background-color: var(--secondary-bg-color-lighter);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 6px 12px 6px 16px;
 }
 
 .comment .bubble.active {
   position: relative;
-  background-color: rgba(var(--primary-color), 0.05);
+  background-color: var(--primary-color-light);
   border-left: 0;
 }
 
@@ -420,7 +457,7 @@
   top: 2px;
   bottom: 2px;
   width: 3px;
-  background-color: rgb(var(--primary-color));
+  background-color: var(--primary-color);
   left: 1px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -460,6 +497,7 @@
 
 .comment .date:focus {
   outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .comment .content {
@@ -554,7 +592,7 @@
 }
 
 .attribution a:hover {
-  color: rgb(var(--primary-color));
+  color: var(--primary-color);
 }
 
 .form .right .btn {
@@ -586,23 +624,15 @@
     padding: 6px 10px;
   }
 
-  .form .middle {
-    position: relative;
+  .form .separator {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
     margin: 0;
   }
 
   .line {
-    position: absolute;
-    top: calc(50%);
-    left: unset;
-    right: unset;
-    bottom: calc(50%);
     height: 1px;
-    width: 100%;
+    width: initial;
   }
 
   .form {
