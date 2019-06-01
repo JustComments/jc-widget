@@ -81,6 +81,7 @@ class Form extends Component {
     onEmailInput,
     onWebsiteInput,
     onTextInput,
+    onLogout,
   }) {
     const textareaPlaceholder = replyToComment
       ? substitute(__('replyTo'), {
@@ -101,9 +102,11 @@ class Form extends Component {
                 <div className={s['input-group']}>
                   <div className={s['pic-container']}>
                     {!disableProfilePictures && (
-                      <div className={s.userPic}>
-                        {userPic ? <img src={userPic} /> : <Anonymous />}
-                      </div>
+                      <UserPic
+                        userPic={userPic}
+                        loginProvider={loginProvider}
+                        onLogout={onLogout}
+                      />
                     )}
                     <label className={cls(s.fontBody1)}>
                       Comment annonymously
@@ -180,9 +183,11 @@ class Form extends Component {
             </div>
           )}
           {!guestForm && !disableProfilePictures && (
-            <div className={s.userPic}>
-              {userPic ? <img src={userPic} /> : <Anonymous />}
-            </div>
+            <UserPic
+              userPic={userPic}
+              loginProvider={loginProvider}
+              onLogout={onLogout}
+            />
           )}
           <div className={s.row}>
             <textarea
@@ -255,5 +260,33 @@ function Toggle({ icon, title, value, onClick }) {
     >
       {icon}
     </button>
+  );
+}
+
+export function UserPic({ userPic, loginProvider, onLogout }) {
+  return (
+    <div className={s.userPic}>
+      {userPic ? <img src={userPic} /> : <Anonymous />}
+      {loginProvider === 'twitter' && (
+        <button
+          onClick={onLogout}
+          type="button"
+          title="logout"
+          className={cls(s.btn, s.logout)}
+        >
+          <TwitterIcon />
+        </button>
+      )}
+      {loginProvider === 'fb' && (
+        <button
+          onClick={onLogout}
+          type="button"
+          title="logout"
+          className={cls(s.btn, s.logout)}
+        >
+          <FacebookIcon />
+        </button>
+      )}
+    </div>
   );
 }

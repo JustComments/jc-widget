@@ -23,7 +23,7 @@ import { createGuestJWT } from './utils';
 //  X mobile styles
 //  X post CSS and styles
 //  X active state for the comment
-//  - facebook login
+//  X facebook login
 //  - translations
 
 export default () => (
@@ -86,7 +86,7 @@ class Widget extends Component {
     return (
       <div className={s.widget}>
         {shouldRenderFormBefore && <Form />}
-        {loading && <div>{__('loadingComments  ')}</div>}
+        {loading && <div className={s.loading}>{__('loadingComments')}</div>}
         {!loading && (
           <div className={cls(s.header, s.fontHeading2)}>
             <span>

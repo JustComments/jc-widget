@@ -23,7 +23,7 @@ export const actions = (store) => ({
         store.setState({
           jumped: true,
         });
-      }, 50);
+      }, 200);
     }
   },
 
@@ -178,6 +178,13 @@ export const actions = (store) => ({
       setJWT(session, jwt, 'fb');
       store.setState({
         session: session.clone(),
+        form: {
+          errors: {},
+          dirty: false,
+          pushNotifications: !!session.get('subscription'),
+          userPic: session.get('userPic'),
+          loginProvider: session.get('loginProvider'),
+        },
       });
     });
   },
@@ -187,9 +194,32 @@ export const actions = (store) => ({
 
     api.authPopup(api.twitterRedirect(window.location.href)).then((jwt) => {
       setJWT(session, jwt, 'twitter');
+
       store.setState({
         session: session.clone(),
+        form: {
+          errors: {},
+          dirty: false,
+          pushNotifications: !!session.get('subscription'),
+          userPic: session.get('userPic'),
+          loginProvider: session.get('loginProvider'),
+        },
       });
+    });
+  },
+
+  onLogout: (state) => {
+    const { session } = state;
+    session.clear();
+    store.setState({
+      session: session.clone(),
+      form: {
+        errors: {},
+        dirty: false,
+        pushNotifications: !!session.get('subscription'),
+        userPic: session.get('userPic'),
+        loginProvider: session.get('loginProvider'),
+      },
     });
   },
 
@@ -432,14 +462,14 @@ function updateById(comments, commentId, fn) {
     if (c.commentId === commentId) {
       return fn(c);
     }
-    c.nested = updateById(c.nested, commentId, fn);
+    c.nested = updateById(c.nested || [], commentId, fn);
     return c;
   });
 }
 
 function updateByIdWithReset(comments, commentId, fn, resetFn) {
   return comments.map((c) => {
-    c.nested = updateByIdWithReset(c.nested, commentId, fn, resetFn);
+    c.nested = updateByIdWithReset(c.nested || [], commentId, fn, resetFn);
     if (c.commentId === commentId) {
       return fn(c);
     }

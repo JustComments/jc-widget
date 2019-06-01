@@ -398,22 +398,48 @@
 .userPic {
   margin-left: -86px;
   float: left;
+  position: relative;
 }
 
 .userPic,
 .userPic img,
-.userPic svg {
+.userPic svg.anon {
   width: 56px;
   height: 56px;
   border: none;
   border-radius: 50%;
 }
 
-.userPic svg rect {
+.userPic .logout {
+  display: block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  text-align: center;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.userPic .logout svg.twitter,
+.userPic .logout svg.fb {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.userPic svg.anon rect {
   fill: var(--primary-bg-color);
 }
 
-.userPic svg path {
+.userPic svg.anon path {
   fill: var(--secondary-text-color);
 }
 
@@ -436,6 +462,10 @@
 
 .comment.deep {
   margin-left: 0;
+}
+
+.comment .userPic {
+  margin-left: -102px;
 }
 
 .comment .bubble {
@@ -579,6 +609,7 @@
   height: 20px;
 }
 
+.loading,
 .attribution {
   width: 100%;
   text-align: center;
@@ -646,7 +677,7 @@
 
   .userPic,
   .userPic img,
-  .userPic svg {
+  .userPic svg.anon {
     width: 40px;
     height: 40px;
   }
@@ -662,6 +693,10 @@
 
   .form label {
     margin-bottom: 0;
+  }
+
+  .form .row.last {
+    margin-left: 50px;
   }
 
   .pic-container {

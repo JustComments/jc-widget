@@ -89,6 +89,7 @@ export function renderWidget(
       dirty: false,
       pushNotifications: !!session.get('subscription'),
       userPic: session.get('userPic'),
+      loginProvider: session.get('loginProvider'),
     },
     config: {
       itemProtocol: itemProtocol,

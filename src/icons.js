@@ -4,7 +4,11 @@ import s from './style.css';
 
 export function Anonymous() {
   return (
-    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      className={s.anon}
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect height="32" width="32" />
       <path d="m18,23.521078l0,-1.780245c2.203,-1.339772 4,-4.682185 4,-8.023518c0,-5.366645 0,-9.716316 -6,-9.716316s-6,4.349671 -6,9.716316c0,3.342413 1.797,6.683746 4,8.023518l0,1.780245c-6.784,0.599173 -12,4.197448 -12,8.548199l28,0c0,-4.35075 -5.216,-7.950105 -12,-8.548199z" />
     </svg>
@@ -60,6 +64,7 @@ export function EmailIcon() {
 export function TwitterIcon() {
   return (
     <svg
+      className={s.twitter}
       width="32"
       height="32"
       viewBox="0 0 32 32"
@@ -88,6 +93,7 @@ export function TwitterIcon() {
 export function FacebookIcon() {
   return (
     <svg
+      className={s.fb}
       width="32"
       height="32"
       viewBox="0 0 32 32"

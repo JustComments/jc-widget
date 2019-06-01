@@ -15,7 +15,7 @@ import {
 } from './icons';
 import { getCommentDate, getCommentUrl } from './comment-utils';
 
-import Form from './form';
+import Form, { UserPic } from './form';
 
 const WrapperComment = (origProps) => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -97,32 +97,36 @@ class Comment extends Component {
         id={`jc${comment.commentId}`}
       >
         <div className={cls(s.bubble, { [s.active]: comment.active })}>
-          <div className={s.userPic}>
-            {comment.userPic ? <img src={comment.userPic} /> : <Anonymous />}
-          </div>
+          <UserPic
+            userPic={comment.userPic}
+            loginProvider={comment.loginProvider}
+          />
           <div className={s.title}>
             <div>
-              <span className={cls(s.username, s.fontHeading4)}>
-                {comment.username}
-              </span>
-              <br />
-              <a
-                onClick={this.onCommentLinkClick}
-                href={getCommentUrl(comment)}
-                className={cls(s.date, s.fontBody3)}
-              >
-                {getCommentDate(comment)}
-              </a>
-              {comment.replyTo && commentsIndex && (
+              <div>
+                <span className={cls(s.username, s.fontHeading4)}>
+                  {comment.username}
+                </span>
+              </div>
+              <div>
                 <a
+                  onClick={this.onCommentLinkClick}
+                  href={getCommentUrl(comment)}
                   className={cls(s.date, s.fontBody3)}
-                  onClick={this.onReplyCommentLinkClick}
-                  href={getCommentUrl(commentsIndex[comment.replyTo])}
                 >
-                  <ReplyIcon />
-                  {commentsIndex[comment.replyTo].username}
+                  {getCommentDate(comment)}
                 </a>
-              )}
+                {comment.replyTo && commentsIndex && (
+                  <a
+                    className={cls(s.date, s.fontBody3)}
+                    onClick={this.onReplyCommentLinkClick}
+                    href={getCommentUrl(commentsIndex[comment.replyTo])}
+                  >
+                    <ReplyIcon />
+                    {commentsIndex[comment.replyTo].username}
+                  </a>
+                )}
+              </div>
             </div>
             <div className={s.collapse}>
               <button onClick={this.onToggleComment} className={s.btn}>
