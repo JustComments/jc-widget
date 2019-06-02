@@ -109,7 +109,7 @@ class Form extends Component {
                       />
                     )}
                     <label className={cls(s.fontBody1)}>
-                      Comment annonymously
+                      {__('anonymousCommentHeader')}
                     </label>
                   </div>
                   <input

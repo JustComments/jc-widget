@@ -7,4 +7,7 @@ module.exports = {
     TIMEAGO_LOCALE: 'timeago.js/locales/en',
   },
   setupFiles: ['./jest.setup.js'],
+  transform: {
+    '\\.js$': '<rootDir>/node_modules/babel-jest',
+  },
 };
