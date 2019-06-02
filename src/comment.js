@@ -28,6 +28,7 @@ export default WrapperComment;
 const mapToProps = (state, props) => {
   return {
     commentsIndex: state.commentsIndex,
+    disableProfilePictures: state.config.disableProfilePictures,
   };
 };
 
@@ -86,27 +87,41 @@ class Comment extends Component {
     this.props.shareOnTwitter(this.props.comment.commentId);
   };
 
-  render({ comment, commentsIndex, first, level }) {
+  render({ comment, commentsIndex, first, level, disableProfilePictures }) {
     return (
       <div
         key={comment.commentId}
         className={cls(s.comment, s.fontBody2, {
           [s.first]: first,
           [s.deep]: level >= 5,
+          [s.noUserPic]: disableProfilePictures,
         })}
         id={`jc${comment.commentId}`}
       >
         <div className={cls(s.bubble, { [s.active]: comment.active })}>
-          <UserPic
-            userPic={comment.userPic}
-            loginProvider={comment.loginProvider}
-          />
+          {!disableProfilePictures && (
+            <UserPic
+              userUrl={comment.userUrl}
+              userPic={comment.userPic}
+              loginProvider={comment.loginProvider}
+            />
+          )}
           <div className={s.title}>
             <div>
               <div>
-                <span className={cls(s.username, s.fontHeading4)}>
-                  {comment.username}
-                </span>
+                {comment.userUrl ? (
+                  <a
+                    target="_blank"
+                    href={comment.userUrl}
+                    className={cls(s.username, s.fontHeading4)}
+                  >
+                    {comment.username}
+                  </a>
+                ) : (
+                  <span className={cls(s.username, s.fontHeading4)}>
+                    {comment.username}
+                  </span>
+                )}
               </div>
               <div>
                 <a
@@ -145,13 +160,13 @@ class Comment extends Component {
           <div className={s.reply}>
             <button
               onClick={this.onToggleCommentForm}
-              className={cls(s['link-btn'], s.fontButton2)}
+              className={cls(s.linkBtn, s.fontButton2)}
             >
-              Reply
+              {__('reply')}
             </button>
           </div>
           {/*<div className={s.like}>
-            <button onClick={this.onToggleLikeMenu} className={s['link-btn']}>
+            <button onClick={this.onToggleLikeMenu} className={s.linkBtn}>
               Like
             </button>
             {comment.likeMenuOpened && (
@@ -186,7 +201,7 @@ class Comment extends Component {
           <div className={s.more}>
             <button
               onClick={this.onToggleMenu}
-              className={cls(s['link-btn'], s.fontButton2)}
+              className={cls(s.linkBtn, s.fontButton2)}
             >
               ⋯
             </button>
@@ -195,25 +210,25 @@ class Comment extends Component {
                 <div>
                   <button
                     onClick={this.onCopyToClipboard}
-                    className={cls(s['menu-button'], s.fontBody3)}
+                    className={cls(s.menuBtn, s.fontBody3)}
                   >
-                    copy link
+                    {__('copyLink')}
                   </button>
                 </div>
                 <div>
                   <button
                     onClick={this.shareOnFb}
-                    className={cls(s['menu-button'], s.fontBody3)}
+                    className={cls(s.menuBtn, s.fontBody3)}
                   >
-                    share on <FacebookIcon />
+                    {__('share')} <FacebookIcon />
                   </button>
                 </div>
                 <div>
                   <button
                     onClick={this.shareOnTwitter}
-                    className={cls(s['menu-button'], s.fontBody3)}
+                    className={cls(s.menuBtn, s.fontBody3)}
                   >
-                    <span>share on</span> <TwitterIcon />
+                    <span>{__('share')}</span> <TwitterIcon />
                   </button>
                 </div>
               </div>

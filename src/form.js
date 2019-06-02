@@ -91,16 +91,17 @@ class Form extends Component {
     return (
       <div
         className={cls(s.form, {
-          [s['no-profile-pic']]: disableProfilePictures,
-          [s['no-social']]: !showSocial,
+          [s.noProfilePic]: disableProfilePictures,
+          [s.noSocial]: !showSocial,
+          [s.noUserPic]: disableProfilePictures,
         })}
       >
         <form ref={this.saveRef}>
           {guestForm && (
             <div className={s.row}>
               <div className={s.left}>
-                <div className={s['input-group']}>
-                  <div className={s['pic-container']}>
+                <div className={s.inputGroup}>
+                  <div className={s.formPicContainer}>
                     {!disableProfilePictures && (
                       <UserPic
                         userPic={userPic}
@@ -158,7 +159,7 @@ class Form extends Component {
               {showSocial && (
                 <div className={s.right}>
                   <div className={cls(s.fontBody1)}>
-                    Login to leave a comment with social media
+                    {__('socialCommentHeader')}
                   </div>
                   <button
                     tabindex="0"
@@ -263,9 +264,9 @@ function Toggle({ icon, title, value, onClick }) {
   );
 }
 
-export function UserPic({ userPic, loginProvider, onLogout }) {
+export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
   return (
-    <div className={s.userPic}>
+    <UserPicContainer userUrl={userUrl}>
       {userPic ? <img src={userPic} /> : <Anonymous />}
       {loginProvider === 'twitter' && (
         <button
@@ -287,6 +288,16 @@ export function UserPic({ userPic, loginProvider, onLogout }) {
           <FacebookIcon />
         </button>
       )}
-    </div>
+    </UserPicContainer>
+  );
+}
+
+function UserPicContainer({ userUrl, children }) {
+  return userUrl ? (
+    <a className={s.userPic} href={userUrl} target="_blank">
+      {children}
+    </a>
+  ) : (
+    <div className={s.userPic}>{children}</div>
   );
 }

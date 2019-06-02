@@ -9,8 +9,8 @@ module.exports = {
   networkError: 'A network error has occurred. Please try again.',
   loadMoreButton: 'press to load more comments',
   ctrlEnterToSend: 'use Ctrl + Enter to send; supports Markdown',
-  share: 'share',
-  reply: 'reply',
+  share: 'share on',
+  reply: 'Reply',
   replyTo: 'Write your response to %{name}',
   noComments: 'Be the first to comment.',
   commentRemovedByModerator: 'The comment has been removed by the moderator.',
@@ -21,4 +21,6 @@ module.exports = {
     'receive an email when someone replies to your comment',
   website: 'Website (optional)',
   anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

@@ -210,7 +210,7 @@
   color: var(--primary-button-hover-color);
 }
 
-.link-btn:hover .icon {
+.linkBtn:hover .icon {
   fill: var(--primary-button-hover-color);
 }
 
@@ -223,6 +223,10 @@
   margin-left: 86px;
 }
 
+.form.noUserPic {
+  margin-left: 0;
+}
+
 .form .left {
   position: relative;
   width: calc(50% - 31.5px);
@@ -233,7 +237,7 @@
   margin-bottom: 25px;
 }
 
-.form .input-group {
+.form .inputGroup {
   display: flex;
   flex-direction: column;
 }
@@ -307,7 +311,7 @@
   justify-content: space-evenly;
 }
 
-.comment .menu .menu-button {
+.comment .menu .menuBtn {
   box-sizing: border-box;
   cursor: pointer;
   text-align: right;
@@ -325,19 +329,19 @@
   padding: 10px;
 }
 
-.menu-button svg {
+.menuBtn svg {
   width: 13px;
   height: 13px;
   display: inline-block;
   vertical-align: middle;
 }
 
-.comment .menu .menu-button:focus {
+.comment .menu .menuBtn:focus {
   outline: var(--outline-style);
   outline-offset: var(--outline-offset);
 }
 
-.comment .menu .menu-button:hover {
+.comment .menu .menuBtn:hover {
   color: var(--primary-color);
   background-color: var(--primary-color-lighter);
 }
@@ -363,7 +367,7 @@
   right: 0;
 }
 
-.link-btn {
+.linkBtn {
   box-sizing: border-box;
   cursor: pointer;
   text-align: left;
@@ -374,12 +378,12 @@
   border: 1px solid transparent;
 }
 
-.link-btn:focus {
+.linkBtn:focus {
   outline: var(--outline-style);
   outline-offset: var(--outline-offset);
 }
 
-.link-btn:hover {
+.linkBtn:hover {
   border-bottom: 1px solid var(--primary-color);
 }
 
@@ -399,6 +403,15 @@
   margin-left: -86px;
   float: left;
   position: relative;
+}
+
+a.userPic {
+  text-decoration: none;
+}
+
+a.userPic:focus {
+  outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .userPic,
@@ -456,6 +469,14 @@
   margin-left: 86px;
 }
 
+.comment.noUserPic {
+  margin-left: 0;
+}
+
+.comment.noUserPic .comment {
+  margin-left: 30px;
+}
+
 .comment > .comment.first {
   margin-top: 30px;
 }
@@ -504,6 +525,20 @@
 
 .comment .username {
   color: var(--primary-text-color);
+  text-decoration: none;
+}
+
+.comment a.username {
+  cursor: pointer;
+}
+
+.comment a.username:hover {
+  text-decoration: underline;
+}
+
+.comment a.username:focus {
+  outline: var(--outline-style);
+  outline-offset: var(--outline-offset);
 }
 
 .comment .date svg {
@@ -699,7 +734,7 @@
     margin-left: 50px;
   }
 
-  .pic-container {
+  .formPicContainer {
     display: flex;
     align-items: center;
     margin-bottom: 22px;
@@ -707,6 +742,9 @@
 
   .comment {
     margin-bottom: 22px;
+  }
+
+  .comment .comment {
     margin-left: 30px;
   }
 
