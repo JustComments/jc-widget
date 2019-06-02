@@ -513,6 +513,8 @@ function createComment(
       ? session.get('subscription')
       : null;
 
+  const loginProvider = session.get('loginProvider');
+
   return api.saveComment(jwt, {
     itemProtocol,
     itemPort,
@@ -523,6 +525,7 @@ function createComment(
     captchaResult,
     subscription,
     emailNotifications,
+    loginProvider,
   });
 }
 

@@ -191,6 +191,7 @@ export class API {
         emailNotifications: comment.emailNotifications || false,
         locale: getUserLocale(),
         timezone: getUserTimezone(),
+        loginProvider: comment.loginProvider,
       }),
     }).then((c) => {
       return {

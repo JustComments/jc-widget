@@ -268,26 +268,36 @@ export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
   return (
     <UserPicContainer userUrl={userUrl}>
       {userPic ? <img src={userPic} /> : <Anonymous />}
-      {loginProvider === 'twitter' && (
-        <button
-          onClick={onLogout}
-          type="button"
-          title="logout"
-          className={cls(s.btn, s.logout)}
-        >
-          <TwitterIcon />
-        </button>
-      )}
-      {loginProvider === 'fb' && (
-        <button
-          onClick={onLogout}
-          type="button"
-          title="logout"
-          className={cls(s.btn, s.logout)}
-        >
-          <FacebookIcon />
-        </button>
-      )}
+      {loginProvider === 'twitter' &&
+        (onLogout ? (
+          <button
+            onClick={onLogout}
+            type="button"
+            title="logout"
+            className={cls(s.btn, s.logout)}
+          >
+            <TwitterIcon />
+          </button>
+        ) : (
+          <div className={cls(s.logout)}>
+            <TwitterIcon />
+          </div>
+        ))}
+      {loginProvider === 'fb' &&
+        (onLogout ? (
+          <button
+            onClick={onLogout}
+            type="button"
+            title="logout"
+            className={cls(s.btn, s.logout)}
+          >
+            <FacebookIcon />
+          </button>
+        ) : (
+          <div className={cls(s.logout)}>
+            <FacebookIcon />
+          </div>
+        ))}
     </UserPicContainer>
   );
 }
