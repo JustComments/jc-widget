@@ -18,4 +18,7 @@ module.exports = {
   toggleNotificationsPush: '返信通知を設定する',
   toggleNotificationsEmail: '返信通知を設定する',
   website: 'ウエブサイト',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

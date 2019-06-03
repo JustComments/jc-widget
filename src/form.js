@@ -61,6 +61,16 @@ class Form extends Component {
     return this.props.sendComment(this.form, this.props.replyToComment);
   };
 
+  onPreview = (e) => {
+    e.preventDefault();
+    return this.props.previewComment(this.form, this.props.replyToComment);
+  };
+
+  onHidePreview = (e) => {
+    e.preventDefault();
+    return this.props.hideCommentPreview(this.form, this.props.replyToComment);
+  };
+
   render({
     userPic,
     guestForm,
@@ -190,23 +200,50 @@ class Form extends Component {
               onLogout={onLogout}
             />
           )}
-          <div className={s.row}>
-            <textarea
-              className={cls(s.inpt, s.fontBody2, { [s.dirty]: form.dirty })}
-              placeholder={textareaPlaceholder}
-              aria-label={textareaPlaceholder}
-              value={form.text}
-              required={true}
-              onInput={onTextInput}
-              onKeyDown={(e) => {
-                if (e.ctrlKey && e.keyCode == 13) {
-                  this.onSend(e);
-                } else if (e.metaKey && e.keyCode == 13) {
-                  this.onSend(e);
-                }
-              }}
-            />
-          </div>
+          {form.preview ? (
+            <div className={cls(s.comment, s.preview)}>
+              <div
+                className={s.content}
+                dangerouslySetInnerHTML={{ __html: form.preview }}
+              />
+            </div>
+          ) : (
+            <div className={cls(s.row, s.textareaContainer)}>
+              <textarea
+                className={cls(s.inpt, s.fontBody2, { [s.dirty]: form.dirty })}
+                placeholder={textareaPlaceholder}
+                aria-label={textareaPlaceholder}
+                value={form.text}
+                required={true}
+                onInput={onTextInput}
+                onKeyDown={(e) => {
+                  if (e.ctrlKey && e.keyCode == 13) {
+                    this.onSend(e);
+                  } else if (e.metaKey && e.keyCode == 13) {
+                    this.onSend(e);
+                  }
+                }}
+              />
+              <div className={s.textareaBtns}>
+                {supportsServiceWorkers() && (
+                  <Toggle
+                    icon={<PushIcon />}
+                    title={__('toggleNotificationsPush')}
+                    onClick={onPushToggle}
+                    value={form.pushNotifications}
+                  />
+                )}
+                {enableEmailNotifications && (
+                  <Toggle
+                    icon={<EmailIcon />}
+                    title={__('toggleNotificationsEmail')}
+                    onClick={onEmailToggle}
+                    value={form.emailNotifications}
+                  />
+                )}
+              </div>
+            </div>
+          )}
           {Object.keys(form.errors).length > 0 && (
             <div className={s.row}>
               {Object.keys(form.errors).map((errorKey) => {
@@ -216,7 +253,6 @@ class Form extends Component {
           )}
           <div className={cls(s.row, s.last)}>
             <button
-              tabindex={0}
               role="button"
               onClick={this.onSend}
               disabled={form.blocked ? 'disabled' : ''}
@@ -226,21 +262,22 @@ class Form extends Component {
               <ReplyIcon />
               <span>{form.blocked ? __('sending') : __('send')}</span>
             </button>
-            {supportsServiceWorkers() && (
-              <Toggle
-                icon={<PushIcon />}
-                title={__('toggleNotificationsPush')}
-                onClick={onPushToggle}
-                value={form.pushNotifications}
-              />
-            )}
-            {enableEmailNotifications && (
-              <Toggle
-                icon={<EmailIcon />}
-                title={__('toggleNotificationsEmail')}
-                onClick={onEmailToggle}
-                value={form.emailNotifications}
-              />
+            {form.preview ? (
+              <button
+                type="button"
+                onClick={this.onHidePreview}
+                className={cls(s.btn, s.secondary, s.fontButton4)}
+              >
+                {__('hidePreview')}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={this.onPreview}
+                className={cls(s.btn, s.secondary, s.fontButton4)}
+              >
+                {__('preview')}
+              </button>
             )}
           </div>
         </form>

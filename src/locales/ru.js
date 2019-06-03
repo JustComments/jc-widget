@@ -21,4 +21,7 @@ module.exports = {
   toggleNotificationsEmail:
     'включить email-уведомления об ответах на этот комментарий',
   website: 'Веб-сайт (необязательно)',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

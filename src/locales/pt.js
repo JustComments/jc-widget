@@ -18,4 +18,7 @@ module.exports = {
   toggleNotificationsPush: 'recebe notificações de comentários',
   toggleNotificationsEmail: 'recebe notificações de comentários',
   website: 'Website (opcional)',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

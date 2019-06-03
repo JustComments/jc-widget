@@ -18,4 +18,7 @@ module.exports = {
   toggleNotificationsPush: 'Få notifikationer om svar',
   toggleNotificationsEmail: 'Få notifikationer om svar',
   website: 'Hemsida (valfritt)',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

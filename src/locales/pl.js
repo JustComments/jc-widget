@@ -19,4 +19,7 @@ module.exports = {
   toggleNotificationsEmail: 'otrzymywać powiadomienia o odpowiedziach',
   website: 'Strona Internetowa (Opcjonalnie)',
   networkError: 'Network Error',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

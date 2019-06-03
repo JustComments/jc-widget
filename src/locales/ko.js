@@ -19,4 +19,7 @@ module.exports = {
   toggleNotificationsPush: '답글 알림을 받습니다.',
   toggleNotificationsEmail: '답글 알림을 받습니다.',
   website: '웹 사이트',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

@@ -19,4 +19,7 @@ module.exports = {
   toggleNotificationsPush: '接收別人回覆您的通知',
   toggleNotificationsEmail: '接收別人回覆您的通知',
   website: 'Website',
+  anonymousCommentHeader: 'Comment annonymously',
+  socialCommentHeader: 'Login with a provider to leave a comment',
+  copyLink: 'copy link',
 };

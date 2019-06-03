@@ -45,6 +45,39 @@ export const actions = (store) => ({
       });
   },
 
+  previewComment: (state, formRef, replyToComment) => {
+    if (!state.form.text) {
+      return;
+    }
+
+    const { session } = state;
+    const jwt = session.get('jwt')
+      ? session.get('jwt')
+      : createGuestJWT(username, email, config.apiKey);
+
+    return state.api
+      .previewComment(jwt, {
+        message: state.form.text,
+      })
+      .then(({ htmlMessage }) => {
+        store.setState({
+          form: {
+            ...state.form,
+            preview: htmlMessage,
+          },
+        });
+      });
+  },
+
+  hideCommentPreview: (state, formRef, replyToComment) => {
+    store.setState({
+      form: {
+        ...state.form,
+        preview: undefined,
+      },
+    });
+  },
+
   sendComment: (state, formRef, replyToComment) => {
     store.setState({
       form: {

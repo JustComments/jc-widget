@@ -200,6 +200,26 @@ export class API {
       };
     });
   }
+
+  previewComment(jwt, comment) {
+    return fetch(`${BASE_URL}/comments/preview?apiKey=${this.opts.apiKey}`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: ['Bearer', jwt].join(' '),
+        'x-api-key': this.opts.apiKey,
+      }),
+      body: JSON.stringify({
+        message: comment.message,
+      }),
+    }).then((c) => {
+      return {
+        ...c,
+        htmlContent: c.htmlMessage,
+      };
+    });
+  }
 }
 
 function qs(p) {
