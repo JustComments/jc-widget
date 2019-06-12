@@ -50,7 +50,7 @@
     "prettier": "1.17.0",
     "pretty-quick": "1.11.0",
     "style-loader": "0.23.1",
-    "webpack": "4.30.0",
+    "webpack": "4.34.0",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "3.3.1"
   },
