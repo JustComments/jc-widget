@@ -265,17 +265,21 @@
 }
 
 .form textarea.inpt {
-  width: 702px;
+  width: 100%;
   height: 117px;
   margin-bottom: 0;
 }
 
 .form label {
-  margin-bottom: 22px;
+  display: block;
+  width: 100%;
 }
 
 .form .inpt {
+  display: block;
   margin-bottom: 25px;
+  margin-top: 5px;
+  width: 100%;
 }
 
 .primary-text {

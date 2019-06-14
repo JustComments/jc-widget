@@ -123,42 +123,42 @@ class Form extends Component {
                       {__('anonymousCommentHeader')}
                     </span>
                   </div>
-                  <input
-                    placeholder={__('name')}
-                    aria-label={__('name')}
-                    title={__('name')}
-                    value={form.username}
-                    required={true}
-                    max={255}
-                    onInput={onUsernameInput}
-                    className={cls(s.inpt, s.fontBody2, {
-                      [s.dirty]: form.dirty,
-                    })}
-                  />
-                  <input
-                    type="email"
-                    placeholder={__('email')}
-                    aria-label={__('email')}
-                    title={__('email')}
-                    value={form.email}
-                    className={cls(s.inpt, s.fontBody2, {
-                      [s.dirty]: form.dirty,
-                    })}
-                    max={255}
-                    onInput={onEmailInput}
-                  />
-                  {enableWebsite && (
+                  <label className={cls(s.fontBody2)}>
+                    {__('name')}
                     <input
-                      placeholder={__('website')}
-                      aria-label={__('website')}
-                      title={__('website')}
-                      type="url"
-                      value={form.website}
+                      value={form.username}
+                      required={true}
+                      max={255}
+                      onInput={onUsernameInput}
                       className={cls(s.inpt, s.fontBody2, {
                         [s.dirty]: form.dirty,
                       })}
-                      onInput={onWebsiteInput}
                     />
+                  </label>
+                  <label className={cls(s.fontBody2)}>
+                    {__('email')}
+                    <input
+                      type="email"
+                      value={form.email}
+                      className={cls(s.inpt, s.fontBody2, {
+                        [s.dirty]: form.dirty,
+                      })}
+                      max={255}
+                      onInput={onEmailInput}
+                    />
+                  </label>
+                  {enableWebsite && (
+                    <label className={cls(s.fontBody2)}>
+                      {__('website')}
+                      <input
+                        type="url"
+                        value={form.website}
+                        className={cls(s.inpt, s.fontBody2, {
+                          [s.dirty]: form.dirty,
+                        })}
+                        onInput={onWebsiteInput}
+                      />
+                    </label>
                   )}
                 </div>
               </div>
@@ -212,22 +212,24 @@ class Form extends Component {
             </div>
           ) : (
             <div className={cls(s.row, s.textareaContainer)}>
-              <textarea
-                className={cls(s.inpt, s.fontBody2, { [s.dirty]: form.dirty })}
-                placeholder={textareaPlaceholder}
-                aria-label={textareaPlaceholder}
-                titlle={textareaPlaceholder}
-                value={form.text}
-                required={true}
-                onInput={onTextInput}
-                onKeyDown={(e) => {
-                  if (e.ctrlKey && e.keyCode == 13) {
-                    this.onSend(e);
-                  } else if (e.metaKey && e.keyCode == 13) {
-                    this.onSend(e);
-                  }
-                }}
-              />
+              <label className={cls(s.fontBody2)}>
+                {textareaPlaceholder}
+                <textarea
+                  className={cls(s.inpt, s.fontBody2, {
+                    [s.dirty]: form.dirty,
+                  })}
+                  value={form.text}
+                  required={true}
+                  onInput={onTextInput}
+                  onKeyDown={(e) => {
+                    if (e.ctrlKey && e.keyCode == 13) {
+                      this.onSend(e);
+                    } else if (e.metaKey && e.keyCode == 13) {
+                      this.onSend(e);
+                    }
+                  }}
+                />
+              </label>
               <div className={s.textareaBtns}>
                 {supportsServiceWorkers() && (
                   <Toggle

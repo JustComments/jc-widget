@@ -50,10 +50,10 @@ export const actions = (store) => ({
       return;
     }
 
-    const { session } = state;
+    const { session, config } = state;
     const jwt = session.get('jwt')
       ? session.get('jwt')
-      : createGuestJWT(username, email, config.apiKey);
+      : createGuestJWT(state.form.username, state.form.email, config.apiKey);
 
     return state.api
       .previewComment(jwt, {
