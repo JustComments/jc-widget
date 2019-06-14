@@ -126,6 +126,7 @@ class Form extends Component {
                   <input
                     placeholder={__('name')}
                     aria-label={__('name')}
+                    title={__('email')}
                     value={form.username}
                     required={true}
                     max={255}
@@ -138,6 +139,7 @@ class Form extends Component {
                     type="email"
                     placeholder={__('email')}
                     aria-label={__('email')}
+                    title={__('email')}
                     value={form.email}
                     className={cls(s.inpt, s.fontBody2, {
                       [s.dirty]: form.dirty,
@@ -149,6 +151,7 @@ class Form extends Component {
                     <input
                       placeholder={__('website')}
                       aria-label={__('website')}
+                      title={__('website')}
                       type="url"
                       value={form.website}
                       className={cls(s.inpt, s.fontBody2, {

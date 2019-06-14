@@ -25,6 +25,7 @@ import { createGuestJWT } from './utils';
 //  X active state for the comment
 //  X facebook login
 //  - translations
+//  - comment count
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
