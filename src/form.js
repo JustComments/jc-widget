@@ -119,9 +119,9 @@ class Form extends Component {
                         onLogout={onLogout}
                       />
                     )}
-                    <label className={cls(s.fontBody1)}>
+                    <span className={cls(s.fontBody1)}>
                       {__('anonymousCommentHeader')}
-                    </label>
+                    </span>
                   </div>
                   <input
                     placeholder={__('name')}
