@@ -126,7 +126,7 @@ class Form extends Component {
                   <input
                     placeholder={__('name')}
                     aria-label={__('name')}
-                    title={__('email')}
+                    title={__('name')}
                     value={form.username}
                     required={true}
                     max={255}
