@@ -144,7 +144,14 @@ class Comment extends Component {
               </div>
             </div>
             <div className={s.collapse}>
-              <button onClick={this.onToggleComment} className={s.btn}>
+              <button
+                title={comment.collapsed ? __('uncollapse') : __('collapse')}
+                aria-label={
+                  comment.collapsed ? __('uncollapse') : __('collapse')
+                }
+                onClick={this.onToggleComment}
+                className={s.btn}
+              >
                 {comment.collapsed ? <CollapseIcon /> : <UncollapseIcon />}
               </button>
             </div>

@@ -177,6 +177,8 @@ class Form extends Component {
                   <button
                     tabindex="0"
                     role="button"
+                    title={__('loginWithFacebook')}
+                    aria-label={__('loginWithFacebook')}
                     onClick={onFacebookLogin}
                     className={cls(s.btn, s.fontButton4)}
                     type="button"
@@ -186,6 +188,8 @@ class Form extends Component {
                   <button
                     tabindex="0"
                     role="button"
+                    title={__('loginWithTwitter')}
+                    aria-label={__('loginWithTwitter')}
                     onClick={onTwitterLogin}
                     className={cls(s.btn, s.fontButton4)}
                     type="button"
@@ -295,12 +299,13 @@ class Form extends Component {
 function Toggle({ icon, title, value, onClick }) {
   return (
     <button
-      tabindex={0}
-      role={'switch'}
-      onClick={onClick}
-      title={title}
-      ariaChecked={value}
+      aria-checked={value ? 'true' : 'false'}
       className={cls(s.btn, s.toggle, { [s.on]: value })}
+      onClick={onClick}
+      role="switch"
+      tabindex="0"
+      aria-label={title}
+      title={title}
     >
       {icon}
     </button>
@@ -310,13 +315,14 @@ function Toggle({ icon, title, value, onClick }) {
 export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
   return (
     <UserPicContainer userUrl={userUrl}>
-      {userPic ? <img src={userPic} /> : <Anonymous />}
+      {userPic ? <img alt={__('userPic')} src={userPic} /> : <Anonymous />}
       {loginProvider === 'twitter' &&
         (onLogout ? (
           <button
             onClick={onLogout}
             type="button"
             title="logout"
+            aria-label="logout"
             className={cls(s.btn, s.logout)}
           >
             <TwitterIcon />
@@ -332,6 +338,7 @@ export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
             onClick={onLogout}
             type="button"
             title="logout"
+            aria-label="logout"
             className={cls(s.btn, s.logout)}
           >
             <FacebookIcon />
@@ -347,7 +354,7 @@ export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
 
 function UserPicContainer({ userUrl, children }) {
   return userUrl ? (
-    <a className={s.userPic} href={userUrl} target="_blank">
+    <a className={s.userPic} href={userUrl} target="_blank" rel="noopener">
       {children}
     </a>
   ) : (
