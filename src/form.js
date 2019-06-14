@@ -216,6 +216,7 @@ class Form extends Component {
                 className={cls(s.inpt, s.fontBody2, { [s.dirty]: form.dirty })}
                 placeholder={textareaPlaceholder}
                 aria-label={textareaPlaceholder}
+                titlle={textareaPlaceholder}
                 value={form.text}
                 required={true}
                 onInput={onTextInput}
