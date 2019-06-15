@@ -25,13 +25,26 @@ import { createGuestJWT } from './utils';
 //  X active state for the comment
 //  X facebook login
 //  - translations
-//  - comment count
+//  X comment count
+//  - number of hidden comments
+//  - hide header and empty text
+//  - disable anonymous login
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
     {(props) => <Widget {...props} />}
   </Connect>
 );
+
+function commentCount(comments) {
+  return comments.reduce((acc, c) => {
+    acc += c.hidden ? 0 : 1;
+    if (c.nested) {
+      acc += commentCount(c.nested);
+    }
+    return acc;
+  }, 0);
+}
 
 const mapToProps = ({
   config,
@@ -54,7 +67,7 @@ const mapToProps = ({
   const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
   const shouldRenderFormAfter = shouldRenderForm && sort === 'asc';
   const hasMore = !!cursor;
-  const count = comments.length; // TODO
+  const count = commentCount(comments);
   const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;
 
   return {
