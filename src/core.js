@@ -47,18 +47,12 @@ export function renderWidget(
   console.log('JustComments info: original pageId', itemId);
 
   const session = getSession();
+
   if (data.jwt) {
     setJWT(session, data.jwt);
   } else {
     if (session.get('jwt')) {
       checkJWTValidity(session);
-    } else {
-      session.setIfMissing('userId', 'guest');
-      session.setIfMissing('userPic', null);
-      session.setIfMissing('username', '');
-      session.setIfMissing('userUrl', '');
-      session.setIfMissing('userEmail', '');
-      session.setIfMissing('website', '');
     }
   }
 
@@ -88,12 +82,16 @@ export function renderWidget(
       pushNotifications: !!session.get('subscription'),
       userPic: session.get('userPic'),
       loginProvider: session.get('loginProvider'),
+      username: session.get('username'),
+      email: session.get('userEmail'),
+      userPic: session.get('userPic'),
+      website: session.get('userUrl'),
     },
     config: {
       itemProtocol: itemProtocol,
       itemPort: itemPort,
       recaptchaSitekey: data.recaptchaSitekey,
-      allowGuests: data.allowGuests,
+      disableAnonymousLogin: data.disableAnonymousLogin,
       disableSocialLogin: data.disableSocialLogin,
       disableLoadMore: data.disableLoadMore,
       sort: data.sort,
@@ -123,7 +121,7 @@ export function renderWidget(
 function readWidgetData(widget) {
   const jwt = widget.dataset.jwt;
   const apiKey = widget.dataset.apikey;
-  const allowGuests = widget.dataset.allowguests !== 'false';
+  const disableAnonymousLogin = widget.dataset.disableanonymouslogin === 'true';
   const disableSocialLogin = widget.dataset.disablesociallogin === 'true';
   const disableLoadMore = widget.dataset.disableloadmore === 'true';
   const disableProfilePictures =
@@ -159,7 +157,7 @@ function readWidgetData(widget) {
   return {
     jwt,
     apiKey,
-    allowGuests,
+    disableAnonymousLogin,
     disableSocialLogin,
     disableLoadMore,
     ignoreQuery,

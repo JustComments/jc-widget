@@ -526,12 +526,12 @@ function createComment(
     emailNotifications,
   },
 ) {
-  const { itemProtocol, itemPort, allowGuests } = config;
+  const { itemProtocol, itemPort } = config;
 
-  if (!session.isAuthenticated() && allowGuests) {
+  if (!session.isAuthenticated()) {
     session.set('username', username);
     session.set('userEmail', email);
-    session.set('website', website);
+    session.set('userUrl', website);
   }
 
   session.set('notifications', notifications);

@@ -27,8 +27,8 @@ import { createGuestJWT } from './utils';
 //  - translations
 //  X comment count
 //  - number of hidden comments
-//  - hide header and empty text
-//  - disable anonymous login
+//  X hide header and empty text
+//  X disable anonymous login
 //  - fix jump to comment
 
 export default () => (
@@ -65,10 +65,8 @@ const mapToProps = ({
     hideCommentHeader,
     hideNoCommentsText,
   } = config;
-  const shouldRenderForm =
-    session.isAuthenticated() || (!session.isAuthenticated() && allowGuests);
-  const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
-  const shouldRenderFormAfter = shouldRenderForm && sort === 'asc';
+  const shouldRenderFormBefore = sort === 'desc';
+  const shouldRenderFormAfter = sort === 'asc';
   const hasMore = !!cursor;
   const count = commentCount(comments);
   const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;

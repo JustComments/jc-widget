@@ -23,24 +23,20 @@ export default (inlineProps) => (
 
 const mapToProps = ({ config, session, form }) => {
   const {
-    allowGuests,
+    disableAnonymousLogin,
     disableSocialLogin,
     enableWebsite,
     enableEmailNotifications,
     disableProfilePictures,
     localStorageSupported,
   } = config;
-  const {
-    userPic,
-    loginProvider, // TODO
-  } = form;
+  const { userPic, loginProvider } = form;
   const showSocial = localStorageSupported && !disableSocialLogin;
-
-  const guestForm = allowGuests && !session.isAuthenticated();
+  const isLoggedIn = session.isAuthenticated();
 
   return {
     userPic,
-    guestForm,
+    disableAnonymousLogin,
     disableSocialLogin,
     loginProvider,
     enableWebsite,
@@ -48,6 +44,7 @@ const mapToProps = ({ config, session, form }) => {
     disableProfilePictures,
     showSocial,
     form,
+    isLoggedIn,
   };
 };
 
@@ -73,7 +70,7 @@ class Form extends Component {
 
   render({
     userPic,
-    guestForm,
+    disableAnonymousLogin,
     replyToComment,
     disableSocialLogin,
     loginProvider,
@@ -92,77 +89,80 @@ class Form extends Component {
     onWebsiteInput,
     onTextInput,
     onLogout,
+    isLoggedIn,
   }) {
     const textareaPlaceholder = replyToComment
       ? substitute(__('replyTo'), {
           name: replyToComment.username,
         })
       : `${__('writeAComment')} (${__('ctrlEnterToSend')})`;
+
     return (
       <div
         className={cls(s.form, {
-          [s.noProfilePic]: disableProfilePictures,
           [s.noSocial]: !showSocial,
           [s.noUserPic]: disableProfilePictures,
         })}
       >
         <form ref={this.saveRef}>
-          {guestForm && (
+          {!isLoggedIn && (
             <div className={s.row}>
-              <div className={s.left}>
-                <div className={s.inputGroup}>
-                  <div className={s.formPicContainer}>
-                    {!disableProfilePictures && (
-                      <UserPic
-                        userPic={userPic}
-                        loginProvider={loginProvider}
-                        onLogout={onLogout}
-                      />
-                    )}
-                    <span className={cls(s.fontBody1)}>
-                      {__('anonymousCommentHeader')}
-                    </span>
-                  </div>
-                  <label className={cls(s.fontBody2)}>
-                    {__('name')}
-                    <input
-                      value={form.username}
-                      required={true}
-                      max={255}
-                      onInput={onUsernameInput}
-                      className={cls(s.inpt, s.fontBody2, {
-                        [s.dirty]: form.dirty,
-                      })}
-                    />
-                  </label>
-                  <label className={cls(s.fontBody2)}>
-                    {__('email')}
-                    <input
-                      type="email"
-                      value={form.email}
-                      className={cls(s.inpt, s.fontBody2, {
-                        [s.dirty]: form.dirty,
-                      })}
-                      max={255}
-                      onInput={onEmailInput}
-                    />
-                  </label>
-                  {enableWebsite && (
+              {!disableAnonymousLogin && (
+                <div className={s.left}>
+                  <div className={s.inputGroup}>
+                    <div className={s.formPicContainer}>
+                      {!disableProfilePictures && (
+                        <UserPic
+                          userPic={userPic}
+                          loginProvider={loginProvider}
+                          onLogout={onLogout}
+                        />
+                      )}
+                      <span className={cls(s.fontBody1)}>
+                        {__('anonymousCommentHeader')}
+                      </span>
+                    </div>
                     <label className={cls(s.fontBody2)}>
-                      {__('website')}
+                      {__('name')}
                       <input
-                        type="url"
-                        value={form.website}
+                        value={form.username}
+                        required={true}
+                        max={255}
+                        onInput={onUsernameInput}
                         className={cls(s.inpt, s.fontBody2, {
                           [s.dirty]: form.dirty,
                         })}
-                        onInput={onWebsiteInput}
                       />
                     </label>
-                  )}
+                    <label className={cls(s.fontBody2)}>
+                      {__('email')}
+                      <input
+                        type="email"
+                        value={form.email}
+                        className={cls(s.inpt, s.fontBody2, {
+                          [s.dirty]: form.dirty,
+                        })}
+                        max={255}
+                        onInput={onEmailInput}
+                      />
+                    </label>
+                    {enableWebsite && (
+                      <label className={cls(s.fontBody2)}>
+                        {__('website')}
+                        <input
+                          type="url"
+                          value={form.website}
+                          className={cls(s.inpt, s.fontBody2, {
+                            [s.dirty]: form.dirty,
+                          })}
+                          onInput={onWebsiteInput}
+                        />
+                      </label>
+                    )}
+                  </div>
                 </div>
-              </div>
-              {showSocial && (
+              )}
+              {showSocial && !disableAnonymousLogin && (
                 <div className={s.separator}>
                   <div className={s.line} />
                   <div className={cls(s.word, s.fontBody1)}>or</div>
@@ -200,7 +200,7 @@ class Form extends Component {
               )}
             </div>
           )}
-          {!guestForm && !disableProfilePictures && (
+          {!disableProfilePictures && isLoggedIn && (
             <UserPic
               userPic={userPic}
               loginProvider={loginProvider}
