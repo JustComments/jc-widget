@@ -1,4 +1,4 @@
-import { LocalStorage } from './utils';
+import { LocalStorage } from './storage';
 
 const BASE_URL = API_ENDPOINT;
 

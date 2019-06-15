@@ -25,4 +25,9 @@ module.exports = {
   copyLink: 'copy link',
   preview: 'Preview',
   hidePreview: 'Hide preview',
+  collapse: 'Collapse thread',
+  uncollapse: 'Uncollapse thread',
+  loginWithFacebook: 'Log in with Facebook',
+  loginWithTwitter: 'Log in with Twitter',
+  userPic: 'User picture',
 };

@@ -5,20 +5,18 @@ import createStore from 'redux-zero';
 import scrollparent from 'scrollparent';
 import { h, render, Component } from 'preact';
 
+import { getSession, checkJWTValidity, setJWT } from './utils';
 import {
   extractDataFromURL,
   isBot,
-  getSession,
-  checkJWTValidity,
-  setJWT,
-  isInViewport,
   onReady,
   findWidgetElement,
   onceVisible,
-} from './utils';
+} from './bootstrap';
 import Widget from './widget';
 import { API } from './api';
 import { bootstrapRecaptcha } from './recaptcha';
+import { LocalStorage } from './storage';
 
 const BASE_URL = API_ENDPOINT;
 
@@ -106,6 +104,9 @@ export function renderWidget(
       apiKey: data.apiKey,
       disableProfilePictures: data.disableProfilePictures,
       disableShareButton: data.disableShareButton,
+      hideCommentHeader: data.hideCommentHeader,
+      hideNoCommentsText: data.hideNoCommentsText,
+      localStorageSupported: LocalStorage.supported(),
     },
   };
 
@@ -131,6 +132,8 @@ function readWidgetData(widget) {
   const ignoreQuery = widget.dataset.ignorequery === 'true';
   const hideAttribution = widget.dataset.hideattribution === 'true';
   const enableWebsite = widget.dataset.enablewebsite === 'true';
+  const hideCommentHeader = widget.dataset.hidecommentheader === 'true';
+  const hideNoCommentsText = widget.dataset.hidenocommentstext === 'true';
   const enableEmailNotifications =
     widget.dataset.enableemailnotifications === 'true';
   const recaptchaSitekey =
@@ -170,6 +173,8 @@ function readWidgetData(widget) {
     theme,
     disableProfilePictures,
     disableShareButton,
+    hideCommentHeader,
+    hideNoCommentsText,
   };
 }
 

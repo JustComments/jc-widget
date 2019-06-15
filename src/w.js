@@ -1,16 +1,15 @@
-import { mapping, bundles } from './locales';
+import './auth';
+
 import {
   onReady,
   findWidgetElement,
   scrollIntoView,
   onceVisible,
-  handleBootstrapParams,
-  isInViewport,
   extractDataFromURL,
   isBot,
-} from './utils';
+} from './bootstrap';
 
-handleBootstrapParams();
+import { mapping } from './locales';
 
 let { jumpToComment } = extractDataFromURL();
 

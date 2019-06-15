@@ -15,18 +15,6 @@
     "lint:css": "stylelint src/style.css",
     "lint:size": "npm run build && size-limit"
   },
-  "keywords": [
-    "comments",
-    "ui",
-    "widget"
-  ],
-  "author": "Oleksii Rudenko <alexei.rudenko@gmail.com>",
-  "license": "GPL-3.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "size-limit": [
     {
       "webpack": false,
@@ -41,6 +29,18 @@
       "path": "dist/w2*.js"
     }
   ],
+  "keywords": [
+    "comments",
+    "ui",
+    "widget"
+  ],
+  "author": "Oleksii Rudenko <alexei.rudenko@gmail.com>",
+  "license": "GPL-3.0",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "devDependencies": {
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.5",

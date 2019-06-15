@@ -29,6 +29,7 @@ import { createGuestJWT } from './utils';
 //  - number of hidden comments
 //  - hide header and empty text
 //  - disable anonymous login
+//  - fix jump to comment
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -61,6 +62,8 @@ const mapToProps = ({
     sort,
     hideAttribution,
     recaptchaSitekey,
+    hideCommentHeader,
+    hideNoCommentsText,
   } = config;
   const shouldRenderForm =
     session.isAuthenticated() || (!session.isAuthenticated() && allowGuests);
@@ -81,6 +84,8 @@ const mapToProps = ({
     disableLoadMore,
     recaptchaSitekey,
     hideAttribution,
+    hideCommentHeader,
+    hideNoCommentsText,
   };
 };
 
@@ -96,12 +101,14 @@ class Widget extends Component {
     disableLoadMore,
     recaptchaSitekey,
     hideAttribution,
+    hideCommentHeader,
+    hideNoCommentsText,
   }) {
     return (
       <div className={s.widget}>
         {shouldRenderFormBefore && <Form />}
         {loading && <div className={s.loading}>{__('loadingComments')}</div>}
-        {!loading && (
+        {!loading && !hideCommentHeader && (
           <div className={cls(s.header, s.fontHeading2)}>
             <span>
               {__('comments')}
@@ -109,7 +116,9 @@ class Widget extends Component {
             </span>
           </div>
         )}
-        {!loading && count === 0 && <p>{__('noComments')}</p>}
+        {!loading && count === 0 && !hideNoCommentsText && (
+          <p>{__('noComments')}</p>
+        )}
         {comments.map((c) => (
           <Comment comment={c} level={0} />
         ))}

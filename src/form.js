@@ -11,7 +11,9 @@ import {
   TwitterIcon,
   FacebookIcon,
 } from './icons';
-import { LocalStorage, supportsServiceWorkers, substitute } from './utils';
+import { supportsServiceWorkers, substitute } from './utils';
+import s from './style.css';
+import cls from 'classnames';
 
 export default (inlineProps) => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -26,12 +28,13 @@ const mapToProps = ({ config, session, form }) => {
     enableWebsite,
     enableEmailNotifications,
     disableProfilePictures,
+    localStorageSupported,
   } = config;
   const {
     userPic,
     loginProvider, // TODO
   } = form;
-  const showSocial = LocalStorage.supported() && !disableSocialLogin;
+  const showSocial = localStorageSupported && !disableSocialLogin;
 
   const guestForm = allowGuests && !session.isAuthenticated();
 
@@ -47,9 +50,6 @@ const mapToProps = ({ config, session, form }) => {
     form,
   };
 };
-
-import s from './style.css';
-import cls from 'classnames';
 
 class Form extends Component {
   saveRef = (ref) => {
