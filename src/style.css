@@ -29,7 +29,7 @@
   --secondary-bg-color: #ecebed;
   --secondary-bg-color-lighter: #ecebed33;
 
-  --primary-color: #e61d0f;
+  --primary-color: #ffffff;
   --primary-color-lighter: #e61d0f1a;
   --primary-color-light: #e61d0f0d;
 
@@ -184,6 +184,8 @@
   background-color: transparent;
   padding: 0;
   margin: 0;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .btn .icon {
@@ -223,13 +225,14 @@
 
 .btn.secondary {
   background: transparent;
-  color: var(--primary-button-bg-color);
+  color: var(--primary-color);
   font-weight: 500;
+  padding-bottom: 1px;
 }
 
 .btn.secondary:hover {
-  border-color: var(--primary-button-bg-color);
-  color: var(--primary-button-hover-color);
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 0;
 }
 
 .linkBtn:hover .icon {
@@ -587,6 +590,8 @@ a.userPic:focus {
   color: var(--secondary-text-color);
   text-decoration: none;
   margin-right: 10px;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .comment .date:hover {

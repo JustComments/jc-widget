@@ -29,6 +29,7 @@ const mapToProps = (state, props) => {
   return {
     commentsIndex: state.commentsIndex,
     disableProfilePictures: state.config.disableProfilePictures,
+    disableShareButton: state.config.disableShareButton,
   };
 };
 
@@ -87,7 +88,14 @@ class Comment extends Component {
     this.props.shareOnTwitter(this.props.comment.commentId);
   };
 
-  render({ comment, commentsIndex, first, level, disableProfilePictures }) {
+  render({
+    comment,
+    commentsIndex,
+    first,
+    level,
+    disableProfilePictures,
+    disableShareButton,
+  }) {
     return (
       <div
         key={comment.commentId}
@@ -222,22 +230,26 @@ class Comment extends Component {
                     {__('copyLink')}
                   </button>
                 </div>
-                <div>
-                  <button
-                    onClick={this.shareOnFb}
-                    className={cls(s.menuBtn, s.fontBody3)}
-                  >
-                    {__('share')} <FacebookIcon />
-                  </button>
-                </div>
-                <div>
-                  <button
-                    onClick={this.shareOnTwitter}
-                    className={cls(s.menuBtn, s.fontBody3)}
-                  >
-                    <span>{__('share')}</span> <TwitterIcon />
-                  </button>
-                </div>
+                {!disableShareButton && (
+                  <div>
+                    <button
+                      onClick={this.shareOnFb}
+                      className={cls(s.menuBtn, s.fontBody3)}
+                    >
+                      {__('share')} <FacebookIcon />
+                    </button>
+                  </div>
+                )}
+                {!disableShareButton && (
+                  <div>
+                    <button
+                      onClick={this.shareOnTwitter}
+                      className={cls(s.menuBtn, s.fontBody3)}
+                    >
+                      <span>{__('share')}</span> <TwitterIcon />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -114,6 +114,7 @@ class Form extends Component {
                       {!disableProfilePictures && (
                         <UserPic
                           userPic={userPic}
+                          userUrl={form.website}
                           loginProvider={loginProvider}
                           onLogout={onLogout}
                         />
@@ -203,6 +204,7 @@ class Form extends Component {
           {!disableProfilePictures && isLoggedIn && (
             <UserPic
               userPic={userPic}
+              userUrl={form.website}
               loginProvider={loginProvider}
               onLogout={onLogout}
             />

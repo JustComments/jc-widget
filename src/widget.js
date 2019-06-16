@@ -30,6 +30,8 @@ import { createGuestJWT } from './utils';
 //  X hide header and empty text
 //  X disable anonymous login
 //  - fix jump to comment
+//  - image on error
+//  - change font size
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -58,6 +60,7 @@ const mapToProps = ({
   const {
     allowGuests,
     disableSocialLogin,
+    disableAnonymousLogin,
     disableLoadMore,
     sort,
     hideAttribution,
@@ -65,8 +68,9 @@ const mapToProps = ({
     hideCommentHeader,
     hideNoCommentsText,
   } = config;
-  const shouldRenderFormBefore = sort === 'desc';
-  const shouldRenderFormAfter = sort === 'asc';
+  const shouldRenderForm = !(disableSocialLogin && disableAnonymousLogin);
+  const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
+  const shouldRenderFormAfter = shouldRenderForm && sort === 'asc';
   const hasMore = !!cursor;
   const count = commentCount(comments);
   const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;

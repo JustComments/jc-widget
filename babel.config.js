@@ -6,9 +6,6 @@ module.exports = function(api) {
       [
         '@babel/preset-env',
         {
-          targets: {
-            browsers: ['last 2 versions', 'safari >= 7'],
-          },
           modules: false,
           loose: true,
           useBuiltIns: false,
@@ -35,7 +32,6 @@ module.exports = function(api) {
               targets: {
                 browsers: ['last 2 versions', 'safari >= 7'],
               },
-              modules: false,
             },
           ],
         ],

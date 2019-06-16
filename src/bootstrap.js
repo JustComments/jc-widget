@@ -32,7 +32,11 @@ export function findWidgetElement() {
 
 export function scrollIntoView(element) {
   try {
-    element.scrollIntoView();
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center',
+    });
   } catch (err) {
     console.log('JustComments warning: ScrollIntoView is not supported', err);
   }

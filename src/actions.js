@@ -241,7 +241,8 @@ export const actions = (store) => ({
     });
   },
 
-  onLogout: (state) => {
+  onLogout: (state, e) => {
+    e.preventDefault();
     const { session } = state;
     session.clear();
     store.setState({

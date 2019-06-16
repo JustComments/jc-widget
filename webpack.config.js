@@ -69,9 +69,7 @@ module.exports = function(env, args) {
                       textAlign: 'left',
                     },
                   }),
-                  require('autoprefixer')({
-                    browsers: ['last 2 versions', 'safari >= 7'],
-                  }),
+                  require('autoprefixer')(),
                 ],
               },
             },
