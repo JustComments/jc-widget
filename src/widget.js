@@ -11,7 +11,6 @@ import Comment from './comment';
 import { createGuestJWT } from './utils';
 
 // TODO:
-
 //  X share button
 //  X copy link button
 //  X save comment nested
@@ -24,14 +23,18 @@ import { createGuestJWT } from './utils';
 //  X post CSS and styles
 //  X active state for the comment
 //  X facebook login
-//  - translations
 //  X comment count
-//  - number of hidden comments
+//  X number of hidden comments
 //  X hide header and empty text
 //  X disable anonymous login
 //  - fix jump to comment
 //  - image on error
 //  - change font size
+//  - loader for preview
+//  - fix styles when social login is hidden
+//  - clear message after posting
+//  - hide inline form after posting
+//  - translations
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>

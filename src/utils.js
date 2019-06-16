@@ -158,7 +158,10 @@ export function setJWT(session, jwt, loginProvider) {
 }
 
 export function substitute(str, keys) {
-  return str.replace('%{name}', keys.name);
+  Object.keys(keys).forEach((key) => {
+    str = str.replace(`%{${key}}`, keys[key]);
+  });
+  return str;
 }
 
 export const copyToClipboard = (str) => {

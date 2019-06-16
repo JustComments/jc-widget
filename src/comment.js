@@ -14,8 +14,10 @@ import {
   ReplyIcon,
 } from './icons';
 import { getCommentDate, getCommentUrl } from './comment-utils';
-
+import { substitute } from './utils';
 import Form, { UserPic } from './form';
+import s from './style.css';
+import cls from 'classnames';
 
 const WrapperComment = (origProps) => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -33,8 +35,15 @@ const mapToProps = (state, props) => {
   };
 };
 
-import s from './style.css';
-import cls from 'classnames';
+function commentCount(comments) {
+  return comments.reduce((acc, c) => {
+    acc += c.hidden ? 0 : 1;
+    if (c.nested) {
+      acc += commentCount(c.nested);
+    }
+    return acc;
+  }, 0);
+}
 
 class Comment extends Component {
   onToggleComment = () => {
@@ -115,7 +124,7 @@ class Comment extends Component {
             />
           )}
           <div className={s.title}>
-            <div>
+            <div className={s.metadata}>
               <div>
                 {comment.userUrl ? (
                   <a
@@ -152,6 +161,13 @@ class Comment extends Component {
               </div>
             </div>
             <div className={s.collapse}>
+              {comment.collapsed && (
+                <span className={cls(s.fontBody3)}>
+                  {substitute(__('collapsedComments'), {
+                    n: commentCount([comment]),
+                  })}
+                </span>
+              )}
               <button
                 title={comment.collapsed ? __('uncollapse') : __('collapse')}
                 aria-label={
