@@ -27,13 +27,13 @@ import { createGuestJWT } from './utils';
 //  X number of hidden comments
 //  X hide header and empty text
 //  X disable anonymous login
-//  - fix jump to comment
-//  - image on error
+//  X loader for preview
+//  X clear message after posting
+//  X hide inline form after posting
+//  X fix styles when social login is hidden
+//  X fix jump to comment
+//  X image on error
 //  - change font size
-//  - loader for preview
-//  - fix styles when social login is hidden
-//  - clear message after posting
-//  - hide inline form after posting
 //  - translations
 
 export default () => (

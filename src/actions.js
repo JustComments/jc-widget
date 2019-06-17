@@ -3,8 +3,8 @@ import { getCommentUrl } from './comment-utils';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {
-    const { jumpToComment, jumped, lastKey } = state;
-    if (!jumped && jumpToComment) {
+    const { jumpToComment, jumped, lastKey, comments } = state;
+    if (!jumped && jumpToComment && comments.length > 0) {
       setTimeout(() => {
         if (!document.getElementById('jc' + jumpToComment)) {
           console.log(
@@ -32,13 +32,20 @@ export const actions = (store) => ({
       loading: true,
     });
 
+    const { jumpToComment } = state;
+
     state.api
       .getComments(state.cursor)
       .then(({ comments: newComments, cursor }) => {
         store.setState({
           loading: false,
           ...withComments([...state.comments, ...newComments], (comments) => {
-            return comments;
+            return updateById(comments, jumpToComment, (c) => {
+              return {
+                ...c,
+                active: true,
+              };
+            });
           }),
           cursor,
         });
@@ -55,6 +62,13 @@ export const actions = (store) => ({
       ? session.get('jwt')
       : createGuestJWT(state.form.username, state.form.email, config.apiKey);
 
+    store.setState({
+      form: {
+        ...state.form,
+        previewLoading: true,
+      },
+    });
+
     return state.api
       .previewComment(jwt, {
         message: state.form.text,
@@ -64,8 +78,18 @@ export const actions = (store) => ({
           form: {
             ...state.form,
             preview: htmlMessage,
+            previewLoading: false,
           },
         });
+      })
+      .catch((err) => {
+        store.setState({
+          form: {
+            ...state.form,
+            previewLoading: false,
+          },
+        });
+        throw err;
       });
   },
 
@@ -127,6 +151,7 @@ export const actions = (store) => ({
             ? withComments([...state.comments], (comments) => {
                 return updateById(comments, comment.replyTo, (c) => ({
                   ...c,
+                  formOpened: false,
                   nested: addCommentInOrder(
                     c.nested,
                     {
@@ -140,10 +165,18 @@ export const actions = (store) => ({
             : withComments(
                 addCommentInOrder(state.comments, comment, state.config.sort),
                 (comments) => {
-                  return updateById(comments, comment.commentId, (c) => ({
-                    ...c,
-                    active: true,
-                  }));
+                  return updateByIdWithReset(
+                    comments,
+                    comment.commentId,
+                    (c) => ({
+                      ...c,
+                      active: true,
+                    }),
+                    (c) => ({
+                      ...c,
+                      active: false,
+                    }),
+                  );
                 },
               )),
           jumpToComment: comment.commentId,
@@ -151,6 +184,7 @@ export const actions = (store) => ({
           form: {
             ...state.form,
             blocked: false,
+            text: '',
           },
         });
       })
@@ -432,6 +466,26 @@ export const actions = (store) => ({
       )}`,
     );
     return hideMenuForComment(state, commentId);
+  },
+
+  onFormImageError: (state) => {
+    store.setState({
+      form: {
+        ...form.state,
+        userPic: undefined,
+      },
+    });
+  },
+
+  onCommentImageError: (state, commentId) => {
+    return {
+      ...withComments(state.comments, (comments) => {
+        return updateById(comments, commentId, (c) => ({
+          ...c,
+          userPic: undefined,
+        }));
+      }),
+    };
   },
 });
 

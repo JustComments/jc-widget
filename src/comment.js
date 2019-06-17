@@ -97,6 +97,10 @@ class Comment extends Component {
     this.props.shareOnTwitter(this.props.comment.commentId);
   };
 
+  onImageError = () => {
+    this.props.onCommentImageError(this.props.comment.commentId);
+  };
+
   render({
     comment,
     commentsIndex,
@@ -121,6 +125,7 @@ class Comment extends Component {
               userUrl={comment.userUrl}
               userPic={comment.userPic}
               loginProvider={comment.loginProvider}
+              onImageError={this.onImageError}
             />
           )}
           <div className={s.title}>

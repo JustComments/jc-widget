@@ -19,7 +19,7 @@ module.exports = {
   toggleNotificationsPush: 'دریافت نوتیفیکیشن ارسال پاسخ به کامنت شما',
   toggleNotificationsEmail: 'دریافت ایمیل ارسال پاسخ به کامنت شما',
   website: 'وبسایت شما (اختیاری)',
-  anonymousCommentHeader: 'Comment annonymously',
+  anonymousCommentHeader: 'Fill out the form to comment',
   socialCommentHeader: 'Login with a provider to leave a comment',
   copyLink: 'copy link',
 };

@@ -254,6 +254,10 @@
   margin-left: 0;
 }
 
+.form.noSocial .left {
+  width: 100%;
+}
+
 .form .left {
   position: relative;
   width: calc(50% - 31.5px);
@@ -262,11 +266,6 @@
 .form .right {
   width: calc(50% - 31.5px);
   margin-bottom: 25px;
-}
-
-.form .inputGroup {
-  display: flex;
-  flex-direction: column;
 }
 
 .form textarea.inpt {
@@ -325,6 +324,10 @@
   border-style: none;
   border: none;
   background-clip: border-box;
+}
+
+.formPicContainer {
+  margin-bottom: 22px;
 }
 
 .comment .menu {
@@ -795,15 +798,10 @@ a.userPic:focus {
   .formPicContainer {
     display: flex;
     align-items: center;
-    margin-bottom: 22px;
   }
 
   .comment {
     margin-bottom: 22px;
-  }
-
-  .comment .title span {
-    display: none;
   }
 
   .comment .comment {
@@ -812,6 +810,10 @@ a.userPic:focus {
 
   .comment > .comment.first {
     margin-top: 22px;
+  }
+
+  .comment .title .collapse span {
+    display: none;
   }
 }
 

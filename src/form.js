@@ -35,10 +35,8 @@ const mapToProps = ({ config, session, form }) => {
   const isLoggedIn = session.isAuthenticated();
 
   return {
-    userPic,
     disableAnonymousLogin,
     disableSocialLogin,
-    loginProvider,
     enableWebsite,
     enableEmailNotifications,
     disableProfilePictures,
@@ -68,12 +66,14 @@ class Form extends Component {
     return this.props.hideCommentPreview(this.form, this.props.replyToComment);
   };
 
+  onImageError = () => {
+    this.props.onFormImageError();
+  };
+
   render({
-    userPic,
     disableAnonymousLogin,
     replyToComment,
     disableSocialLogin,
-    loginProvider,
     enableWebsite,
     enableEmailNotifications,
     disableProfilePictures,
@@ -113,10 +113,11 @@ class Form extends Component {
                     <div className={s.formPicContainer}>
                       {!disableProfilePictures && (
                         <UserPic
-                          userPic={userPic}
+                          userPic={form.userPic}
                           userUrl={form.website}
-                          loginProvider={loginProvider}
+                          loginProvider={form.loginProvider}
                           onLogout={onLogout}
+                          onImageError={this.onImageError}
                         />
                       )}
                       <span className={cls(s.fontBody1)}>
@@ -203,20 +204,29 @@ class Form extends Component {
           )}
           {!disableProfilePictures && isLoggedIn && (
             <UserPic
-              userPic={userPic}
+              userPic={form.userPic}
               userUrl={form.website}
-              loginProvider={loginProvider}
+              loginProvider={form.loginProvider}
               onLogout={onLogout}
+              onImageError={this.onImageError}
             />
           )}
-          {form.preview ? (
+          {form.preview && !form.previewLoading && (
             <div className={cls(s.comment, s.preview)}>
+              <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
               <div
                 className={s.content}
                 dangerouslySetInnerHTML={{ __html: form.preview }}
               />
             </div>
-          ) : (
+          )}
+          {form.previewLoading && (
+            <div className={cls(s.comment, s.preview)}>
+              <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
+              {__('loadingComments')}
+            </div>
+          )}
+          {!form.preview && !form.previewLoading && (
             <div className={cls(s.row, s.textareaContainer)}>
               <label className={cls(s.fontBody2)}>
                 {textareaPlaceholder}
@@ -314,10 +324,20 @@ function Toggle({ icon, title, value, onClick }) {
   );
 }
 
-export function UserPic({ userPic, userUrl, loginProvider, onLogout }) {
+export function UserPic({
+  userPic,
+  onImageError,
+  userUrl,
+  loginProvider,
+  onLogout,
+}) {
   return (
     <UserPicContainer userUrl={userUrl}>
-      {userPic ? <img alt={__('userPic')} src={userPic} /> : <Anonymous />}
+      {userPic ? (
+        <img onError={onImageError} alt={__('userPic')} src={userPic} />
+      ) : (
+        <Anonymous />
+      )}
       {loginProvider === 'twitter' &&
         (onLogout ? (
           <button

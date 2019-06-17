@@ -73,7 +73,6 @@ export function renderWidget(
     comments: [],
     cursor: null,
     jumped: false,
-    loading: false,
     comments: [],
     loading: false,
     form: {
@@ -86,6 +85,7 @@ export function renderWidget(
       email: session.get('userEmail'),
       userPic: session.get('userPic'),
       website: session.get('userUrl'),
+      previewLoading: false,
     },
     config: {
       itemProtocol: itemProtocol,
