@@ -59,7 +59,7 @@
     "classnames": "2.2.6",
     "concurrently": "4.1.0",
     "css-loader": "3.0.0",
-    "eslint": "5.16.0",
+    "eslint": "6.0.0",
     "husky": "2.4.1",
     "i18n-webpack-plugin": "1.0.0",
     "identity-obj-proxy": "3.0.0",
