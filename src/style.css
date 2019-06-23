@@ -9,118 +9,97 @@
   --primary-color-lighter: #6979f81a;
   --primary-color-light: #6979f80d;
 
-  --primary-button-color: var(--primary-bg-color);
-  --primary-button-bg-color: var(--primary-color);
-  --primary-button-hover-color: var(--primary-color);
-  --primary-button-hover-bg-color: var(--primary-bg-color);
-  --primary-button-border: 2px solid var(--primary-button-bg-color);
-
   --primary-text-color: #1a051d;
   --secondary-text-color: #66606b;
 
   --outline-style: 3px var(--primary-color) dashed;
   --outline-offset: 3px;
-}
 
-:global(.just-comments.dark) {
-  --border-color: #2c2c57;
+  --button-border-radius: 6px;
+  --input-border-radius: 6px;
+  --bubble-border-radius: 10px;
+  --user-pic-border-radius: 50%;
 
-  --primary-bg-color: #3f3356;
-  --secondary-bg-color: #ecebed;
-  --secondary-bg-color-lighter: #ecebed33;
+  --font-heading1-size: 22px;
+  --font-heading1-line-height: 28px;
+  --font-heading2-size: 15px;
+  --font-heading2-line-height: 20px;
 
-  --primary-color: #ffffff;
-  --primary-color-lighter: #e61d0f1a;
-  --primary-color-light: #e61d0f0d;
+  --font-button1-size: 17px;
+  --font-button1-line-height: 22px;
+  --font-button2-size: 15px;
+  --font-button2-line-height: 20px;
+  --font-button3-size: 13px;
+  --font-button3-line-height: 18px;
+
+  --font-text1-size: 18px;
+  --font-text1-line-height: 24px;
+  --font-text2-size: 15px;
+  --font-text2-line-height: 24px;
+  --font-text3-size: 13px;
+  --font-text3-line-height: 18px;
 
   --primary-button-color: var(--primary-bg-color);
   --primary-button-bg-color: var(--primary-color);
   --primary-button-hover-color: var(--primary-color);
   --primary-button-hover-bg-color: var(--primary-bg-color);
   --primary-button-border: 2px solid var(--primary-button-bg-color);
-
-  --primary-text-color: #ffffff;
-  --secondary-text-color: #d0cddc;
-
-  --outline-style: 3px var(--primary-color) dashed;
-  --outline-offset: 3px;
 }
 
 .fontHeading1 {
   font-style: normal;
   font-weight: 500;
-  font-size: 34px;
-  line-height: 41px;
+  font-size: var(--font-heading1-size);
+  line-height: var(--font-heading1-line-height);
 }
 
 .fontHeading2 {
   font-style: normal;
   font-weight: 500;
-  font-size: 22px;
-  line-height: 28px;
-}
-
-.fontHeading3 {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
-}
-
-.fontHeading4 {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: var(--font-heading2-size);
+  line-height: var(--font-heading2-line-height);
 }
 
 .fontButton1 {
   font-style: normal;
   font-weight: 500;
-  font-size: 17px;
-  line-height: 22px;
+  font-size: var(--font-button1-size);
+  line-height: var(--font-button1-line-height);
 }
 
 .fontButton2 {
   font-style: normal;
   font-weight: 500;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: var(--font-button2-size);
+  line-height: var(--font-button2-line-height);
 }
 
 .fontButton3 {
   font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 20px;
-}
-
-.fontButton4 {
-  font-style: normal;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: var(--font-button3-size);
+  line-height: var(--font-button3-line-height);
 }
 
 .fontBody1 {
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: var(--font-text1-size);
+  line-height: var(--font-text1-line-height);
 }
 
 .fontBody2 {
   font-style: normal;
   font-weight: normal;
-  font-size: 15px;
-  line-height: 24px;
+  font-size: var(--font-text2-size);
+  line-height: var(--font-text2-line-height);
 }
 
 .fontBody3 {
   font-style: normal;
   font-weight: normal;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: var(--font-text3-size);
+  line-height: var(--font-text3-line-height);
 }
 
 .widget {
@@ -151,7 +130,7 @@
 /* Input Style */
 .inpt {
   background-color: var(--primary-bg-color);
-  border-radius: 6px;
+  border-radius: var(--input-border-radius);
   border-style: solid;
   border: 1px solid var(--border-color);
   box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
@@ -212,7 +191,7 @@
 }
 
 .btn.primary {
-  border-radius: 6px;
+  border-radius: var(--button-border-radius);
   border: var(--primary-button-border);
   background: var(--primary-button-bg-color);
   color: var(--primary-button-color);
@@ -454,7 +433,7 @@ a.userPic:focus {
   width: 56px;
   height: 56px;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--user-pic-border-radius);
 }
 
 .userPic .logout {
@@ -532,7 +511,7 @@ a.userPic:focus {
 .comment .bubble {
   background-color: var(--secondary-bg-color-lighter);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
+  border-radius: var(--bubble-border-radius);
   padding: 6px 12px 6px 16px;
   position: relative;
   min-height: 56px;
@@ -703,6 +682,10 @@ a.userPic:focus {
   text-align: center;
   color: var(--primary-text-color);
   margin-top: 10px;
+}
+
+.text {
+  color: var(--primary-text-color);
 }
 
 .attribution a {

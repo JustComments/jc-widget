@@ -20,8 +20,8 @@ module.exports = {
   toggleNotificationsEmail:
     'receive an email when someone replies to your comment',
   website: 'Website (optional)',
-  anonymousCommentHeader: 'Fill out the form to comment',
-  socialCommentHeader: 'Login with a provider to leave a comment',
+  anonymousCommentHeader: 'Enter your data to comment',
+  socialCommentHeader: 'Log in to leave a comment',
   copyLink: 'copy link',
   preview: 'Preview',
   hidePreview: 'Hide preview',

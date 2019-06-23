@@ -11,29 +11,6 @@ import Comment from './comment';
 import { createGuestJWT } from './utils';
 
 // TODO:
-//  X share button
-//  X copy link button
-//  X save comment nested
-//  X replyTo indication
-//  X find nested comment
-//  X insert in the right position
-//  X attribution style
-//  X base-font variables
-//  X mobile styles
-//  X post CSS and styles
-//  X active state for the comment
-//  X facebook login
-//  X comment count
-//  X number of hidden comments
-//  X hide header and empty text
-//  X disable anonymous login
-//  X loader for preview
-//  X clear message after posting
-//  X hide inline form after posting
-//  X fix styles when social login is hidden
-//  X fix jump to comment
-//  X image on error
-//  - change font size
 //  - translations
 
 export default () => (
@@ -114,7 +91,7 @@ class Widget extends Component {
         {shouldRenderFormBefore && <Form />}
         {loading && <div className={s.loading}>{__('loadingComments')}</div>}
         {!loading && !hideCommentHeader && (
-          <div className={cls(s.header, s.fontHeading2)}>
+          <div className={cls(s.header, s.fontHeading1)}>
             <span>
               {__('comments')}
               {countText}
@@ -122,7 +99,7 @@ class Widget extends Component {
           </div>
         )}
         {!loading && count === 0 && !hideNoCommentsText && (
-          <p>{__('noComments')}</p>
+          <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
         )}
         {comments.map((c) => (
           <Comment comment={c} level={0} />

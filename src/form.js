@@ -182,7 +182,7 @@ class Form extends Component {
                     title={__('loginWithFacebook')}
                     aria-label={__('loginWithFacebook')}
                     onClick={onFacebookLogin}
-                    className={cls(s.btn, s.fontButton4)}
+                    className={cls(s.btn, s.fontButton3)}
                     type="button"
                   >
                     <FacebookIcon />
@@ -193,7 +193,7 @@ class Form extends Component {
                     title={__('loginWithTwitter')}
                     aria-label={__('loginWithTwitter')}
                     onClick={onTwitterLogin}
-                    className={cls(s.btn, s.fontButton4)}
+                    className={cls(s.btn, s.fontButton3)}
                     type="button"
                   >
                     <TwitterIcon />
@@ -279,7 +279,7 @@ class Form extends Component {
               onClick={this.onSend}
               disabled={form.blocked ? 'disabled' : ''}
               type="button"
-              className={cls(s.btn, s.small, s.primary, s.fontButton4)}
+              className={cls(s.btn, s.small, s.primary, s.fontButton3)}
             >
               <ReplyIcon />
               <span>{form.blocked ? __('sending') : __('send')}</span>
@@ -288,7 +288,7 @@ class Form extends Component {
               <button
                 type="button"
                 onClick={this.onHidePreview}
-                className={cls(s.btn, s.secondary, s.fontButton4)}
+                className={cls(s.btn, s.secondary, s.fontButton3)}
               >
                 {__('hidePreview')}
               </button>
@@ -296,7 +296,7 @@ class Form extends Component {
               <button
                 type="button"
                 onClick={this.onPreview}
-                className={cls(s.btn, s.secondary, s.fontButton4)}
+                className={cls(s.btn, s.secondary, s.fontButton3)}
               >
                 {__('preview')}
               </button>

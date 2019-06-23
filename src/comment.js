@@ -135,12 +135,12 @@ class Comment extends Component {
                   <a
                     target="_blank"
                     href={comment.userUrl}
-                    className={cls(s.username, s.fontHeading4)}
+                    className={cls(s.username, s.fontHeading2)}
                   >
                     {comment.username}
                   </a>
                 ) : (
-                  <span className={cls(s.username, s.fontHeading4)}>
+                  <span className={cls(s.username, s.fontHeading2)}>
                     {comment.username}
                   </span>
                 )}
