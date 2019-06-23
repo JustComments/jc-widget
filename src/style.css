@@ -227,6 +227,7 @@
   color: var(--primary-text-color);
   margin-left: 86px;
   margin-bottom: 15px;
+  margin-top: 25px;
 }
 
 .form.noUserPic {
