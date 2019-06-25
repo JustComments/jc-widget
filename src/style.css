@@ -266,11 +266,6 @@
   width: 100%;
 }
 
-.primary-text {
-  color: var(--primary-text-color);
-  opacity: 0.75;
-}
-
 .separator {
   position: relative;
   width: 35px;
@@ -595,7 +590,6 @@ a.userPic:focus {
 
 .comment .content {
   color: var(--primary-text-color);
-  opacity: 0.75;
   margin-top: 7px;
 }
 
