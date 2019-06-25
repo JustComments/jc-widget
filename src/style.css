@@ -780,7 +780,7 @@ a.userPic:focus {
   }
 
   .form .row.last {
-    margin-left: 50px;
+    margin-left: 0;
   }
 
   .formPicContainer {
