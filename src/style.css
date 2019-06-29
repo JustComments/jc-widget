@@ -21,10 +21,11 @@
   --user-pic-border-radius: 50%;
 
   --textarea-height: 117px;
-  --input-border: 1px solid var(--border-color);
   --input-height: 48px;
   --large-button-height: 48px;
   --small-button-height: 40px;
+
+  --input-border: 1px solid var(--border-color);
 
   --font-heading1-size: 22px;
   --font-heading1-line-height: 28px;

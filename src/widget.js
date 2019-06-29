@@ -12,6 +12,9 @@ import { createGuestJWT } from './utils';
 
 // TODO:
 //  - translations
+//  - custom empty pic image
+//  - elipsis animation
+//
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>

@@ -30,6 +30,6 @@ module.exports = {
   loginWithFacebook: 'Log in with Facebook',
   loginWithTwitter: 'Log in with Twitter',
   userPic: 'User picture',
-  collapsedComments: '%{n} comments collapsed',
+  collapsedComments: '%{n} comment(s) collapsed',
   loadingPreview: 'Loading a preview',
 };

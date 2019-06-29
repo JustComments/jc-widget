@@ -47,7 +47,14 @@ module.exports = function(env, args) {
         {
           test: /\.css$/,
           use: [
-            { loader: 'style-loader' },
+            {
+              loader: 'style-loader',
+              options: {
+                attrs: {
+                  id: 'jcStyle',
+                },
+              },
+            },
             {
               loader: 'css-loader',
               options: {

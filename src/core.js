@@ -17,6 +17,7 @@ import Widget from './widget';
 import { API } from './api';
 import { bootstrapRecaptcha } from './recaptcha';
 import { LocalStorage } from './storage';
+import style from './style.css';
 
 const BASE_URL = API_ENDPOINT;
 
