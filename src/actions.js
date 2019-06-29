@@ -471,7 +471,7 @@ export const actions = (store) => ({
   onFormImageError: (state) => {
     store.setState({
       form: {
-        ...form.state,
+        ...state.form,
         userPic: undefined,
       },
     });
