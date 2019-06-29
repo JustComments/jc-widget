@@ -185,6 +185,8 @@ export const actions = (store) => ({
             ...state.form,
             blocked: false,
             text: '',
+            preview: undefined,
+            previewLoading: false,
           },
         });
       })

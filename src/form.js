@@ -215,7 +215,7 @@ class Form extends Component {
             <div className={cls(s.comment, s.preview)}>
               <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
               <div
-                className={s.content}
+                className={cls(s.content, s.fontBody2)}
                 dangerouslySetInnerHTML={{ __html: form.preview }}
               />
             </div>
@@ -223,7 +223,7 @@ class Form extends Component {
           {form.previewLoading && (
             <div className={cls(s.comment, s.preview)}>
               <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
-              {__('loadingComments')}
+              <p className={cls(s.fontBody2)}>{__('loadingPreview')}</p>
             </div>
           )}
           {!form.preview && !form.previewLoading && (

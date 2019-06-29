@@ -31,4 +31,5 @@ module.exports = {
   loginWithTwitter: 'Log in with Twitter',
   userPic: 'User picture',
   collapsedComments: '%{n} comments collapsed',
+  loadingPreview: 'Loading a preview',
 };
