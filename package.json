@@ -2,7 +2,7 @@
   "name": "jc-widget",
   "version": "0.1.0",
   "description": "Just Comments widget",
-  "sideEffects": false,
+  "sideEffects": true,
   "scripts": {
     "test": "jest",
     "build": "rm -rf dist/* && webpack-cli -p --config webpack.config.js --env.production",
