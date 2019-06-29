@@ -120,9 +120,39 @@ class Form extends Component {
                           onImageError={this.onImageError}
                         />
                       )}
-                      <span className={cls(s.fontBody1)}>
-                        {__('anonymousCommentHeader')}
-                      </span>
+                      <div className={cls(s.formHeader, s.fontBody1)}>
+                        <span>
+                          {showSocial
+                            ? __('socialCommentHeader')
+                            : __('anonymousCommentHeader')}
+                        </span>
+                        {showSocial && (
+                          <button
+                            tabindex="0"
+                            role="button"
+                            title={__('loginWithFacebook')}
+                            aria-label={__('loginWithFacebook')}
+                            onClick={onFacebookLogin}
+                            className={cls(s.btn, s.fontButton3)}
+                            type="button"
+                          >
+                            <FacebookIcon />
+                          </button>
+                        )}
+                        {showSocial && (
+                          <button
+                            tabindex="0"
+                            role="button"
+                            title={__('loginWithTwitter')}
+                            aria-label={__('loginWithTwitter')}
+                            onClick={onTwitterLogin}
+                            className={cls(s.btn, s.fontButton3)}
+                            type="button"
+                          >
+                            <TwitterIcon />
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <label className={cls(s.fontBody2)}>
                       {__('name')}
@@ -162,42 +192,6 @@ class Form extends Component {
                       </label>
                     )}
                   </div>
-                </div>
-              )}
-              {showSocial && !disableAnonymousLogin && (
-                <div className={s.separator}>
-                  <div className={s.line} />
-                  <div className={cls(s.word, s.fontBody1)}>or</div>
-                  <div className={s.line} />
-                </div>
-              )}
-              {showSocial && (
-                <div className={s.right}>
-                  <div className={cls(s.fontBody1)}>
-                    {__('socialCommentHeader')}
-                  </div>
-                  <button
-                    tabindex="0"
-                    role="button"
-                    title={__('loginWithFacebook')}
-                    aria-label={__('loginWithFacebook')}
-                    onClick={onFacebookLogin}
-                    className={cls(s.btn, s.fontButton3)}
-                    type="button"
-                  >
-                    <FacebookIcon />
-                  </button>
-                  <button
-                    tabindex="0"
-                    role="button"
-                    title={__('loginWithTwitter')}
-                    aria-label={__('loginWithTwitter')}
-                    onClick={onTwitterLogin}
-                    className={cls(s.btn, s.fontButton3)}
-                    type="button"
-                  >
-                    <TwitterIcon />
-                  </button>
                 </div>
               )}
             </div>

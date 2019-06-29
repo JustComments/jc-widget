@@ -21,7 +21,7 @@ module.exports = {
     'receive an email when someone replies to your comment',
   website: 'Website (optional)',
   anonymousCommentHeader: 'Enter your data to comment',
-  socialCommentHeader: 'Log in to leave a comment',
+  socialCommentHeader: 'Enter your data or log in to comment',
   copyLink: 'copy link',
   preview: 'Preview',
   hidePreview: 'Hide preview',
