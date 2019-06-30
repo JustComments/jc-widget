@@ -217,7 +217,9 @@ class Form extends Component {
           {form.previewLoading && (
             <div className={cls(s.comment, s.preview)}>
               <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
-              <p className={cls(s.fontBody2)}>{__('loadingPreview')}</p>
+              <p className={cls(s.fontBody2, s.previewLoading)}>
+                {__('loadingPreview')}
+              </p>
             </div>
           )}
           {!form.preview && !form.previewLoading && (

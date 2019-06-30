@@ -648,13 +648,34 @@ a.userPic:focus {
   color: var(--secondary-text-color);
 }
 
-.loading,
 .attribution {
   width: 100%;
   text-align: center;
   color: var(--primary-text-color);
   margin-top: 30px;
   margin-bottom: 10px;
+}
+
+.loading {
+  color: var(--primary-text-color);
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.previewLoading:after,
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: jcellipsis steps(4, end) 900ms infinite;
+  content: '\2026'; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes jcellipsis {
+  to {
+    width: 1.25em;
+  }
 }
 
 .text {
