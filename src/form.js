@@ -232,6 +232,7 @@ class Form extends Component {
                   })}
                   value={form.text}
                   required={true}
+                  maxlength={5000}
                   onInput={onTextInput}
                   onKeyDown={(e) => {
                     if (e.ctrlKey && e.keyCode == 13) {
@@ -330,7 +331,12 @@ export function UserPic({
   return (
     <UserPicContainer userUrl={userUrl}>
       {userPic ? (
-        <img onError={onImageError} alt={__('userPic')} src={userPic} />
+        <img
+          className={s.img}
+          onError={onImageError}
+          alt={__('userPic')}
+          src={userPic}
+        />
       ) : (
         <Anonymous />
       )}

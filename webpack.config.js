@@ -76,7 +76,7 @@ module.exports = function(env, args) {
                     reset: {
                       margin: 0,
                       padding: 0,
-                      borderRadius: 0,
+                      border: 0,
                       textAlign: 'left',
                     },
                   }),

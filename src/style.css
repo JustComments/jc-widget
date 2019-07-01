@@ -119,6 +119,10 @@
   box-sizing: border-box;
 }
 
+.img {
+  display: inline;
+}
+
 .loadMore {
   margin-bottom: 30px;
 }
