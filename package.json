@@ -60,7 +60,7 @@
     "concurrently": "4.1.1",
     "css-loader": "3.0.0",
     "eslint": "6.0.1",
-    "husky": "2.4.1",
+    "husky": "3.0.0",
     "i18n-webpack-plugin": "1.0.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.8.0",
@@ -76,7 +76,7 @@
     "stylelint": "10.1.0",
     "stylelint-config-recommended": "2.2.0",
     "stylelint-webpack-plugin": "0.10.5",
-    "webpack": "4.35.0",
+    "webpack": "4.35.2",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "3.3.5"
   },
