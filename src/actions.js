@@ -103,13 +103,6 @@ export const actions = (store) => ({
   },
 
   sendComment: (state, formRef, replyToComment) => {
-    store.setState({
-      form: {
-        ...state.form,
-        blocked: true,
-      },
-    });
-
     const valid = formRef.checkValidity();
 
     if (!valid) {
@@ -127,6 +120,7 @@ export const actions = (store) => ({
       form: {
         ...state.form,
         dirty: false,
+        blocked: true,
       },
     });
 

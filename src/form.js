@@ -10,6 +10,7 @@ import {
   EmailIcon,
   TwitterIcon,
   FacebookIcon,
+  LogoutIcon,
 } from './icons';
 import { supportsServiceWorkers, substitute } from './utils';
 import s from './style.css';
@@ -279,7 +280,13 @@ class Form extends Component {
               className={cls(s.btn, s.small, s.primary, s.fontButton3)}
             >
               <ReplyIcon />
-              <span>{form.blocked ? __('sending') : __('send')}</span>
+              <span
+                className={cls({
+                  [s.sending]: form.blocked,
+                })}
+              >
+                {form.blocked ? __('sending') : __('send')}
+              </span>
             </button>
             {form.preview ? (
               <button
@@ -321,6 +328,11 @@ function Toggle({ icon, title, value, onClick }) {
   );
 }
 
+const icons = {
+  twitter: <TwitterIcon />,
+  facebook: <FacebookIcon />,
+};
+
 export function UserPic({
   userPic,
   onImageError,
@@ -328,8 +340,9 @@ export function UserPic({
   loginProvider,
   onLogout,
 }) {
+  const icon = icons[loginProvider];
   return (
-    <UserPicContainer userUrl={userUrl}>
+    <UserPicContainer onLogout={onLogout} userUrl={userUrl}>
       {userPic ? (
         <img
           className={s.img}
@@ -340,48 +353,28 @@ export function UserPic({
       ) : (
         <Anonymous />
       )}
-      {loginProvider === 'twitter' &&
-        (onLogout ? (
-          <button
-            onClick={onLogout}
-            type="button"
-            title="logout"
-            aria-label="logout"
-            className={cls(s.btn, s.logout)}
-          >
-            <TwitterIcon />
-          </button>
-        ) : (
-          <div className={cls(s.logout)}>
-            <TwitterIcon />
-          </div>
-        ))}
-      {loginProvider === 'fb' &&
-        (onLogout ? (
-          <button
-            onClick={onLogout}
-            type="button"
-            title="logout"
-            aria-label="logout"
-            className={cls(s.btn, s.logout)}
-          >
-            <FacebookIcon />
-          </button>
-        ) : (
-          <div className={cls(s.logout)}>
-            <FacebookIcon />
-          </div>
-        ))}
+      {icon && <div className={cls(s.providerIcon)}>{icon}</div>}
+      {onLogout && loginProvider && (
+        <button
+          onClick={onLogout}
+          type="button"
+          title="logout"
+          aria-label="logout"
+          className={cls(s.btn, s.logoutButton)}
+        >
+          <LogoutIcon />
+        </button>
+      )}
     </UserPicContainer>
   );
 }
 
-function UserPicContainer({ userUrl, children }) {
+function UserPicContainer({ onLogout, userUrl, children }) {
   return userUrl ? (
-    <a className={s.userPic} href={userUrl} target="_blank" rel="noopener">
+    <a className={cls(s.userPic)} href={userUrl} target="_blank" rel="noopener">
       {children}
     </a>
   ) : (
-    <div className={s.userPic}>{children}</div>
+    <div className={cls(s.userPic, { [s.logout]: onLogout })}>{children}</div>
   );
 }

@@ -413,7 +413,19 @@ a.userPic:focus {
   border-radius: var(--user-pic-border-radius);
 }
 
-.userPic .logout {
+.userPic .logoutButton {
+  position: absolute;
+  left: calc(50% - 5px);
+  bottom: -30px;
+}
+
+.userPic .logoutIcon {
+  fill: var(--secondary-text-color);
+  width: 15px;
+  height: 15px;
+}
+
+.userPic .providerIcon {
   display: block;
   width: 20px;
   height: 20px;
@@ -428,8 +440,8 @@ a.userPic:focus {
   margin: 0;
 }
 
-.userPic .logout svg.twitter,
-.userPic .logout svg.fb {
+.userPic .providerIcon svg.twitter,
+.userPic .providerIcon svg.fb {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -667,6 +679,7 @@ a.userPic:focus {
 }
 
 .previewLoading:after,
+.sending:after,
 .loading:after {
   overflow: hidden;
   display: inline-block;
@@ -745,12 +758,13 @@ a.userPic:focus {
     height: 40px;
   }
 
-  .form label {
-    margin-bottom: 0;
+  .userPic .logoutIcon {
+    width: 16px;
+    height: 16px;
   }
 
-  .form .row.last {
-    margin-left: 0;
+  .form label {
+    margin-bottom: 0;
   }
 
   .formPicContainer {
@@ -785,10 +799,6 @@ a.userPic:focus {
   }
 
   .comment .comment.deep {
-    margin-left: 0;
-  }
-
-  .form .row.last {
     margin-left: 0;
   }
 }

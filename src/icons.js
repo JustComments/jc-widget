@@ -307,3 +307,18 @@ export const InLoveIcon = () => (
     </defs>
   </svg>
 );
+
+export const LogoutIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 120 120"
+      className={s.logoutIcon}
+    >
+      <path d="M107.36 71.768L65.052 29.46l11.74-11.738L119.1 60.03z" />
+      <path d="M41 50.446h60.21V69.5H41z" />
+      <path d="M119.15 59.957L76.858 102.28l-11.74-11.722 42.312-42.33zM5 8.5h17v103H5z" />
+      <path d="M5 5h48v17H5zm0 92h48v17H5z" />
+    </svg>
+  );
+};
