@@ -6,6 +6,7 @@ import { actions } from './actions';
 import { Connect } from 'redux-zero/preact';
 import { createGuestJWT } from './utils';
 import { h, render, Component } from 'preact';
+import { Recaptcha } from './recaptcha';
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -79,6 +80,7 @@ class Widget extends Component {
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
+    setRecaptchaRef,
   }) {
     return (
       <div className={s.widget}>
@@ -111,7 +113,7 @@ class Widget extends Component {
         {recaptchaSitekey && (
           <Recaptcha
             sitekey={recaptchaSitekey}
-            ref={(c) => (this.recaptcha = c)}
+            ref={(c) => setRecaptchaRef(c)}
           />
         )}
         {shouldRenderFormAfter && <Form />}

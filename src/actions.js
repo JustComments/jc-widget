@@ -102,6 +102,12 @@ export const actions = (store) => ({
     });
   },
 
+  setRecaptchaRef: (state, recaptchaRef) => {
+    store.setState({
+      recaptchaRef,
+    });
+  },
+
   sendComment: (state, formRef, replyToComment) => {
     const valid = formRef.checkValidity();
 
@@ -132,7 +138,7 @@ export const actions = (store) => ({
         : undefined,
     };
 
-    return checkCaptcha()
+    return checkCaptcha(state.recaptchaRef)
       .then((captchaResult) => {
         return createComment(state.api, state.session, state.config, {
           ...data,
@@ -613,6 +619,9 @@ function createComment(
   });
 }
 
-function checkCaptcha() {
-  return Promise.resolve();
+function checkCaptcha(recaptcha) {
+  if (!recaptcha) {
+    return Promise.resolve();
+  }
+  return recaptcha.check();
 }
