@@ -5,8 +5,12 @@ timeago.register('locale', locale);
 
 const ago = timeago();
 
-export function getCommentDate(comment) {
+export function getHumanReadableCommentTimestamp(comment) {
   return ago.format(comment.createdAt, 'locale');
+}
+
+export function getCommentTimestamp(comment) {
+  return new Date(comment.createdAt).toISOString();
 }
 
 export function getCommentUrl(comment) {

@@ -67,45 +67,46 @@ export function renderWidget(
   });
 
   const initialState = {
-    jumpToComment,
     api,
-    session,
-    subscription: null,
+    comments: [],
     comments: [],
     cursor: null,
     jumped: false,
-    comments: [],
+    jumpToComment,
     loading: false,
+    session,
+    subscription: null,
     form: {
-      errors: {},
       dirty: false,
-      pushNotifications: !!session.get('subscription'),
-      userPic: session.get('userPic'),
-      loginProvider: session.get('loginProvider'),
-      username: session.get('username'),
       email: session.get('userEmail'),
+      errors: {},
+      loginProvider: session.get('loginProvider'),
+      previewLoading: false,
+      pushNotifications: !!session.get('subscription'),
+      username: session.get('username'),
+      userPic: session.get('userPic'),
       userPic: session.get('userPic'),
       website: session.get('userUrl'),
-      previewLoading: false,
     },
     config: {
-      itemProtocol: itemProtocol,
-      itemPort: itemPort,
-      recaptchaSitekey: data.recaptchaSitekey,
-      disableAnonymousLogin: data.disableAnonymousLogin,
-      disableSocialLogin: data.disableSocialLogin,
-      disableLoadMore: data.disableLoadMore,
-      sort: data.sort,
-      hideAttribution: data.hideAttribution,
-      enableWebsite: data.enableWebsite,
-      enableEmailNotifications: data.enableEmailNotifications,
-      theme: data.theme,
       apiKey: data.apiKey,
+      defaultUserPicUrl: data.defaultUserPicUrl,
+      disableAnonymousLogin: data.disableAnonymousLogin,
+      disableLoadMore: data.disableLoadMore,
       disableProfilePictures: data.disableProfilePictures,
       disableShareButton: data.disableShareButton,
+      disableSocialLogin: data.disableSocialLogin,
+      enableEmailNotifications: data.enableEmailNotifications,
+      enableWebsite: data.enableWebsite,
+      hideAttribution: data.hideAttribution,
       hideCommentHeader: data.hideCommentHeader,
       hideNoCommentsText: data.hideNoCommentsText,
+      itemPort: itemPort,
+      itemProtocol: itemProtocol,
       localStorageSupported: LocalStorage.supported(),
+      recaptchaSitekey: data.recaptchaSitekey,
+      sort: data.sort,
+      theme: data.theme,
     },
   };
 
@@ -139,6 +140,7 @@ function readWidgetData(widget) {
     widget.dataset.recaptcha === 'true'
       ? '6Lc9nTEUAAAAABlX72vOhEVdBUX_ULUY88e7Chkl'
       : undefined;
+  const defaultUserPicUrl = widget.dataset.defaultuserpicurl;
   let pageSize = widget.dataset.pagesize
     ? parseInt(widget.dataset.pagesize, 10)
     : 100;
@@ -156,24 +158,25 @@ function readWidgetData(widget) {
   const pageId = widget.dataset.pageid;
   const theme = widget.dataset.theme || 'default';
   return {
-    jwt,
     apiKey,
+    defaultUserPicUrl,
     disableAnonymousLogin,
-    disableSocialLogin,
     disableLoadMore,
-    ignoreQuery,
-    hideAttribution,
-    enableWebsite,
-    enableEmailNotifications,
-    pageSize,
-    sort,
-    pageId,
-    recaptchaSitekey,
-    theme,
     disableProfilePictures,
     disableShareButton,
+    disableSocialLogin,
+    enableEmailNotifications,
+    enableWebsite,
+    hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
+    ignoreQuery,
+    jwt,
+    pageId,
+    pageSize,
+    recaptchaSitekey,
+    sort,
+    theme,
   };
 }
 

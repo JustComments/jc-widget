@@ -590,7 +590,7 @@ function createComment(
 
   const jwt = session.get('jwt')
     ? session.get('jwt')
-    : createGuestJWT(username, email, config.apiKey);
+    : createGuestJWT(username, email, config.apiKey, config.defaultUserPicUrl);
 
   const subscription =
     notifications && session.get('subscription')

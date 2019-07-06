@@ -30,6 +30,7 @@ const mapToProps = ({ config, session, form }) => {
     enableEmailNotifications,
     disableProfilePictures,
     localStorageSupported,
+    defaultUserPicUrl,
   } = config;
   const { userPic, loginProvider } = form;
   const showSocial = localStorageSupported && !disableSocialLogin;
@@ -44,6 +45,7 @@ const mapToProps = ({ config, session, form }) => {
     showSocial,
     form,
     isLoggedIn,
+    defaultUserPicUrl,
   };
 };
 
@@ -72,6 +74,7 @@ class Form extends Component {
   };
 
   render({
+    defaultUserPicUrl,
     disableAnonymousLogin,
     replyToComment,
     disableSocialLogin,
@@ -114,7 +117,13 @@ class Form extends Component {
                     <div className={s.formPicContainer}>
                       {!disableProfilePictures && (
                         <UserPic
-                          userPic={form.userPic}
+                          userPic={
+                            form.userPic
+                              ? form.userPic
+                              : !isLoggedIn
+                              ? defaultUserPicUrl
+                              : undefined
+                          }
                           userUrl={form.website}
                           loginProvider={form.loginProvider}
                           onLogout={onLogout}
@@ -199,7 +208,13 @@ class Form extends Component {
           )}
           {!disableProfilePictures && isLoggedIn && (
             <UserPic
-              userPic={form.userPic}
+              userPic={
+                form.userPic
+                  ? form.userPic
+                  : !isLoggedIn
+                  ? defaultUserPicUrl
+                  : undefined
+              }
               userUrl={form.website}
               loginProvider={form.loginProvider}
               onLogout={onLogout}
@@ -343,16 +358,15 @@ export function UserPic({
   const icon = icons[loginProvider];
   return (
     <UserPicContainer onLogout={onLogout} userUrl={userUrl}>
-      {userPic ? (
+      {userPic && (
         <img
           className={s.img}
           onError={onImageError}
           alt={__('userPic')}
           src={userPic}
         />
-      ) : (
-        <Anonymous />
       )}
+      {!userPic && <Anonymous />}
       {icon && <div className={cls(s.providerIcon)}>{icon}</div>}
       {onLogout && loginProvider && (
         <button

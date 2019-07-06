@@ -1,19 +1,11 @@
-import { h, render, Component } from 'preact';
-
-import { Connect } from 'redux-zero/preact';
-import { actions } from './actions';
-
-import s from './style.css';
 import cls from 'classnames';
-
-import Form from './form';
 import Comment from './comment';
+import Form from './form';
+import s from './style.css';
+import { actions } from './actions';
+import { Connect } from 'redux-zero/preact';
 import { createGuestJWT } from './utils';
-
-// TODO:
-//  - translations
-//  - custom empty pic image
-//  - hover over the date
+import { h, render, Component } from 'preact';
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>

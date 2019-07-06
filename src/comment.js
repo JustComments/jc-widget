@@ -13,7 +13,11 @@ import {
   InLoveIcon,
   ReplyIcon,
 } from './icons';
-import { getCommentDate, getCommentUrl } from './comment-utils';
+import {
+  getCommentTimestamp,
+  getHumanReadableCommentTimestamp,
+  getCommentUrl,
+} from './comment-utils';
 import { substitute } from './utils';
 import Form, { UserPic } from './form';
 import s from './style.css';
@@ -150,8 +154,9 @@ class Comment extends Component {
                   onClick={this.onCommentLinkClick}
                   href={getCommentUrl(comment)}
                   className={cls(s.date, s.fontBody3)}
+                  title={getCommentTimestamp(comment)}
                 >
-                  {getCommentDate(comment)}
+                  {getHumanReadableCommentTimestamp(comment)}
                 </a>
                 {comment.replyTo && commentsIndex && (
                   <a

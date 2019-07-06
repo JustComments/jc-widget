@@ -6,11 +6,11 @@ export function buildURL(itemId, commentId) {
   return `//${itemId}#jc${commentId}`;
 }
 
-export function createGuestJWT(username, email, apiKey) {
+export function createGuestJWT(username, email, apiKey, userPic) {
   var data = {
     apiKey,
     userId: 'guest',
-    userPic: null,
+    userPic: userPic && !email ? userPic : null,
     userUrl: null,
     userEmail: email,
     username,
