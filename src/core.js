@@ -35,7 +35,7 @@ export function renderWidget(
   const data = readWidgetData(widget);
 
   const { itemId, jumpToComment, itemProtocol, itemPort } = extractDataFromURL(
-    data.ignoreQuery,
+    data.usequery,
   );
 
   if (data.recaptchaSitekey) {
@@ -106,7 +106,6 @@ export function renderWidget(
       localStorageSupported: LocalStorage.supported(),
       recaptchaSitekey: data.recaptchaSitekey,
       sort: data.sort,
-      theme: data.theme,
     },
   };
 
@@ -129,7 +128,7 @@ function readWidgetData(widget) {
   const disableProfilePictures =
     widget.dataset.disableprofilepictures === 'true';
   const disableShareButton = widget.dataset.disablesharebutton === 'true';
-  const ignoreQuery = widget.dataset.ignorequery === 'true';
+  const usequery = widget.dataset.usequery === 'true';
   const hideAttribution = widget.dataset.hideattribution === 'true';
   const enableWebsite = widget.dataset.enablewebsite === 'true';
   const hideCommentHeader = widget.dataset.hidecommentheader === 'true';
@@ -156,7 +155,6 @@ function readWidgetData(widget) {
   }
 
   const pageId = widget.dataset.pageid;
-  const theme = widget.dataset.theme || 'default';
   return {
     apiKey,
     defaultUserPicUrl,
@@ -170,13 +168,12 @@ function readWidgetData(widget) {
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
-    ignoreQuery,
+    usequery,
     jwt,
     pageId,
     pageSize,
     recaptchaSitekey,
     sort,
-    theme,
   };
 }
 

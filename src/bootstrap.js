@@ -118,7 +118,7 @@ function removeURLParameter(url, parameter) {
   }
 }
 
-export function extractDataFromURL(ignoreQuery) {
+export function extractDataFromURL(useQuery) {
   const href = window.location.href;
   const pathname = window.location.pathname;
   const hostname = window.location.hostname;
@@ -127,7 +127,7 @@ export function extractDataFromURL(ignoreQuery) {
   const itemProtocol = window.location.protocol;
   const rewrittenPath = rewritePath(pathname);
   const itemId = `${hostname}${rewrittenPath}${
-    ignoreQuery ? '' : removeCommonParams(search)
+    useQuery ? removeCommonParams(search) : ''
   }`;
   const jumpToComment = getJumpToComment();
 

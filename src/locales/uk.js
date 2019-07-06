@@ -8,7 +8,7 @@ module.exports = {
   loadingComments: 'loading comments',
   networkError: 'A network error has occurred. Please try again.',
   loadMoreButton: 'press to load more comments',
-  ctrlEnterToSend: 'use Ctrl + Enter to send; Markdown is supported',
+  ctrlEnterToSend: 'use Ctrl + Enter to send; supports Markdown',
   share: 'share on',
   reply: 'Reply',
   replyTo: 'Write your response to %{name}',

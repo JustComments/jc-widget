@@ -404,7 +404,11 @@ a.userPic:focus {
   outline-offset: var(--outline-offset);
 }
 
-.userPic,
+.userPic {
+  width: 56px;
+  height: 86px;
+}
+
 .userPic img,
 .userPic svg.anon {
   width: 56px;
@@ -416,7 +420,7 @@ a.userPic:focus {
 .userPic .logoutButton {
   position: absolute;
   left: calc(50% - 5px);
-  bottom: -30px;
+  bottom: 0;
 }
 
 .userPic .logoutIcon {
@@ -431,7 +435,7 @@ a.userPic:focus {
   height: 20px;
   position: absolute;
   right: 0;
-  bottom: 0;
+  top: 36px;
   box-sizing: border-box;
   text-align: center;
   border: 0;
@@ -751,7 +755,11 @@ a.userPic:focus {
     margin-right: 10px;
   }
 
-  .userPic,
+  .userPic {
+    width: 40px;
+    height: 70px;
+  }
+
   .userPic img,
   .userPic svg.anon {
     width: 40px;
@@ -759,6 +767,19 @@ a.userPic:focus {
   }
 
   .userPic .logoutIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .userPic .providerIcon {
+    width: 16px;
+    height: 16px;
+    right: 0;
+    top: 26px;
+  }
+
+  .userPic .providerIcon svg.twitter,
+  .userPic .providerIcon svg.fb {
     width: 16px;
     height: 16px;
   }

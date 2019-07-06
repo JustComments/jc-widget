@@ -297,7 +297,7 @@ class Form extends Component {
               <ReplyIcon />
               <span
                 className={cls({
-                  [s.sending]: form.blocked,
+                  // [s.sending]: form.blocked,
                 })}
               >
                 {form.blocked ? __('sending') : __('send')}
@@ -345,7 +345,7 @@ function Toggle({ icon, title, value, onClick }) {
 
 const icons = {
   twitter: <TwitterIcon />,
-  facebook: <FacebookIcon />,
+  fb: <FacebookIcon />,
 };
 
 export function UserPic({

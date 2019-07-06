@@ -14,6 +14,7 @@ exports.mapping = {
   zh_CN: 'zh_CN',
   zh_HK: 'zh_HK',
   zh_TW: 'zh_TW',
+  uk: 'uk',
 };
 
 exports.bundles = {
@@ -72,5 +73,9 @@ exports.bundles = {
   zh_HK: {
     textLocale: 'zh_HK',
     timeAgoLocale: 'zh_CN',
+  },
+  uk: {
+    textLocale: 'uk',
+    timeAgoLocale: 'uk',
   },
 };
