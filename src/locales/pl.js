@@ -18,8 +18,4 @@ module.exports = {
   toggleNotificationsPush: 'otrzymywać powiadomienia o odpowiedziach',
   toggleNotificationsEmail: 'otrzymywać powiadomienia o odpowiedziach',
   website: 'Strona Internetowa (Opcjonalnie)',
-  networkError: 'Network Error',
-  anonymousCommentHeader: 'Fill out the form to comment',
-  socialCommentHeader: 'Login with a provider to leave a comment',
-  copyLink: 'copy link',
 };

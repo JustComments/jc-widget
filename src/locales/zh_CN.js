@@ -17,8 +17,4 @@ module.exports = {
   usernameRemoved: '已删除',
   toggleNotificationsPush: '收到回复通知',
   toggleNotificationsEmail: '收到回复通知',
-  website: 'Website',
-  anonymousCommentHeader: 'Fill out the form to comment',
-  socialCommentHeader: 'Login with a provider to leave a comment',
-  copyLink: 'copy link',
 };

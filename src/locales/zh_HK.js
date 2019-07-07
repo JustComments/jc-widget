@@ -18,8 +18,4 @@ module.exports = {
   usernameRemoved: '已被移除',
   toggleNotificationsPush: '接收別人回覆你的通知',
   toggleNotificationsEmail: '接收別人回覆你的通知',
-  website: 'Website',
-  anonymousCommentHeader: 'Fill out the form to comment',
-  socialCommentHeader: 'Login with a provider to leave a comment',
-  copyLink: 'copy link',
 };

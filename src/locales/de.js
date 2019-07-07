@@ -18,7 +18,4 @@ module.exports = {
   toggleNotificationsPush: 'Push-Benachrichtigungen über Antworten erhalten',
   toggleNotificationsEmail: 'E-Mail-Benachrichtigungen über Antworten erhalten',
   website: 'Website (optional)',
-  anonymousCommentHeader: 'Fill out the form to comment',
-  socialCommentHeader: 'Login with a provider to leave a comment',
-  copyLink: 'copy link',
 };
