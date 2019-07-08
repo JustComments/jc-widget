@@ -90,6 +90,7 @@ class Form extends Component {
     onTwitterLogin,
     onUsernameInput,
     onEmailInput,
+    onEmailBlur,
     onWebsiteInput,
     onTextInput,
     onLogout,
@@ -185,6 +186,7 @@ class Form extends Component {
                           [s.dirty]: form.dirty,
                         })}
                         max={255}
+                        onBlur={onEmailBlur}
                         onInput={onEmailInput}
                       />
                     </label>

@@ -18,6 +18,7 @@ import { API } from './api';
 import { bootstrapRecaptcha } from './recaptcha';
 import { LocalStorage } from './storage';
 import style from './style.css';
+import { getUserPic } from './actions';
 
 const BASE_URL = API_ENDPOINT;
 
@@ -66,6 +67,8 @@ export function renderWidget(
     fetchData,
   });
 
+  const email = session.get('userEmail');
+
   const initialState = {
     api,
     comments: [],
@@ -78,14 +81,14 @@ export function renderWidget(
     subscription: null,
     form: {
       dirty: false,
-      email: session.get('userEmail'),
+      email,
       errors: {},
       loginProvider: session.get('loginProvider'),
       previewLoading: false,
       pushNotifications: !!session.get('subscription'),
       username: session.get('username'),
-      userPic: session.get('userPic'),
-      userPic: session.get('userPic'),
+      userPic: session.get('userPic') || (email && getUserPic(email)),
+      userUrl: session.get('userUrl'),
       website: session.get('userUrl'),
     },
     config: {

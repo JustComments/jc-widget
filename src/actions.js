@@ -1,5 +1,6 @@
 import { createGuestJWT, setJWT, copyToClipboard } from './utils';
 import { getCommentUrl } from './comment-utils';
+import * as md5 from 'md5';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {
@@ -309,6 +310,18 @@ export const actions = (store) => ({
         email: e.target.value,
       },
     };
+  },
+
+  onEmailBlur: (state, e) => {
+    const { email } = state.form;
+    if (email) {
+      return {
+        form: {
+          ...state.form,
+          userPic: getUserPic(email),
+        },
+      };
+    }
   },
 
   onWebsiteInput: (state, e) => {
@@ -624,4 +637,8 @@ function checkCaptcha(recaptcha) {
     return Promise.resolve();
   }
   return recaptcha.check();
+}
+
+export function getUserPic(email) {
+  return `https://www.gravatar.com/avatar/${md5(email)}`;
 }
