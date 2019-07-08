@@ -477,7 +477,7 @@ export const actions = (store) => ({
   shareOnFb: (state, commentId) => {
     const comment = findById(state.commentsIndex, commentId);
     openSharePopup(
-      `http://facebook.com/sharer.php?s=100&p[url]=${encodeURIComponent(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
         getCommentUrl(comment),
       )}`,
     );
