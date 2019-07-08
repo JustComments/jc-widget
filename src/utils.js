@@ -157,13 +157,6 @@ export function setJWT(session, jwt, loginProvider) {
   session.setIfMissing('loginProvider', loginProvider);
 }
 
-export function substitute(str, keys) {
-  Object.keys(keys).forEach((key) => {
-    str = str.replace(`%{${key}}`, keys[key]);
-  });
-  return str;
-}
-
 export const copyToClipboard = (str) => {
   const el = document.createElement('textarea');
   el.value = str;

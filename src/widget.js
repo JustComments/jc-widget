@@ -7,6 +7,7 @@ import { Connect } from 'redux-zero/preact';
 import { createGuestJWT } from './utils';
 import { h, render, Component } from 'preact';
 import { Recaptcha } from './recaptcha';
+import { __ } from './i18n';
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>

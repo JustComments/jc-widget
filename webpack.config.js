@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const I18nPlugin = require('i18n-webpack-plugin');
 const localizedBundles = require('./src/locales').bundles;
 
 Object.keys(localizedBundles).forEach((bundleKey) => {
@@ -112,10 +111,13 @@ module.exports = function(env, args) {
             BUNDLE_LOCALE: JSON.stringify(bundle.textLocale),
           }),
           new webpack.NormalModuleReplacementPlugin(
-            /TIMEAGO_LOCALE/,
+            /TIMEAGO_LOCALE_MODULE/,
             'timeago.js/locales/' + bundle.timeAgoLocale,
           ),
-          new I18nPlugin(bundle.translations),
+          new webpack.NormalModuleReplacementPlugin(
+            /BUNDLE_LOCALE_MODULE/,
+            './locales/' + bundle.textLocale,
+          ),
           ...(!skipReports
             ? [
                 new BundleAnalyzerPlugin({

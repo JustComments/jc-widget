@@ -1,12 +1,7 @@
-import locale from 'TIMEAGO_LOCALE';
-import timeago from 'timeago.js';
-
-timeago.register('locale', locale);
-
-const ago = timeago();
+import { formatDate } from './i18n';
 
 export function getHumanReadableCommentTimestamp(comment) {
-  return ago.format(comment.createdAt, 'locale');
+  return formatDate(comment.createdAt);
 }
 
 export function getCommentTimestamp(comment) {

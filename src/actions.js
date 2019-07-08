@@ -1,6 +1,7 @@
 import { createGuestJWT, setJWT, copyToClipboard } from './utils';
 import { getCommentUrl } from './comment-utils';
 import * as md5 from 'md5';
+import { __ } from './i18n';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {

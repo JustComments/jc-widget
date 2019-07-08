@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { __, substitute } from './i18n';
 
 import { Connect } from 'redux-zero/preact';
 import { actions } from './actions';
@@ -12,7 +13,7 @@ import {
   FacebookIcon,
   LogoutIcon,
 } from './icons';
-import { supportsServiceWorkers, substitute } from './utils';
+import { supportsServiceWorkers } from './utils';
 import s from './style.css';
 import cls from 'classnames';
 

@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-
+import { __, substitute } from './i18n';
 import { Connect } from 'redux-zero/preact';
 import { actions } from './actions';
 import {
@@ -18,7 +18,6 @@ import {
   getHumanReadableCommentTimestamp,
   getCommentUrl,
 } from './comment-utils';
-import { substitute } from './utils';
 import Form, { UserPic } from './form';
 import s from './style.css';
 import cls from 'classnames';
