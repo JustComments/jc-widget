@@ -37,7 +37,7 @@ export class API {
       '_blank',
       'location=yes,height=600,width=800,scrollbars=yes,status=yes',
     );
-    let resolve = undefined;
+    let resolve;
     const promise = new Promise((r) => {
       resolve = r;
     });
@@ -70,7 +70,7 @@ export class API {
       '_blank',
       'location=yes,height=600,width=800,scrollbars=yes,status=yes',
     );
-    let resolve = undefined;
+    let resolve;
     const promise = new Promise((r) => {
       resolve = r;
     });
@@ -78,7 +78,6 @@ export class API {
     LocalStorage.set('jcAuth', true);
     const handler = (e) => {
       if (e.key === 'jcOauthToken' && e.newValue) {
-        const tokenVerifier = e.newValue;
         window.removeEventListener('storage', handler);
         const jwt = LocalStorage.get('jcOauthToken');
         resolve(jwt);
@@ -96,7 +95,7 @@ export class API {
       '_blank',
       'location=yes,height=600,width=800,scrollbars=yes,status=yes',
     );
-    let resolve = undefined;
+    let resolve;
     const promise = new Promise((r) => {
       resolve = r;
     });
@@ -154,12 +153,10 @@ export class API {
         pageSize: this.opts.pageSize,
       })}`,
       { method: 'GET' },
-    ).then((json) => {
-      return {
-        comments: json.comments,
-        cursor: json.lastKey,
-      };
-    });
+    ).then((json) => ({
+      comments: json.comments,
+      cursor: json.lastKey,
+    }));
   }
 
   saveComment(jwt, comment) {
@@ -193,12 +190,10 @@ export class API {
         timezone: getUserTimezone(),
         loginProvider: comment.loginProvider,
       }),
-    }).then((c) => {
-      return {
-        ...c,
-        htmlContent: c.htmlMessage,
-      };
-    });
+    }).then((c) => ({
+      ...c,
+      htmlContent: c.htmlMessage,
+    }));
   }
 
   previewComment(jwt, comment) {
@@ -213,12 +208,10 @@ export class API {
       body: JSON.stringify({
         message: comment.message,
       }),
-    }).then((c) => {
-      return {
-        ...c,
-        htmlContent: c.htmlMessage,
-      };
-    });
+    }).then((c) => ({
+      ...c,
+      htmlContent: c.htmlMessage,
+    }));
   }
 }
 

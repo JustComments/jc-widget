@@ -18,7 +18,8 @@ import {
   getHumanReadableCommentTimestamp,
   getCommentUrl,
 } from './comment-utils';
-import Form, { UserPic } from './form';
+import { Avatar } from './avatar';
+import Form from './form';
 import s from './style.css';
 import cls from 'classnames';
 
@@ -30,13 +31,11 @@ const WrapperComment = (origProps) => (
 
 export default WrapperComment;
 
-const mapToProps = (state, props) => {
-  return {
-    commentsIndex: state.commentsIndex,
-    disableProfilePictures: state.config.disableProfilePictures,
-    disableShareButton: state.config.disableShareButton,
-  };
-};
+const mapToProps = (state) => ({
+  commentsIndex: state.commentsIndex,
+  disableProfilePictures: state.config.disableProfilePictures,
+  disableShareButton: state.config.disableShareButton,
+});
 
 function commentCount(comments) {
   return comments.reduce((acc, c) => {
@@ -123,70 +122,72 @@ class Comment extends Component {
         id={`jc${comment.commentId}`}
       >
         <div className={cls(s.bubble, { [s.active]: comment.active })}>
-          {!disableProfilePictures && (
-            <UserPic
-              userUrl={comment.userUrl}
-              userPic={comment.userPic}
-              loginProvider={comment.loginProvider}
-              onImageError={this.onImageError}
-            />
-          )}
-          <div className={s.title}>
-            <div className={s.metadata}>
-              <div>
-                {comment.userUrl ? (
+          <div>
+            {!disableProfilePictures && (
+              <Avatar
+                userUrl={comment.userUrl}
+                userPic={comment.userPic}
+                loginProvider={comment.loginProvider}
+                onImageError={this.onImageError}
+              />
+            )}
+            <div className={s.title}>
+              <div className={s.metadata}>
+                <div>
+                  {comment.userUrl ? (
+                    <a
+                      target="_blank"
+                      href={comment.userUrl}
+                      className={cls(s.username, s.fontHeading2)}
+                    >
+                      {comment.username}
+                    </a>
+                  ) : (
+                    <span className={cls(s.username, s.fontHeading2)}>
+                      {comment.username}
+                    </span>
+                  )}
+                </div>
+                <div>
                   <a
-                    target="_blank"
-                    href={comment.userUrl}
-                    className={cls(s.username, s.fontHeading2)}
+                    onClick={this.onCommentLinkClick}
+                    href={getCommentUrl(comment)}
+                    className={cls(s.date, s.fontBody3)}
+                    title={getCommentTimestamp(comment)}
                   >
-                    {comment.username}
+                    {getHumanReadableCommentTimestamp(comment)}
                   </a>
-                ) : (
-                  <span className={cls(s.username, s.fontHeading2)}>
-                    {comment.username}
+                  {comment.replyTo && commentsIndex && (
+                    <a
+                      className={cls(s.date, s.fontBody3)}
+                      onClick={this.onReplyCommentLinkClick}
+                      href={getCommentUrl(commentsIndex[comment.replyTo])}
+                    >
+                      <ReplyIcon />
+                      {commentsIndex[comment.replyTo].username}
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div className={s.collapse}>
+                {comment.collapsed && (
+                  <span className={cls(s.fontBody3)}>
+                    {substitute(__('collapsedComments'), {
+                      n: commentCount([comment]),
+                    })}
                   </span>
                 )}
-              </div>
-              <div>
-                <a
-                  onClick={this.onCommentLinkClick}
-                  href={getCommentUrl(comment)}
-                  className={cls(s.date, s.fontBody3)}
-                  title={getCommentTimestamp(comment)}
+                <button
+                  title={comment.collapsed ? __('uncollapse') : __('collapse')}
+                  aria-label={
+                    comment.collapsed ? __('uncollapse') : __('collapse')
+                  }
+                  onClick={this.onToggleComment}
+                  className={s.btn}
                 >
-                  {getHumanReadableCommentTimestamp(comment)}
-                </a>
-                {comment.replyTo && commentsIndex && (
-                  <a
-                    className={cls(s.date, s.fontBody3)}
-                    onClick={this.onReplyCommentLinkClick}
-                    href={getCommentUrl(commentsIndex[comment.replyTo])}
-                  >
-                    <ReplyIcon />
-                    {commentsIndex[comment.replyTo].username}
-                  </a>
-                )}
+                  {comment.collapsed ? <CollapseIcon /> : <UncollapseIcon />}
+                </button>
               </div>
-            </div>
-            <div className={s.collapse}>
-              {comment.collapsed && (
-                <span className={cls(s.fontBody3)}>
-                  {substitute(__('collapsedComments'), {
-                    n: commentCount([comment]),
-                  })}
-                </span>
-              )}
-              <button
-                title={comment.collapsed ? __('uncollapse') : __('collapse')}
-                aria-label={
-                  comment.collapsed ? __('uncollapse') : __('collapse')
-                }
-                onClick={this.onToggleComment}
-                className={s.btn}
-              >
-                {comment.collapsed ? <CollapseIcon /> : <UncollapseIcon />}
-              </button>
             </div>
           </div>
           {!comment.collapsed && (

@@ -4,7 +4,6 @@ import Form from './form';
 import s from './style.css';
 import { actions } from './actions';
 import { Connect } from 'redux-zero/preact';
-import { createGuestJWT } from './utils';
 import { h, render, Component } from 'preact';
 import { Recaptcha } from './recaptcha';
 import { __ } from './i18n';
@@ -25,16 +24,8 @@ function commentCount(comments) {
   }, 0);
 }
 
-const mapToProps = ({
-  config,
-  session,
-  loading,
-  cursor,
-  jumpToComment,
-  comments,
-}) => {
+const mapToProps = ({ config, loading, cursor, comments }) => {
   const {
-    allowGuests,
     disableSocialLogin,
     disableAnonymousLogin,
     disableLoadMore,
@@ -136,13 +127,11 @@ class Widget extends Component {
   }
 }
 
-const Attribution = () => {
-  return (
-    <div className={cls(s.attribution, s.fontBody3)}>
-      <span>powered by &nbsp;</span>
-      <a href="https://just-comments.com" target="_blank">
-        just-comments.com
-      </a>
-    </div>
-  );
-};
+const Attribution = () => (
+  <div className={cls(s.attribution, s.fontBody3)}>
+    <span>powered by &nbsp;</span>
+    <a href="https://just-comments.com" target="_blank">
+      just-comments.com
+    </a>
+  </div>
+);

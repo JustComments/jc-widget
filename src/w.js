@@ -17,7 +17,7 @@ let loaded = false;
 function loadCoreOnce(bundleLocale) {
   if (!loaded) {
     loaded = true;
-    var s = document.createElement('script');
+    let s = document.createElement('script');
     s.setAttribute('src', CORE_URL.replace('.js', `.${bundleLocale}.js`));
     document.body.appendChild(s);
   }
@@ -40,7 +40,6 @@ function bootstrap() {
   }
 
   const locale = widget.dataset.locale || 'en';
-  const disableseo = widget.dataset.disableseo === 'true';
   const loadImmediately = isBot();
   const lang = locale.split('_').shift();
   const bundleLocale = mapping[locale] || mapping[lang] || 'en';

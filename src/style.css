@@ -390,11 +390,17 @@
 }
 
 /* End Button Style */
-
-.userPic {
+.userPicContainer {
   margin-left: -86px;
+  width: 56px;
+  height: 76px;
   float: left;
   position: relative;
+  text-align: center;
+}
+
+.form .userPicContainer {
+  height: 86px;
 }
 
 a.userPic {
@@ -406,29 +412,12 @@ a.userPic:focus {
   outline-offset: var(--outline-offset);
 }
 
-.userPic {
-  width: 56px;
-  height: 86px;
-}
-
 .userPic img,
 .userPic svg.anon {
   width: 56px;
   height: 56px;
   border: none;
   border-radius: var(--user-pic-border-radius);
-}
-
-.userPic .logoutButton {
-  position: absolute;
-  left: calc(50% - 5px);
-  bottom: 0;
-}
-
-.userPic .logoutIcon {
-  fill: var(--secondary-text-color);
-  width: 15px;
-  height: 15px;
 }
 
 .userPic .providerIcon {
@@ -444,6 +433,16 @@ a.userPic:focus {
   background-color: transparent;
   padding: 0;
   margin: 0;
+}
+
+.userPicContainer .logoutButton {
+  margin-top: 10px;
+}
+
+.userPicContainer .logoutButton svg {
+  fill: var(--secondary-text-color);
+  width: 15px;
+  height: 15px;
 }
 
 .userPic .providerIcon svg.twitter,
@@ -468,6 +467,19 @@ a.userPic:focus {
   color: var(--primary-text-color);
   padding: 43px 0 10px 0;
   margin-bottom: 33px;
+}
+
+.text {
+  color: var(--primary-text-color);
+}
+
+.attribution a {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
+.attribution a:hover {
+  color: var(--primary-color);
 }
 
 .comment {
@@ -499,7 +511,7 @@ a.userPic:focus {
   margin-left: 0;
 }
 
-.comment .userPic {
+.comment .userPicContainer {
   margin-left: -102px;
 }
 
@@ -701,22 +713,9 @@ a.userPic:focus {
   }
 }
 
-.text {
-  color: var(--primary-text-color);
-}
-
-.attribution a {
-  text-decoration: none;
-  color: var(--primary-text-color);
-}
-
-.attribution a:hover {
-  color: var(--primary-color);
-}
-
 .form .row {
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
 }
 
 .form .row.last {
@@ -734,6 +733,12 @@ a.userPic:focus {
 @media (max-width: 790px) {
   .comment {
     margin-left: 0;
+    margin-bottom: 22px;
+  }
+
+  .header {
+    padding: 14px 0 10px 0;
+    margin-bottom: 10px;
   }
 
   .comment .buttons {
@@ -744,44 +749,45 @@ a.userPic:focus {
     padding: 6px 10px 6px 10px;
   }
 
-  .comment .userPic {
-    margin-left: 0;
-  }
-
   .form {
     margin-left: 0;
   }
 
-  .userPic {
+  .userPicContainer {
     margin-left: 0;
     margin-right: 10px;
-  }
-
-  .userPic {
-    width: 40px;
-    height: 70px;
-  }
-
-  .userPic img,
-  .userPic svg.anon {
     width: 40px;
     height: 40px;
   }
 
-  .userPic .logoutIcon {
+  .form .userPicContainer {
+    display: none;
+  }
+
+  .comment .userPicContainer {
+    margin-left: 0;
+  }
+
+  .userPicContainer img,
+  .userPicContainer svg.anon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .userPicContainer .logoutIcon {
     width: 16px;
     height: 16px;
   }
 
-  .userPic .providerIcon {
+  .userPicContainer .providerIcon {
     width: 16px;
     height: 16px;
     right: 0;
     top: 26px;
   }
 
-  .userPic .providerIcon svg.twitter,
-  .userPic .providerIcon svg.fb {
+  .userPicContainer .providerIcon svg.twitter,
+  .userPicContainer .providerIcon svg.fb {
     width: 16px;
     height: 16px;
   }
@@ -793,10 +799,6 @@ a.userPic:focus {
   .formPicContainer {
     display: flex;
     align-items: center;
-  }
-
-  .comment {
-    margin-bottom: 22px;
   }
 
   .comment .comment {

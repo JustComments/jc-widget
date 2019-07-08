@@ -1,13 +1,12 @@
 import { Base64 } from 'js-base64';
 import jwtDecode from 'jwt-decode';
-import { LocalStorage } from './storage';
 
 export function buildURL(itemId, commentId) {
   return `//${itemId}#jc${commentId}`;
 }
 
 export function createGuestJWT(username, email, apiKey, userPic) {
-  var data = {
+  let data = {
     apiKey,
     userId: 'guest',
     userPic: userPic && !email ? userPic : null,

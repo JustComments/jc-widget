@@ -13,6 +13,7 @@ import {
   FacebookIcon,
   LogoutIcon,
 } from './icons';
+import { Avatar } from './avatar';
 import { supportsServiceWorkers } from './utils';
 import s from './style.css';
 import cls from 'classnames';
@@ -33,7 +34,6 @@ const mapToProps = ({ config, session, form }) => {
     localStorageSupported,
     defaultUserPicUrl,
   } = config;
-  const { userPic, loginProvider } = form;
   const showSocial = localStorageSupported && !disableSocialLogin;
   const isLoggedIn = session.isAuthenticated();
 
@@ -78,13 +78,11 @@ class Form extends Component {
     defaultUserPicUrl,
     disableAnonymousLogin,
     replyToComment,
-    disableSocialLogin,
     enableWebsite,
     enableEmailNotifications,
     disableProfilePictures,
     showSocial,
     form,
-    sendComment,
     onPushToggle,
     onEmailToggle,
     onFacebookLogin,
@@ -118,7 +116,7 @@ class Form extends Component {
                   <div className={s.inputGroup}>
                     <div className={s.formPicContainer}>
                       {!disableProfilePictures && (
-                        <UserPic
+                        <Avatar
                           userPic={
                             form.userPic
                               ? form.userPic
@@ -170,7 +168,7 @@ class Form extends Component {
                       {__('name')}
                       <input
                         value={form.username}
-                        required={true}
+                        required
                         max={255}
                         onInput={onUsernameInput}
                         className={cls(s.inpt, s.fontBody2, {
@@ -210,7 +208,7 @@ class Form extends Component {
             </div>
           )}
           {!disableProfilePictures && isLoggedIn && (
-            <UserPic
+            <Avatar
               userPic={
                 form.userPic
                   ? form.userPic
@@ -225,20 +223,28 @@ class Form extends Component {
             />
           )}
           {form.preview && !form.previewLoading && (
-            <div className={cls(s.comment, s.preview)}>
-              <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
-              <div
-                className={cls(s.content, s.fontBody2)}
-                dangerouslySetInnerHTML={{ __html: form.preview }}
-              />
+            <div className={cls(s.row)}>
+              <div className={cls(s.comment, s.preview)}>
+                <label className={cls(s.fontBody2)}>
+                  {textareaPlaceholder}
+                </label>
+                <div
+                  className={cls(s.content, s.fontBody2)}
+                  dangerouslySetInnerHTML={{ __html: form.preview }}
+                />
+              </div>
             </div>
           )}
           {form.previewLoading && (
-            <div className={cls(s.comment, s.preview)}>
-              <label className={cls(s.fontBody2)}>{textareaPlaceholder}</label>
-              <p className={cls(s.fontBody2, s.previewLoading)}>
-                {__('loadingPreview')}
-              </p>
+            <div className={cls(s.row)}>
+              <div className={cls(s.comment, s.preview)}>
+                <label className={cls(s.fontBody2)}>
+                  {textareaPlaceholder}
+                </label>
+                <p className={cls(s.fontBody2, s.previewLoading)}>
+                  {__('loadingPreview')}
+                </p>
+              </div>
             </div>
           )}
           {!form.preview && !form.previewLoading && (
@@ -250,7 +256,7 @@ class Form extends Component {
                     [s.dirty]: form.dirty,
                   })}
                   value={form.text}
-                  required={true}
+                  required
                   maxlength={5000}
                   onInput={onTextInput}
                   onKeyDown={(e) => {
@@ -284,9 +290,9 @@ class Form extends Component {
           )}
           {Object.keys(form.errors).length > 0 && (
             <div className={s.row}>
-              {Object.keys(form.errors).map((errorKey) => {
-                return h('p', {}, [form.errors[errorKey]]);
-              })}
+              {Object.keys(form.errors).map((errorKey) =>
+                h('p', {}, [form.errors[errorKey]]),
+              )}
             </div>
           )}
           <div className={cls(s.row, s.last)}>
@@ -343,55 +349,5 @@ function Toggle({ icon, title, value, onClick }) {
     >
       {icon}
     </button>
-  );
-}
-
-const icons = {
-  twitter: <TwitterIcon />,
-  fb: <FacebookIcon />,
-};
-
-export function UserPic({
-  userPic,
-  onImageError,
-  userUrl,
-  loginProvider,
-  onLogout,
-}) {
-  const icon = icons[loginProvider];
-  return (
-    <UserPicContainer onLogout={onLogout} userUrl={userUrl}>
-      {userPic && (
-        <img
-          className={s.img}
-          onError={onImageError}
-          alt={__('userPic')}
-          src={userPic}
-        />
-      )}
-      {!userPic && <Anonymous />}
-      {icon && <div className={cls(s.providerIcon)}>{icon}</div>}
-      {onLogout && loginProvider && (
-        <button
-          onClick={onLogout}
-          type="button"
-          title="logout"
-          aria-label="logout"
-          className={cls(s.btn, s.logoutButton)}
-        >
-          <LogoutIcon />
-        </button>
-      )}
-    </UserPicContainer>
-  );
-}
-
-function UserPicContainer({ onLogout, userUrl, children }) {
-  return userUrl ? (
-    <a className={cls(s.userPic)} href={userUrl} target="_blank" rel="noopener">
-      {children}
-    </a>
-  ) : (
-    <div className={cls(s.userPic, { [s.logout]: onLogout })}>{children}</div>
   );
 }

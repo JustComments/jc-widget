@@ -2,7 +2,6 @@ import './auth';
 
 import { Provider } from 'redux-zero/preact';
 import createStore from 'redux-zero';
-import scrollparent from 'scrollparent';
 import { h, render, Component } from 'preact';
 
 import { getSession, checkJWTValidity, setJWT } from './utils';
@@ -17,10 +16,7 @@ import Widget from './widget';
 import { API } from './api';
 import { bootstrapRecaptcha } from './recaptcha';
 import { LocalStorage } from './storage';
-import style from './style.css';
 import { getUserPic } from './actions';
-
-const BASE_URL = API_ENDPOINT;
 
 export function renderWidget(
   widget,
@@ -52,10 +48,8 @@ export function renderWidget(
 
   if (data.jwt) {
     setJWT(session, data.jwt);
-  } else {
-    if (session.get('jwt')) {
-      checkJWTValidity(session);
-    }
+  } else if (session.get('jwt')) {
+    checkJWTValidity(session);
   }
 
   const api = new API({
@@ -71,7 +65,6 @@ export function renderWidget(
 
   const initialState = {
     api,
-    comments: [],
     comments: [],
     cursor: null,
     jumped: false,
@@ -104,8 +97,8 @@ export function renderWidget(
       hideAttribution: data.hideAttribution,
       hideCommentHeader: data.hideCommentHeader,
       hideNoCommentsText: data.hideNoCommentsText,
-      itemPort: itemPort,
-      itemProtocol: itemProtocol,
+      itemPort,
+      itemProtocol,
       localStorageSupported: LocalStorage.supported(),
       recaptchaSitekey: data.recaptchaSitekey,
       sort: data.sort,

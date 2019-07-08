@@ -41,20 +41,18 @@ export const actions = (store) => ({
       .then(({ comments: newComments, cursor }) => {
         store.setState({
           loading: false,
-          ...withComments([...state.comments, ...newComments], (comments) => {
-            return updateById(comments, jumpToComment, (c) => {
-              return {
-                ...c,
-                active: true,
-              };
-            });
-          }),
+          ...withComments([...state.comments, ...newComments], (comments) =>
+            updateById(comments, jumpToComment, (c) => ({
+              ...c,
+              active: true,
+            })),
+          ),
           cursor,
         });
       });
   },
 
-  previewComment: (state, formRef, replyToComment) => {
+  previewComment: (state) => {
     if (!state.form.text) {
       return;
     }
@@ -95,7 +93,7 @@ export const actions = (store) => ({
       });
   },
 
-  hideCommentPreview: (state, formRef, replyToComment) => {
+  hideCommentPreview: (state) => {
     store.setState({
       form: {
         ...state.form,
@@ -141,12 +139,12 @@ export const actions = (store) => ({
     };
 
     return checkCaptcha(state.recaptchaRef)
-      .then((captchaResult) => {
-        return createComment(state.api, state.session, state.config, {
+      .then((captchaResult) =>
+        createComment(state.api, state.session, state.config, {
           ...data,
           captchaResult,
-        });
-      })
+        }),
+      )
       .then((comment) => {
         window.location.hash = `#jc${comment.commentId}`;
         return store.setState({
@@ -176,8 +174,8 @@ export const actions = (store) => ({
               })
             : withComments(
                 addCommentInOrder(state.comments, comment, state.config.sort),
-                (comments) => {
-                  return updateByIdWithReset(
+                (comments) =>
+                  updateByIdWithReset(
                     comments,
                     comment.commentId,
                     (c) => ({
@@ -188,8 +186,7 @@ export const actions = (store) => ({
                       ...c,
                       active: false,
                     }),
-                  );
-                },
+                  ),
               )),
           jumpToComment: comment.commentId,
           jumped: false,
@@ -305,25 +302,21 @@ export const actions = (store) => ({
     });
   },
 
-  onUsernameInput: (state, e) => {
-    return {
-      form: {
-        ...state.form,
-        username: e.target.value,
-      },
-    };
-  },
+  onUsernameInput: (state, e) => ({
+    form: {
+      ...state.form,
+      username: e.target.value,
+    },
+  }),
 
-  onEmailInput: (state, e) => {
-    return {
-      form: {
-        ...state.form,
-        email: e.target.value,
-      },
-    };
-  },
+  onEmailInput: (state, e) => ({
+    form: {
+      ...state.form,
+      email: e.target.value,
+    },
+  }),
 
-  onEmailBlur: (state, e) => {
+  onEmailBlur: (state) => {
     const { email } = state.form;
     if (email) {
       return {
@@ -335,123 +328,97 @@ export const actions = (store) => ({
     }
   },
 
-  onWebsiteInput: (state, e) => {
-    return {
-      form: {
-        ...state.form,
-        website: e.target.value,
-      },
-    };
-  },
+  onWebsiteInput: (state, e) => ({
+    form: {
+      ...state.form,
+      website: e.target.value,
+    },
+  }),
 
-  onTextInput: (state, e) => {
-    return {
-      form: {
-        ...state.form,
-        text: e.target.value,
-      },
-    };
-  },
+  onTextInput: (state, e) => ({
+    form: {
+      ...state.form,
+      text: e.target.value,
+    },
+  }),
 
-  onToggleComment: (state, commentId, collapsed) => {
-    return {
-      ...withComments(state.comments, (comments) => {
-        return updateById(comments, commentId, (c) => {
-          return {
-            ...c,
-            collapsed,
-          };
-        });
-      }),
-    };
-  },
+  onToggleComment: (state, commentId, collapsed) => ({
+    ...withComments(state.comments, (comments) =>
+      updateById(comments, commentId, (c) => ({
+        ...c,
+        collapsed,
+      })),
+    ),
+  }),
 
-  onToggleCommentForm: (state, commentId, formOpened) => {
-    return {
-      ...withComments(state.comments, (comments) => {
-        return updateByIdWithReset(
-          comments,
-          commentId,
-          (c) => {
-            return {
-              ...c,
-              formOpened,
-              menuOpened: false,
-              likeMenuOpened: false,
-            };
-          },
-          (c) => {
-            return {
-              ...c,
-              likeMenuOpened: false,
-              formOpened: false,
-              menuOpened: false,
-            };
-          },
-        );
-      }),
-    };
-  },
+  onToggleCommentForm: (state, commentId, formOpened) => ({
+    ...withComments(state.comments, (comments) =>
+      updateByIdWithReset(
+        comments,
+        commentId,
+        (c) => ({
+          ...c,
+          formOpened,
+          menuOpened: false,
+          likeMenuOpened: false,
+        }),
+        (c) => ({
+          ...c,
+          likeMenuOpened: false,
+          formOpened: false,
+          menuOpened: false,
+        }),
+      ),
+    ),
+  }),
 
-  onToggleCommentMenu: (state, commentId, menuOpened) => {
-    return {
-      ...withComments(state.comments, (comments) => {
-        return updateByIdWithReset(
-          comments,
-          commentId,
-          (c) => {
-            return {
-              ...c,
-              menuOpened,
-              likeMenuOpened: false,
-              formOpened: false,
-            };
-          },
-          (c) => {
-            return {
-              ...c,
-              likeMenuOpened: false,
-              formOpened: false,
-              menuOpened: false,
-            };
-          },
-        );
-      }),
-    };
-  },
+  onToggleCommentMenu: (state, commentId, menuOpened) => ({
+    ...withComments(state.comments, (comments) =>
+      updateByIdWithReset(
+        comments,
+        commentId,
+        (c) => ({
+          ...c,
+          menuOpened,
+          likeMenuOpened: false,
+          formOpened: false,
+        }),
+        (c) => ({
+          ...c,
+          likeMenuOpened: false,
+          formOpened: false,
+          menuOpened: false,
+        }),
+      ),
+    ),
+  }),
 
-  onToggleLikeMenu: (state, commentId, likeMenuOpened) => {
-    return {
-      ...withComments(state.comments, (comments) => {
-        return updateByIdWithReset(
-          comments,
-          commentId,
-          (c) => {
-            return {
-              ...c,
-              likeMenuOpened,
-              formOpened: false,
-              menuOpened: false,
-            };
-          },
-          (c) => {
-            return {
-              ...c,
-              likeMenuOpened: false,
-              formOpened: false,
-              menuOpened: false,
-            };
-          },
-        );
-      }),
-    };
-  },
+  onToggleLikeMenu: (state, commentId, likeMenuOpened) => ({
+    ...withComments(state.comments, (comments) =>
+      updateByIdWithReset(
+        comments,
+        commentId,
+        (c) => ({
+          ...c,
+          likeMenuOpened,
+          formOpened: false,
+          menuOpened: false,
+        }),
+        (c) => ({
+          ...c,
+          likeMenuOpened: false,
+          formOpened: false,
+          menuOpened: false,
+        }),
+      ),
+    ),
+  }),
 
   jumpToComment: (state, commentId) => {
     window.location.hash = 'jc' + commentId;
     return {
-      ...withComments(state.comments, (comments) => {
-        return updateByIdWithReset(
+      ...withComments(state.comments, (comments) =>
+        updateByIdWithReset(
           comments,
           commentId,
           (c) => ({
@@ -462,8 +429,8 @@ export const actions = (store) => ({
             ...c,
             active: false,
           }),
-        );
-      }),
+        ),
+      ),
       jumpToComment: commentId,
       jumped: false,
     };
@@ -503,24 +470,21 @@ export const actions = (store) => ({
     });
   },
 
-  onCommentImageError: (state, commentId) => {
-    return {
-      ...withComments(state.comments, (comments) => {
-        return updateById(comments, commentId, (c) => ({
-          ...c,
-          userPic: undefined,
-        }));
-      }),
-    };
-  },
+  onCommentImageError: (state, commentId) => ({
+    ...withComments(state.comments, (comments) =>
+      updateById(comments, commentId, (c) => ({
+        ...c,
+        userPic: undefined,
+      })),
+    ),
+  }),
 });
 
 function addCommentInOrder(comments, comment, sort) {
   if (sort === 'asc') {
     return addCommentInAscOrder(comments, comment);
-  } else {
-    return addCommentInDescOrder(comments, comment);
   }
+  return addCommentInDescOrder(comments, comment);
 }
 
 function addCommentInAscOrder(comments, comment) {
@@ -540,20 +504,16 @@ function openSharePopup(url) {
 }
 
 function hideMenuForComment(state, commentId) {
-  return withComments(state.comments, (comments) => {
-    return updateById(comments, commentId, (c) => {
-      return {
-        ...c,
-        menuOpened: false,
-      };
-    });
-  });
+  return withComments(state.comments, (comments) =>
+    updateById(comments, commentId, (c) => ({
+      ...c,
+      menuOpened: false,
+    })),
+  );
 }
 
 function withComments(comments, ...fns) {
-  comments = fns.reduce((comments, fn) => {
-    return fn(comments);
-  }, comments);
+  comments = fns.reduce((comments, fn) => fn(comments), comments);
   return {
     comments,
     commentsIndex: buildIndex(comments),

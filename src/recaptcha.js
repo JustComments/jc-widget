@@ -1,4 +1,4 @@
-import { h, render, Component } from 'preact';
+import { h, Component } from 'preact';
 
 export function bootstrapRecaptcha() {
   window.jcRecaptchaPromise = new Promise((resolve) => {
@@ -29,7 +29,7 @@ export class Recaptcha extends Component {
     const { sitekey } = this.props;
     return window.jcRecaptchaPromise.then(() => {
       this.grecaptchaId = grecaptcha.render(this.root, {
-        sitekey: sitekey,
+        sitekey,
         size: 'invisible',
         callback: this.onCaptchaSubmit.bind(this),
       });
