@@ -148,21 +148,31 @@ export const actions = (store) => ({
         });
       })
       .then((comment) => {
+        window.location.hash = `#jc${comment.commentId}`;
         return store.setState({
           ...(comment.replyTo
             ? withComments([...state.comments], (comments) => {
-                return updateById(comments, comment.replyTo, (c) => ({
+                comments = updateById(comments, comment.replyTo, (c) => ({
                   ...c,
                   formOpened: false,
                   nested: addCommentInOrder(
                     c.nested,
-                    {
-                      ...comment,
-                      active: true,
-                    },
+                    comment,
                     state.config.sort,
                   ),
                 }));
+                return updateByIdWithReset(
+                  comments,
+                  comment.commentId,
+                  (c) => ({
+                    ...c,
+                    active: true,
+                  }),
+                  (c) => ({
+                    ...c,
+                    active: false,
+                  }),
+                );
               })
             : withComments(
                 addCommentInOrder(state.comments, comment, state.config.sort),
