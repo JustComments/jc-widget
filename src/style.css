@@ -337,17 +337,19 @@
 }
 
 .comment .buttons .reply {
-  width: 56px;
+  min-width: 56px;
 }
 
 .comment .buttons .like {
-  width: 47px;
+  min-width: 47px;
   position: relative;
+  margin-left: 10px;
 }
 
 .comment .buttons .more {
   width: 18px;
   position: relative;
+  margin-left: 10px;
 }
 
 .comment .buttons .menu {
