@@ -352,6 +352,10 @@ export const actions = (store) => ({
   }),
 
   onToggleCommentForm: (state, commentId, formOpened) => ({
+    form: {
+      ...state.form,
+      text: formOpened ? '' : state.form.text,
+    },
     ...withComments(state.comments, (comments) =>
       updateByIdWithReset(
         comments,
