@@ -283,9 +283,11 @@ class Comment extends Component {
 
         {comment.formOpened && <Form replyToComment={comment} />}
         {!comment.collapsed &&
-          (comment.nested || []).map((c, i) => (
-            <WrapperComment level={level + 1} first={i === 0} comment={c} />
-          ))}
+          (comment.nested || [])
+            .filter((c) => !c.hidden)
+            .map((c, i) => (
+              <WrapperComment level={level + 1} first={i === 0} comment={c} />
+            ))}
       </div>
     );
   }

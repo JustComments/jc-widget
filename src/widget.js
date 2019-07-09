@@ -89,9 +89,11 @@ class Widget extends Component {
         {!loading && count === 0 && !hideNoCommentsText && (
           <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
         )}
-        {comments.map((c) => (
-          <Comment comment={c} level={0} />
-        ))}
+        {comments
+          .filter((c) => !c.hidden)
+          .map((c) => (
+            <Comment comment={c} level={0} />
+          ))}
         {cursor && !disableLoadMore && (
           <div className={s.loadMore}>
             <button
