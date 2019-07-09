@@ -634,11 +634,15 @@ a.userPic:focus {
 }
 
 .comment .content ul {
-  margin: 20px;
+  margin-left: 20px;
 }
 
 .comment .content ol {
-  margin: 20px;
+  margin-left: 20px;
+}
+
+.comment .content li {
+  margin: 0;
 }
 
 .comment .content blockquote {
