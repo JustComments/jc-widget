@@ -137,30 +137,30 @@ class Form extends Component {
                             : __('anonymousCommentHeader')}
                         </span>
                         {showSocial && (
-                          <button
-                            tabindex="0"
-                            role="button"
-                            title={__('loginWithFacebook')}
-                            aria-label={__('loginWithFacebook')}
-                            onClick={onFacebookLogin}
-                            className={cls(s.btn, s.fontButton3)}
-                            type="button"
-                          >
-                            <FacebookIcon />
-                          </button>
-                        )}
-                        {showSocial && (
-                          <button
-                            tabindex="0"
-                            role="button"
-                            title={__('loginWithTwitter')}
-                            aria-label={__('loginWithTwitter')}
-                            onClick={onTwitterLogin}
-                            className={cls(s.btn, s.fontButton3)}
-                            type="button"
-                          >
-                            <TwitterIcon />
-                          </button>
+                          <span className={cls(s.socialContainer)}>
+                            <button
+                              tabindex="0"
+                              role="button"
+                              title={__('loginWithFacebook')}
+                              aria-label={__('loginWithFacebook')}
+                              onClick={onFacebookLogin}
+                              className={cls(s.btn, s.fontButton3)}
+                              type="button"
+                            >
+                              <FacebookIcon />
+                            </button>
+                            <button
+                              tabindex="0"
+                              role="button"
+                              title={__('loginWithTwitter')}
+                              aria-label={__('loginWithTwitter')}
+                              onClick={onTwitterLogin}
+                              className={cls(s.btn, s.fontButton3)}
+                              type="button"
+                            >
+                              <TwitterIcon />
+                            </button>
+                          </span>
                         )}
                       </div>
                     </div>
