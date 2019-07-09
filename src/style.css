@@ -634,13 +634,11 @@ a.userPic:focus {
 }
 
 .comment .content ul {
-  box-sizing: inherit;
-  margin: 0;
+  margin: 20px;
 }
 
 .comment .content ol {
-  box-sizing: inherit;
-  margin: 0;
+  margin: 20px;
 }
 
 .comment .content blockquote {
