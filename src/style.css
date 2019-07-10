@@ -162,12 +162,15 @@
 .inpt {
   background-color: var(--primary-bg-color);
   border-radius: var(--input-border-radius);
-  border-style: solid;
   border: var(--input-border);
   box-sizing: border-box;
   height: var(--input-height);
   padding: 12px 16px;
   color: var(--primary-text-color);
+}
+
+.inpt:required {
+  box-shadow: none;
 }
 
 .inpt::placeholder {
