@@ -335,12 +335,21 @@ export const actions = (store) => ({
     },
   }),
 
-  onTextInput: (state, e) => ({
-    form: {
-      ...state.form,
-      text: e.target.value,
-    },
-  }),
+  onTextInput: (state, e) => {
+    const element = e.target;
+    element.style.height = 'inherit';
+    const newHeight =
+      element.scrollHeight > 150
+        ? element.scrollHeight + 25
+        : element.scrollHeight;
+    element.style.height = newHeight + 'px';
+    return {
+      form: {
+        ...state.form,
+        text: e.target.value,
+      },
+    };
+  },
 
   onToggleComment: (state, commentId, collapsed) => ({
     ...withComments(state.comments, (comments) =>

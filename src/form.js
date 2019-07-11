@@ -259,6 +259,7 @@ class Form extends Component {
                   required
                   maxlength={5000}
                   onInput={onTextInput}
+                  style={{ minHeight: '150px' }}
                   onKeyDown={(e) => {
                     if (e.ctrlKey && e.keyCode == 13) {
                       this.onSend(e);
