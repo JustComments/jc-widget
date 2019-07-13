@@ -71,7 +71,7 @@ module.exports = function(env, args) {
               options: {
                 ident: 'postcss',
                 plugins: [
-                  require('postcss-nested')(),
+                  require('autoprefixer')(),
                   require('postcss-autoreset')({
                     rulesMatcher: (rule) => rule.selector.match(/^[.]\w+$/),
                     reset: {
@@ -81,7 +81,7 @@ module.exports = function(env, args) {
                       textAlign: 'left',
                     },
                   }),
-                  require('autoprefixer')(),
+                  require('postcss-nested')(),
                 ],
               },
             },
