@@ -5,7 +5,7 @@ export function getHumanReadableCommentTimestamp(comment) {
 }
 
 export function getCommentTimestamp(comment) {
-  return new Date(comment.createdAt).toISOString();
+  return new Date(comment.createdAt).toLocaleString();
 }
 
 export function getCommentUrl(comment) {
