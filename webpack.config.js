@@ -61,7 +61,8 @@ module.exports = function(env, args) {
                 modules: {
                   localIdentName: !env.production
                     ? '[name]_[local]___[hash:base64:10]'
-                    : undefined,
+                    : '[hash:base64:16]',
+                  hashPrefix: 'jc',
                 },
               },
             },
@@ -79,6 +80,7 @@ module.exports = function(env, args) {
                       textAlign: 'left',
                     },
                   }),
+                  require('postcss-increase-specificity')(),
                   require('autoprefixer')(),
                 ],
               },
