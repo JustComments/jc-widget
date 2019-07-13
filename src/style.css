@@ -159,7 +159,7 @@
 }
 
 /* Input Style */
-.inpt {
+:global(.just-comments) .inpt {
   background-color: var(--primary-bg-color);
   border-radius: var(--input-border-radius);
   border: var(--input-border);
@@ -169,20 +169,20 @@
   color: var(--primary-text-color);
 }
 
-.inpt:required {
+:global(.just-comments) .inpt:required {
   box-shadow: none;
 }
 
-.inpt::placeholder {
+:global(.just-comments) .inpt::placeholder {
   color: var(--secondary-text-color);
 }
 
-.inpt:focus {
+:global(.just-comments) .inpt:focus {
   outline: var(--outline-style);
   outline-offset: var(--outline-offset);
 }
 
-.inpt.dirty:invalid {
+:global(.just-comments) .inpt.dirty:invalid {
   border: 1px solid red;
 }
 /* End of Input Style*/
