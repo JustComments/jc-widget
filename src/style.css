@@ -743,6 +743,32 @@
     margin-left: 40px;
   }
 
+  .reaction0 {
+    z-index: 3;
+    left: 10px;
+  }
+
+  .reaction1 {
+    z-index: 2;
+    left: 5px;
+  }
+
+  .reaction2 {
+    z-index: 1;
+  }
+
+  .reactions .reactionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .reactions svg {
+    width: 18px;
+    height: 18px;
+  }
+
   @media (max-width: 790px) {
     .comment {
       margin-left: 0;
