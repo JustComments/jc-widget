@@ -461,11 +461,11 @@
     bottom: 0;
   }
 
-  .userPic svg.anon rect {
-    fill: var(--primary-bg-color);
+  .userPic svg.anon path:first-child {
+    fill: var(--border-color);
   }
 
-  .userPic svg.anon path {
+  .userPic svg.anon path:last-child {
     fill: var(--secondary-text-color);
   }
 
