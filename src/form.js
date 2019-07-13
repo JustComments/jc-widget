@@ -26,27 +26,29 @@ export default (inlineProps) => (
 
 const mapToProps = ({ config, session, form }) => {
   const {
-    disableAnonymousLogin,
-    disableSocialLogin,
-    enableWebsite,
-    enableEmailNotifications,
-    disableProfilePictures,
-    localStorageSupported,
     defaultUserPicUrl,
+    disableAnonymousLogin,
+    disableProfilePictures,
+    disablePushNotifications,
+    disableSocialLogin,
+    enableEmailNotifications,
+    enableWebsite,
+    localStorageSupported,
   } = config;
   const showSocial = localStorageSupported && !disableSocialLogin;
   const isLoggedIn = session.isAuthenticated();
 
   return {
+    defaultUserPicUrl,
     disableAnonymousLogin,
-    disableSocialLogin,
-    enableWebsite,
-    enableEmailNotifications,
     disableProfilePictures,
-    showSocial,
+    disablePushNotifications,
+    disableSocialLogin,
+    enableEmailNotifications,
+    enableWebsite,
     form,
     isLoggedIn,
-    defaultUserPicUrl,
+    showSocial,
   };
 };
 
@@ -77,23 +79,24 @@ class Form extends Component {
   render({
     defaultUserPicUrl,
     disableAnonymousLogin,
-    replyToComment,
-    enableWebsite,
-    enableEmailNotifications,
     disableProfilePictures,
-    showSocial,
+    disablePushNotifications,
+    enableEmailNotifications,
+    enableWebsite,
     form,
-    onPushToggle,
+    isLoggedIn,
+    onEmailBlur,
+    onEmailInput,
     onEmailToggle,
     onFacebookLogin,
+    onLogout,
+    onPushToggle,
+    onTextInput,
     onTwitterLogin,
     onUsernameInput,
-    onEmailInput,
-    onEmailBlur,
     onWebsiteInput,
-    onTextInput,
-    onLogout,
-    isLoggedIn,
+    replyToComment,
+    showSocial,
   }) {
     const textareaPlaceholder = replyToComment
       ? substitute(__('replyTo'), {
@@ -270,7 +273,7 @@ class Form extends Component {
                 />
               </label>
               <div className={s.textareaBtns}>
-                {supportsServiceWorkers() && (
+                {supportsServiceWorkers() && !disablePushNotifications && (
                   <Toggle
                     icon={<PushIcon />}
                     title={__('toggleNotificationsPush')}
@@ -305,13 +308,7 @@ class Form extends Component {
               className={cls(s.btn, s.small, s.primary, s.fontButton3)}
             >
               <ReplyIcon />
-              <span
-                className={cls({
-                  // [s.sending]: form.blocked,
-                })}
-              >
-                {form.blocked ? __('sending') : __('send')}
-              </span>
+              <span>{form.blocked ? __('sending') : __('send')}</span>
             </button>
             {form.preview ? (
               <button

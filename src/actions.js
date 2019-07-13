@@ -576,7 +576,7 @@ function createComment(
     replyToComment,
     parentId,
     captchaResult,
-    notifications,
+    pushNotifications,
     emailNotifications,
   },
 ) {
@@ -588,7 +588,7 @@ function createComment(
     session.set('userUrl', website);
   }
 
-  session.set('notifications', notifications);
+  session.set('pushNotifications', pushNotifications);
   session.set('emailNotifications', emailNotifications);
 
   const jwt = session.get('jwt')
@@ -596,7 +596,7 @@ function createComment(
     : createGuestJWT(username, email, config.apiKey, config.defaultUserPicUrl);
 
   const subscription =
-    notifications && session.get('subscription')
+    pushNotifications && session.get('subscription')
       ? session.get('subscription')
       : null;
 

@@ -44,6 +44,7 @@ export class Session {
       'website',
       'subscription',
       'notifications',
+      'pushNotifications',
       'emailNotifications',
     ];
     this.loadSessionData();

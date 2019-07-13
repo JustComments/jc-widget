@@ -92,6 +92,7 @@ export function renderWidget(
       disableProfilePictures: data.disableProfilePictures,
       disableShareButton: data.disableShareButton,
       disableSocialLogin: data.disableSocialLogin,
+      disablePushNotifications: data.disablePushNotifications,
       enableEmailNotifications: data.enableEmailNotifications,
       enableWebsite: data.enableWebsite,
       hideAttribution: data.hideAttribution,
@@ -131,6 +132,8 @@ function readWidgetData(widget) {
   const hideNoCommentsText = widget.dataset.hidenocommentstext === 'true';
   const enableEmailNotifications =
     widget.dataset.enableemailnotifications === 'true';
+  const disablePushNotifications =
+    widget.dataset.disablepushnotifications === 'true';
   const recaptchaSitekey =
     widget.dataset.recaptcha === 'true'
       ? '6Lc9nTEUAAAAABlX72vOhEVdBUX_ULUY88e7Chkl'
@@ -157,6 +160,7 @@ function readWidgetData(widget) {
     disableAnonymousLogin,
     disableLoadMore,
     disableProfilePictures,
+    disablePushNotifications,
     disableShareButton,
     disableSocialLogin,
     enableEmailNotifications,
@@ -164,12 +168,12 @@ function readWidgetData(widget) {
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
-    usequery,
     jwt,
     pageId,
     pageSize,
     recaptchaSitekey,
     sort,
+    usequery,
   };
 }
 
