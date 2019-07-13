@@ -32,4 +32,5 @@ module.exports = {
   userPic: 'User picture',
   website: 'Website (optional)',
   writeAComment: 'Write a comment',
+  react: 'React',
 };

@@ -12,16 +12,20 @@ import {
   HappyIcon,
   InLoveIcon,
   ReplyIcon,
+  SadIcon,
+  HeartIcon,
 } from './icons';
 import {
   getCommentTimestamp,
   getHumanReadableCommentTimestamp,
   getCommentUrl,
+  getTopReactions,
 } from './comment-utils';
 import { Avatar } from './avatar';
 import Form from './form';
 import s from './style.css';
 import cls from 'classnames';
+import { reactions } from './actions';
 
 const WrapperComment = (origProps) => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -83,8 +87,12 @@ class Comment extends Component {
   onToggleLikeMenu = () => {
     this.props.onToggleLikeMenu(
       this.props.comment.commentId,
-      !this.props.comment.likeMenuOpened,
+      !this.props.comment.reactMenuOpened,
     );
+  };
+
+  onLike = (reactionId) => {
+    this.props.onLike(this.props.comment.commentId, reactionId);
   };
 
   onCopyToClipboard = () => {
@@ -111,6 +119,9 @@ class Comment extends Component {
     disableProfilePictures,
     disableShareButton,
   }) {
+    const Reaction = comment.reactionId
+      ? reactions.find((r) => r.id === comment.reactionId).icon
+      : undefined;
     return (
       <div
         key={comment.commentId}
@@ -206,39 +217,38 @@ class Comment extends Component {
               {__('reply')}
             </button>
           </div>
-          {/*<div className={s.like}>
-            <button onClick={this.onToggleLikeMenu} className={s.linkBtn}>
-              Like
-            </button>
-            {comment.likeMenuOpened && (
-              <div className={cls(s.menu, s.horizontal)}>
-                <button
-                  tabindex="0"
-                  role="button"
-                  className={s.btn}
-                  type="button"
-                >
-                  <LikeIcon />
-                </button>
-                <button
-                  tabindex="0"
-                  role="button"
-                  className={s.btn}
-                  type="button"
-                >
-                  <HappyIcon />
-                </button>
-                <button
-                  tabindex="0"
-                  role="button"
-                  className={s.btn}
-                  type="button"
-                >
-                  <InLoveIcon />
-                </button>
-              </div>
-            )}
-          </div>*/}
+          {!Reaction && (
+            <div className={s.react}>
+              <button
+                onClick={this.onToggleLikeMenu}
+                className={cls(s.linkBtn, s.fontButton2)}
+              >
+                {__('react')}
+              </button>
+              {comment.reactMenuOpened && (
+                <div className={cls(s.menu, s.reactMenu, s.horizontal)}>
+                  {reactions.map((r) => {
+                    return (
+                      <button
+                        tabindex="0"
+                        role="button"
+                        className={s.btn}
+                        onClick={() => this.onLike(r.id)}
+                        type="button"
+                      >
+                        <r.icon />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+          {Reaction && (
+            <div className={cls(s.react, s.reacted)}>
+              <Reaction />
+            </div>
+          )}
           <div className={s.more}>
             <button
               onClick={this.onToggleMenu}
@@ -279,6 +289,24 @@ class Comment extends Component {
               </div>
             )}
           </div>
+          {comment.reactions && (
+            <div className={cls(s.reactions, s.fontBody2)}>
+              <span>
+                {getTopReactions(comment).reduce((acc, n) => acc + n.value, 0)}
+              </span>
+              {getTopReactions(comment).map((r, i) => {
+                const reaction = reactions.find((_r) => _r.id === r.id);
+                return (
+                  <span
+                    title={r.value}
+                    className={cls(s.reactionContainer, s[`reaction${i}`])}
+                  >
+                    <reaction.icon />
+                  </span>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {comment.formOpened && <Form replyToComment={comment} />}

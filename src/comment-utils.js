@@ -1,4 +1,5 @@
 import { formatDate } from './i18n';
+import { reactions } from './actions';
 
 export function getHumanReadableCommentTimestamp(comment) {
   return formatDate(comment.createdAt);
@@ -26,4 +27,18 @@ export function getCommentUrl(comment) {
   url.href = window.location.toString();
   url.hash = '#jc' + comment.commentId;
   return url.toString();
+}
+
+export function getTopReactions(comment) {
+  if (!comment.reactions) {
+    return [];
+  }
+  const reactions = Object.keys(comment.reactions).map((id) => ({
+    id: id,
+    value: comment.reactions[id],
+  }));
+  reactions.sort((a, b) => {
+    return a.value - b.value;
+  });
+  return reactions.slice(0, 3);
 }

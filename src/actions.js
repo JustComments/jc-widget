@@ -2,6 +2,8 @@ import { createGuestJWT, setJWT, copyToClipboard } from './utils';
 import { getCommentUrl } from './comment-utils';
 import * as md5 from 'md5';
 import { __ } from './i18n';
+import { LikeIcon, HappyIcon, InLoveIcon, SadIcon, HeartIcon } from './icons';
+import { LocalStorage } from './storage';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {
@@ -42,10 +44,19 @@ export const actions = (store) => ({
         store.setState({
           loading: false,
           ...withComments([...state.comments, ...newComments], (comments) =>
-            updateById(comments, jumpToComment, (c) => ({
-              ...c,
-              active: true,
-            })),
+            mapComment(
+              updateById(comments, jumpToComment, (c) => ({
+                ...c,
+                active: true,
+              })),
+              (c) => {
+                return {
+                  ...c,
+                  reactionId:
+                    LocalStorage.get(`jcReacted${c.commentId}`) || undefined,
+                };
+              },
+            ),
           ),
           cursor,
         });
@@ -373,11 +384,11 @@ export const actions = (store) => ({
           ...c,
           formOpened,
           menuOpened: false,
-          likeMenuOpened: false,
+          reactMenuOpened: false,
         }),
         (c) => ({
           ...c,
-          likeMenuOpened: false,
+          reactMenuOpened: false,
           formOpened: false,
           menuOpened: false,
         }),
@@ -393,12 +404,12 @@ export const actions = (store) => ({
         (c) => ({
           ...c,
           menuOpened,
-          likeMenuOpened: false,
+          reactMenuOpened: false,
           formOpened: false,
         }),
         (c) => ({
           ...c,
-          likeMenuOpened: false,
+          reactMenuOpened: false,
           formOpened: false,
           menuOpened: false,
         }),
@@ -406,20 +417,20 @@ export const actions = (store) => ({
     ),
   }),
 
-  onToggleLikeMenu: (state, commentId, likeMenuOpened) => ({
+  onToggleLikeMenu: (state, commentId, reactMenuOpened) => ({
     ...withComments(state.comments, (comments) =>
       updateByIdWithReset(
         comments,
         commentId,
         (c) => ({
           ...c,
-          likeMenuOpened,
+          reactMenuOpened,
           formOpened: false,
           menuOpened: false,
         }),
         (c) => ({
           ...c,
-          likeMenuOpened: false,
+          reactMenuOpened: false,
           formOpened: false,
           menuOpened: false,
         }),
@@ -491,6 +502,26 @@ export const actions = (store) => ({
       })),
     ),
   }),
+
+  onLike: (state, commentId, reactionId) => {
+    LocalStorage.set(`jcReacted${commentId}`, reactionId);
+    return {
+      ...withComments(state.comments, (comments) =>
+        updateById(comments, commentId, (c) => ({
+          ...c,
+          reactionId: reactionId,
+          reactions: c.reactions
+            ? {
+                ...c.reactions,
+                [reactionId]: c.reactions[reactionId] + 1,
+              }
+            : {
+                [reactionId]: 1,
+              },
+        })),
+      ),
+    };
+  },
 });
 
 function addCommentInOrder(comments, comment, sort) {
@@ -551,6 +582,13 @@ function updateById(comments, commentId, fn) {
     }
     c.nested = updateById(c.nested || [], commentId, fn);
     return c;
+  });
+}
+
+function mapComment(comments, fn) {
+  return comments.map((c) => {
+    c.nested = mapComment(c.nested || [], fn);
+    return fn(c);
   });
 }
 
@@ -626,3 +664,26 @@ function checkCaptcha(recaptcha) {
 export function getUserPic(email) {
   return `https://www.gravatar.com/avatar/${md5(email)}`;
 }
+
+export const reactions = [
+  {
+    icon: LikeIcon,
+    id: 'like',
+  },
+  {
+    icon: InLoveIcon,
+    id: 'inlove',
+  },
+  {
+    icon: SadIcon,
+    id: 'sad',
+  },
+  {
+    icon: HappyIcon,
+    id: 'happy',
+  },
+  {
+    icon: HeartIcon,
+    id: 'heart',
+  },
+];
