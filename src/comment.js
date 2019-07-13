@@ -164,7 +164,7 @@ class Comment extends Component {
                       href={getCommentUrl(commentsIndex[comment.replyTo])}
                     >
                       <ReplyIcon />
-                      {commentsIndex[comment.replyTo].username}
+                      <span>{commentsIndex[comment.replyTo].username}</span>
                     </a>
                   )}
                 </div>
