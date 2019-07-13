@@ -80,7 +80,6 @@ module.exports = function(env, args) {
                       textAlign: 'left',
                     },
                   }),
-                  require('postcss-increase-specificity')(),
                   require('autoprefixer')(),
                 ],
               },
