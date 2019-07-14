@@ -38,6 +38,8 @@ export const actions = (store) => ({
 
     const { jumpToComment } = state;
 
+    const reacted = getLocalReacted();
+
     state.api
       .getComments(state.cursor)
       .then(({ comments: newComments, cursor }) => {
@@ -52,8 +54,7 @@ export const actions = (store) => ({
               (c) => {
                 return {
                   ...c,
-                  reactionId:
-                    LocalStorage.get(`jcReacted${c.commentId}`) || undefined,
+                  reactionId: reacted[c.commentId],
                 };
               },
             ),
@@ -504,7 +505,8 @@ export const actions = (store) => ({
   }),
 
   onLike: (state, commentId, reactionId) => {
-    LocalStorage.set(`jcReacted${commentId}`, reactionId);
+    storeReactionLocally(commentId, reactionId);
+    state.api.createReaction(commentId, reactionId);
     return {
       ...withComments(state.comments, (comments) =>
         updateById(comments, commentId, (c) => ({
@@ -513,7 +515,8 @@ export const actions = (store) => ({
           reactions: c.reactions
             ? {
                 ...c.reactions,
-                [reactionId]: c.reactions[reactionId] + 1,
+                [reactionId]:
+                  (c.reactions[reactionId] ? c.reactions[reactionId] : 0) + 1,
               }
             : {
                 [reactionId]: 1,
@@ -523,6 +526,30 @@ export const actions = (store) => ({
     };
   },
 });
+
+const jcReacted = 'jcReacted';
+
+function storeReactionLocally(commentId, reactionId) {
+  let list = LocalStorage.get(jcReacted)
+    ? JSON.parse(LocalStorage.get(jcReacted))
+    : [];
+  list.push({ cid: commentId, rid: reactionId });
+  if (list.length >= 5000) {
+    list = list.slice(-4000);
+  }
+  LocalStorage.set(jcReacted, JSON.stringify(list));
+}
+
+function getLocalReacted() {
+  let list = LocalStorage.get(jcReacted)
+    ? JSON.parse(LocalStorage.get(jcReacted))
+    : [];
+
+  return list.reduce((acc, item) => {
+    acc[item.cid] = item.rid;
+    return acc;
+  }, {});
+}
 
 function addCommentInOrder(comments, comment, sort) {
   if (sort === 'asc') {
