@@ -213,6 +213,21 @@ export class API {
       htmlContent: c.htmlMessage,
     }));
   }
+
+  createReaction(commentId, reactionId) {
+    return fetch(`${BASE_URL}/reactions?apiKey=${this.opts.apiKey}`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify({
+        commentId,
+        reactionId,
+        itemId: this.opts.effectiveItemId,
+      }),
+    });
+  }
 }
 
 function qs(p) {

@@ -296,7 +296,7 @@
   .comment .menu {
     background-color: var(--primary-bg-color);
     border: 1px solid var(--border-color);
-    width: 120px;
+    width: 150px;
     text-align: right;
     padding: 10px 0;
     border-radius: 2px;
@@ -343,20 +343,26 @@
     background-color: var(--primary-color-lighter);
   }
 
-  .comment .buttons .reply {
-    min-width: 56px;
+  .comment .buttons .react {
+    position: relative;
+    margin-left: 18px;
+    display: flex;
+    align-items: center;
   }
 
-  .comment .buttons .like {
-    min-width: 47px;
+  .comment .buttons .react.reacted {
     position: relative;
-    margin-left: 10px;
+  }
+
+  .comment .buttons .react.reacted svg {
+    width: 18px;
+    height: 18px;
   }
 
   .comment .buttons .more {
     width: 18px;
     position: relative;
-    margin-left: 10px;
+    margin-left: 18px;
   }
 
   .comment .buttons .menu {
@@ -741,6 +747,12 @@
 
   .form .row.last > .btn.secondary {
     margin-left: 40px;
+  }
+
+  .reactions {
+    margin-left: auto;
+    display: flex;
+    color: var(--secondary-text-color);
   }
 
   .reaction0 {
