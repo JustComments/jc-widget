@@ -120,7 +120,7 @@ class Comment extends Component {
     disableShareButton,
   }) {
     const Reaction = comment.reactionId
-      ? reactions.find((r) => r.id === comment.reactionId).icon
+      ? reactions.find((r) => r.id === comment.reactionId)
       : undefined;
     return (
       <div
@@ -245,8 +245,8 @@ class Comment extends Component {
             </div>
           )}
           {Reaction && (
-            <div className={cls(s.react, s.reacted)}>
-              <Reaction />
+            <div title={Reaction.name} className={cls(s.react, s.reacted)}>
+              <Reaction.icon />
             </div>
           )}
           <div className={s.more}>
@@ -295,13 +295,13 @@ class Comment extends Component {
                 {getTopReactions(comment).reduce((acc, n) => acc + n.value, 0)}
               </span>
               {getTopReactions(comment).map((r, i) => {
-                const reaction = reactions.find((_r) => _r.id === r.id);
+                const _Reaction = reactions.find((_r) => _r.id === r.id);
                 return (
                   <span
-                    title={r.value}
+                    title={`${_Reaction.name}: ${r.value}`}
                     className={cls(s.reactionContainer, s[`reaction${i}`])}
                   >
-                    <reaction.icon />
+                    <_Reaction.icon />
                   </span>
                 );
               })}

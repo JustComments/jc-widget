@@ -141,6 +141,7 @@
     display: inline-flex;
     min-width: 70px;
     justify-content: space-between;
+    padding: 5px 0;
   }
 
   .formHeader {
@@ -259,6 +260,9 @@
     color: var(--primary-text-color);
     margin-left: 86px;
     margin-bottom: 15px;
+  }
+
+  .form.last {
     margin-top: 50px;
   }
 
@@ -556,7 +560,7 @@
   }
 
   .comment .buttons {
-    padding: 6px 12px 0 16px;
+    padding: 6px 10px 0 16px;
     display: flex;
   }
 
@@ -694,7 +698,6 @@
   .comment .collapse .btn {
     width: 18px;
     height: 18px;
-    margin-left: 8px;
   }
 
   .comment .collapse span {
