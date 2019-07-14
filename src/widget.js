@@ -110,7 +110,7 @@ class Widget extends Component {
             ref={(c) => setRecaptchaRef(c)}
           />
         )}
-        {shouldRenderFormAfter && <Form />}
+        {shouldRenderFormAfter && <Form last={true} />}
         {!hideAttribution && <Attribution />}
       </div>
     );

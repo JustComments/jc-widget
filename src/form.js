@@ -85,6 +85,7 @@ class Form extends Component {
     enableWebsite,
     form,
     isLoggedIn,
+    last,
     onEmailBlur,
     onEmailInput,
     onEmailToggle,
@@ -109,6 +110,7 @@ class Form extends Component {
         className={cls(s.form, {
           [s.noSocial]: !showSocial,
           [s.noUserPic]: disableProfilePictures,
+          [s.last]: last,
         })}
       >
         <form ref={this.saveRef}>

@@ -696,21 +696,26 @@ export const reactions = [
   {
     icon: LikeIcon,
     id: 'like',
+    name: 'Like',
   },
   {
     icon: InLoveIcon,
     id: 'inlove',
+    name: 'Love',
   },
   {
     icon: SadIcon,
     id: 'sad',
+    name: 'Sad',
   },
   {
     icon: HappyIcon,
     id: 'happy',
+    name: 'Happy',
   },
   {
     icon: HeartIcon,
     id: 'heart',
+    name: 'Heart',
   },
 ];

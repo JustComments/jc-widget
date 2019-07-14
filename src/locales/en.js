@@ -18,7 +18,7 @@ module.exports = {
   noComments: 'Be the first to comment.',
   preview: 'Preview',
   reply: 'Reply',
-  replyTo: 'Write your response to %{name}',
+  replyTo: 'Write a public response to %{name}',
   send: 'Send',
   sending: 'Sending',
   share: 'share on',
@@ -31,6 +31,6 @@ module.exports = {
   usernameRemoved: 'removed',
   userPic: 'User picture',
   website: 'Website (optional)',
-  writeAComment: 'Write a comment',
+  writeAComment: 'Write a public comment',
   react: 'React',
 };
