@@ -78,7 +78,7 @@
     "stylelint-webpack-plugin": "0.10.5",
     "webpack": "4.35.3",
     "webpack-bundle-analyzer": "3.3.2",
-    "webpack-cli": "3.3.5"
+    "webpack-cli": "3.3.6"
   },
   "dependencies": {
     "js-base64": "2.5.1",
