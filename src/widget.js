@@ -81,8 +81,7 @@ class Widget extends Component {
     return (
       <div className={s.widget}>
         {shouldRenderFormBefore && <Form />}
-        {loading && <div className={s.loading}>{__('loadingComments')}</div>}
-        {!loading && !hideCommentHeader && (
+        {!hideCommentHeader && (
           <div className={cls(s.header)}>
             <span className={cls(s.fontHeading1)}>
               {__('comments')}
@@ -107,6 +106,7 @@ class Widget extends Component {
             </span>
           </div>
         )}
+        {loading && <div className={s.loading}>{__('loadingComments')}</div>}
         {!loading && count === 0 && !hideNoCommentsText && (
           <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
         )}
