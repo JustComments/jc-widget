@@ -7,15 +7,20 @@ import { LocalStorage } from './storage';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {
-    const { jumpToComment, jumped, lastKey, comments } = state;
+    const { jumpToComment, jumped, cursor, comments } = state;
     if (!jumped && jumpToComment && comments.length > 0) {
       setTimeout(() => {
         if (!document.getElementById('jc' + jumpToComment)) {
           console.log(
             'Could not scroll: ' + '#jc' + jumpToComment + ' not found',
           );
-          if (lastKey) {
-            this.loadMore();
+          if (cursor) {
+            loadComments(store, state.api, {
+              jumpToComment: jumpToComment,
+              existingComments: comments,
+              cursor: cursor,
+              sort: state.config.sort,
+            });
           }
           return;
         }
@@ -513,7 +518,7 @@ export const actions = (store) => ({
     });
 
     return loadComments(store, state.api, {
-      jumpToComment: state.jumpToComment,
+      jumpToComment: null,
       existingComments: [],
       cursor: null,
       sort: e.target.value,

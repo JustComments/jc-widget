@@ -36,9 +36,6 @@ const mapToProps = ({ config, loading, cursor, comments }) => {
     hideNoCommentsText,
   } = config;
   const shouldRenderForm = !(disableSocialLogin && disableAnonymousLogin);
-  const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
-  const shouldRenderFormAfter =
-    shouldRenderForm && (sort === 'asc' || sort === 'top');
   const hasMore = !!cursor;
   const count = commentCount(comments);
   const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;
@@ -54,8 +51,7 @@ const mapToProps = ({ config, loading, cursor, comments }) => {
     hideNoCommentsText,
     loading,
     recaptchaSitekey,
-    shouldRenderFormAfter,
-    shouldRenderFormBefore,
+    shouldRenderForm,
     sort,
   };
 };
@@ -74,13 +70,12 @@ class Widget extends Component {
     onSortChange,
     recaptchaSitekey,
     setRecaptchaRef,
-    shouldRenderFormAfter,
-    shouldRenderFormBefore,
+    shouldRenderForm,
     sort,
   }) {
     return (
       <div className={s.widget}>
-        {shouldRenderFormBefore && <Form />}
+        {shouldRenderForm && <Form />}
         {!hideCommentHeader && (
           <div className={cls(s.header)}>
             <span className={cls(s.fontHeading1)}>
@@ -131,7 +126,7 @@ class Widget extends Component {
             ref={(c) => setRecaptchaRef(c)}
           />
         )}
-        {shouldRenderFormAfter && <Form last={true} />}
+        {shouldRenderForm && comments.length > 10 && <Form last={true} />}
         {!hideAttribution && <Attribution />}
       </div>
     );
