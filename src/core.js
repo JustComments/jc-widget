@@ -140,8 +140,8 @@ function readWidgetData(widget) {
       ? '6Lc9nTEUAAAAABlX72vOhEVdBUX_ULUY88e7Chkl'
       : undefined;
   const defaultUserPicUrl = widget.dataset.defaultuserpicurl;
-  const disableReactions = true;
-  // const disableReactions = widget.dataset.disablereactions === 'true';
+  // const disableReactions = true;
+  const disableReactions = widget.dataset.disablereactions === 'true';
 
   let pageSize = widget.dataset.pagesize
     ? parseInt(widget.dataset.pagesize, 10)
@@ -153,7 +153,7 @@ function readWidgetData(widget) {
 
   let sort = widget.dataset.sort ? widget.dataset.sort : 'asc';
 
-  if (sort !== 'asc' && sort !== 'desc') {
+  if (['asc', 'desc', 'top'].indexOf(sort) === -1) {
     sort = 'asc';
   }
 

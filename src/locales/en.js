@@ -33,4 +33,7 @@ module.exports = {
   website: 'Website (optional)',
   writeAComment: 'Write a public comment',
   react: 'React',
+  newestFirst: 'newest first',
+  oldestFirst: 'oldest first',
+  topFirst: 'top first',
 };

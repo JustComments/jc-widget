@@ -37,52 +37,73 @@ const mapToProps = ({ config, loading, cursor, comments }) => {
   } = config;
   const shouldRenderForm = !(disableSocialLogin && disableAnonymousLogin);
   const shouldRenderFormBefore = shouldRenderForm && sort === 'desc';
-  const shouldRenderFormAfter = shouldRenderForm && sort === 'asc';
+  const shouldRenderFormAfter =
+    shouldRenderForm && (sort === 'asc' || sort === 'top');
   const hasMore = !!cursor;
   const count = commentCount(comments);
   const countText = count > 0 ? ` (${count}${hasMore ? '+' : ''})` : ``;
 
   return {
-    shouldRenderFormBefore,
-    shouldRenderFormAfter,
-    loading,
-    count,
     comments,
+    count,
     countText,
     cursor,
     disableLoadMore,
-    recaptchaSitekey,
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
+    loading,
+    recaptchaSitekey,
+    shouldRenderFormAfter,
+    shouldRenderFormBefore,
+    sort,
   };
 };
 
 class Widget extends Component {
   render({
-    shouldRenderFormBefore,
-    shouldRenderFormAfter,
-    loading,
-    count,
     comments,
+    count,
     countText,
     cursor,
     disableLoadMore,
-    recaptchaSitekey,
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
+    loading,
+    onSortChange,
+    recaptchaSitekey,
     setRecaptchaRef,
+    shouldRenderFormAfter,
+    shouldRenderFormBefore,
+    sort,
   }) {
     return (
       <div className={s.widget}>
         {shouldRenderFormBefore && <Form />}
         {loading && <div className={s.loading}>{__('loadingComments')}</div>}
         {!loading && !hideCommentHeader && (
-          <div className={cls(s.header, s.fontHeading1)}>
-            <span>
+          <div className={cls(s.header)}>
+            <span className={cls(s.fontHeading1)}>
               {__('comments')}
               {countText}
+            </span>
+            <span className={cls(s.fontBody2)}>
+              Show:{' '}
+              <select
+                onChange={onSortChange}
+                className={cls(s.select, s.fontBody2)}
+              >
+                <option value="desc" selected={sort === 'desc'}>
+                  {__('newestFirst')}
+                </option>
+                <option value="asc" selected={sort === 'asc'}>
+                  {__('oldestFirst')}
+                </option>
+                <option value="top" selected={sort === 'top'}>
+                  {__('topFirst')}
+                </option>
+              </select>
             </span>
           </div>
         )}

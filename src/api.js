@@ -142,14 +142,14 @@ export class API {
     });
   }
 
-  getComments(cursor) {
+  getComments(cursor, sort) {
     return fetch(
       `${BASE_URL}/v2/comments?${qs({
         lastKey: cursor,
         pageUrl: window.location.href,
         apiKey: this.opts.apiKey,
         pageId: this.opts.effectiveItemId,
-        sort: this.opts.sort,
+        sort: sort,
         pageSize: this.opts.pageSize,
       })}`,
       { method: 'GET' },

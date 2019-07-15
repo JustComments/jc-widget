@@ -32,36 +32,12 @@ export const actions = (store) => ({
   },
 
   loadComments: (state) => {
-    store.setState({
-      loading: true,
+    return loadComments(store, state.api, {
+      jumpToComment: state.jumpToComment,
+      existingComments: state.comments,
+      cursor: state.cursor,
+      sort: state.config.sort,
     });
-
-    const { jumpToComment } = state;
-
-    const reacted = getLocalReacted();
-
-    state.api
-      .getComments(state.cursor)
-      .then(({ comments: newComments, cursor }) => {
-        store.setState({
-          loading: false,
-          ...withComments([...state.comments, ...newComments], (comments) =>
-            mapComment(
-              updateById(comments, jumpToComment, (c) => ({
-                ...c,
-                active: true,
-              })),
-              (c) => {
-                return {
-                  ...c,
-                  reactionId: reacted[c.commentId],
-                };
-              },
-            ),
-          ),
-          cursor,
-        });
-      });
   },
 
   previewComment: (state) => {
@@ -525,6 +501,24 @@ export const actions = (store) => ({
       ),
     };
   },
+
+  onSortChange(state, e) {
+    store.setState({
+      cursor: null,
+      comments: [],
+      config: {
+        ...state.config,
+        sort: e.target.value,
+      },
+    });
+
+    return loadComments(store, state.api, {
+      jumpToComment: state.jumpToComment,
+      existingComments: [],
+      cursor: null,
+      sort: e.target.value,
+    });
+  },
 });
 
 const jcReacted = 'jcReacted';
@@ -552,7 +546,7 @@ function getLocalReacted() {
 }
 
 function addCommentInOrder(comments, comment, sort) {
-  if (sort === 'asc') {
+  if (sort === 'asc' || sort === 'top') {
     return addCommentInAscOrder(comments, comment);
   }
   return addCommentInDescOrder(comments, comment);
@@ -686,6 +680,41 @@ function checkCaptcha(recaptcha) {
     return Promise.resolve();
   }
   return recaptcha.check();
+}
+
+function loadComments(
+  store,
+  api,
+  { sort, jumpToComment, cursor, existingComments },
+) {
+  store.setState({
+    loading: true,
+  });
+
+  const reacted = getLocalReacted();
+
+  return api
+    .getComments(cursor, sort)
+    .then(({ comments: newComments, cursor }) => {
+      store.setState({
+        loading: false,
+        ...withComments([...existingComments, ...newComments], (comments) =>
+          mapComment(
+            updateById(comments, jumpToComment, (c) => ({
+              ...c,
+              active: true,
+            })),
+            (c) => {
+              return {
+                ...c,
+                reactionId: reacted[c.commentId],
+              };
+            },
+          ),
+        ),
+        cursor,
+      });
+    });
 }
 
 export function getUserPic(email) {

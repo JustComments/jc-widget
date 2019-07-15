@@ -488,6 +488,22 @@
     color: var(--primary-text-color);
     padding: 43px 0 10px 0;
     margin-bottom: 33px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .header > span:nth-child(2) {
+    margin-left: auto;
+  }
+
+  .select {
+    color: var(--primary-text-color);
+    background-color: var(--primary-bg-color);
+  }
+
+  .select:focus {
+    outline: var(--outline-style);
+    outline-offset: var(--outline-offset);
   }
 
   .text {
