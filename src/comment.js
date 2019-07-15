@@ -39,6 +39,7 @@ const mapToProps = (state) => ({
   commentsIndex: state.commentsIndex,
   disableProfilePictures: state.config.disableProfilePictures,
   disableShareButton: state.config.disableShareButton,
+  disableReactions: state.config.disableReactions,
 });
 
 function commentCount(comments) {
@@ -114,10 +115,11 @@ class Comment extends Component {
   render({
     comment,
     commentsIndex,
+    disableProfilePictures,
+    disableReactions,
+    disableShareButton,
     first,
     level,
-    disableProfilePictures,
-    disableShareButton,
   }) {
     const Reaction = comment.reactionId
       ? reactions.find((r) => r.id === comment.reactionId)
@@ -217,7 +219,7 @@ class Comment extends Component {
               {__('reply')}
             </button>
           </div>
-          {!Reaction && (
+          {!disableReactions && !Reaction && (
             <div className={s.react}>
               <button
                 onClick={this.onToggleLikeMenu}

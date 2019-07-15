@@ -40,7 +40,7 @@ export function getTopReactions(comment) {
   }));
 
   reactions.sort((a, b) => {
-    return a.value - b.value;
+    return b.value - a.value;
   });
 
   return reactions.slice(0, 3);
