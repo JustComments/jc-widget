@@ -93,6 +93,7 @@ export function renderWidget(
       disableShareButton: data.disableShareButton,
       disableSocialLogin: data.disableSocialLogin,
       disablePushNotifications: data.disablePushNotifications,
+      disableReactions: data.disableReactions,
       enableEmailNotifications: data.enableEmailNotifications,
       enableWebsite: data.enableWebsite,
       hideAttribution: data.hideAttribution,
@@ -139,6 +140,9 @@ function readWidgetData(widget) {
       ? '6Lc9nTEUAAAAABlX72vOhEVdBUX_ULUY88e7Chkl'
       : undefined;
   const defaultUserPicUrl = widget.dataset.defaultuserpicurl;
+  const disableReactions = true;
+  // const disableReactions = widget.dataset.disablereactions === 'true';
+
   let pageSize = widget.dataset.pagesize
     ? parseInt(widget.dataset.pagesize, 10)
     : 100;
@@ -161,6 +165,7 @@ function readWidgetData(widget) {
     disableLoadMore,
     disableProfilePictures,
     disablePushNotifications,
+    disableReactions,
     disableShareButton,
     disableSocialLogin,
     enableEmailNotifications,

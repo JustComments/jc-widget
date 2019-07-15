@@ -306,6 +306,10 @@
     border-radius: 2px;
   }
 
+  .comment .form {
+    margin-top: 33px;
+  }
+
   .comment .menu.horizontal {
     display: flex;
     flex-direction: row;
@@ -702,6 +706,7 @@
 
   .comment .collapse span {
     color: var(--secondary-text-color);
+    margin-right: 10px;
   }
 
   .attribution {
