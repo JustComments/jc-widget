@@ -121,6 +121,7 @@ class Comment extends Component {
     first,
     level,
   }) {
+    const topReactions = getTopReactions(comment);
     const Reaction = comment.reactionId
       ? reactions.find((r) => r.id === comment.reactionId)
       : undefined;
@@ -237,6 +238,7 @@ class Comment extends Component {
                         className={s.btn}
                         onClick={() => this.onLike(r.id)}
                         type="button"
+                        title={r.name}
                       >
                         <r.icon />
                       </button>
@@ -292,16 +294,25 @@ class Comment extends Component {
             )}
           </div>
           {comment.reactions && (
-            <div className={cls(s.reactions, s.fontBody2)}>
-              <span>
-                {getTopReactions(comment).reduce((acc, n) => acc + n.value, 0)}
-              </span>
-              {getTopReactions(comment).map((r, i) => {
+            <span className={cls(s.reactionsCount, s.fontBody2)}>
+              {topReactions.reduce((acc, n) => acc + n.value, 0)}
+            </span>
+          )}
+          {comment.reactions && (
+            <div
+              className={cls(
+                s.reactions,
+                s[`reactions${topReactions.length}`],
+                s.fontBody2,
+              )}
+            >
+              {topReactions.map((r, i) => {
                 const _Reaction = reactions.find((_r) => _r.id === r.id);
+                const n = i + (3 - topReactions.length);
                 return (
                   <span
                     title={`${_Reaction.name}: ${r.value}`}
-                    className={cls(s.reactionContainer, s[`reaction${i}`])}
+                    className={cls(s.reactionContainer, s[`reaction${n}`])}
                   >
                     <_Reaction.icon />
                   </span>

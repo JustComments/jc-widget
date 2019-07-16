@@ -774,30 +774,48 @@
   }
 
   .reactions {
-    margin-left: auto;
-    display: flex;
     color: var(--secondary-text-color);
+    position: relative;
+    width: 43px;
+  }
+
+  .reactions2 {
+    width: 30px;
+  }
+
+  .reactions1 {
+    width: 18px;
+  }
+
+  .reactionsCount {
+    color: var(--secondary-text-color);
+    margin-left: auto;
+    margin-right: 5px;
   }
 
   .reaction0 {
     z-index: 3;
-    left: 10px;
+    right: 26px;
+    position: absolute;
   }
 
   .reaction1 {
     z-index: 2;
-    left: 5px;
+    right: 13px;
+    position: absolute;
   }
 
   .reaction2 {
     z-index: 1;
+    right: 0;
+    position: absolute;
   }
 
   .reactions .reactionContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    height: 22px;
   }
 
   .reactions svg {
