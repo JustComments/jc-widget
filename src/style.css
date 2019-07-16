@@ -490,6 +490,7 @@
     margin-bottom: 33px;
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
   }
 
   .header > span:nth-child(2) {
@@ -908,6 +909,10 @@
   }
 
   @media (max-width: 375px) {
+    .header span:nth-child(2) {
+      margin-left: 0;
+    }
+
     .comment {
       margin-left: 0;
     }
