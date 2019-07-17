@@ -301,26 +301,20 @@
     margin-bottom: 22px;
   }
 
-  .comment .menu {
+  .menu {
     background-color: var(--primary-bg-color);
-    border: 1px solid var(--border-color);
-    width: 150px;
-    text-align: right;
-    padding: 10px 0;
     border-radius: 2px;
+    border: 1px solid var(--border-color);
+    left: 0;
+    padding: 10px 0;
+    position: absolute;
+    text-align: right;
+    top: 30px;
+    width: 150px;
+    z-index: 100;
   }
 
-  .comment .form {
-    margin-top: 33px;
-  }
-
-  .comment .menu.horizontal {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .comment .menu .menuBtn {
+  .menuBtn {
     box-sizing: border-box;
     cursor: pointer;
     text-align: right;
@@ -334,10 +328,6 @@
     vertical-align: baseline;
   }
 
-  .comment .form {
-    padding: 10px;
-  }
-
   .menuBtn svg {
     width: 13px;
     height: 13px;
@@ -345,43 +335,50 @@
     vertical-align: middle;
   }
 
-  .comment .menu .menuBtn:focus {
+  .menuBtn:focus {
     outline: var(--outline-style);
     outline-offset: var(--outline-offset);
   }
 
-  .comment .menu .menuBtn:hover {
+  .menuBtn:hover {
     color: var(--primary-color);
     background-color: var(--primary-color-lighter);
   }
 
-  .comment .buttons .react {
+  .menu.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .comment .form {
+    margin-top: 33px;
+  }
+
+  .comment .form {
+    padding: 10px;
+  }
+
+  .react {
     position: relative;
     margin-left: 18px;
     display: flex;
     align-items: center;
   }
 
-  .comment .buttons .react.reacted {
+  .react.reacted {
     position: relative;
   }
 
-  .comment .buttons .react.reacted svg {
+  .react.reacted svg {
     width: 18px;
     height: 18px;
   }
 
-  .comment .buttons .more {
+  .more {
     width: 18px;
     position: relative;
     margin-left: 18px;
-  }
-
-  .comment .buttons .menu {
-    position: absolute;
-    z-index: 100;
-    top: 25px;
-    right: 0;
   }
 
   .linkBtn {
@@ -488,13 +485,15 @@
   }
 
   .header {
+    align-items: flex-end;
     border-bottom: 1px solid var(--border-color);
     color: var(--primary-text-color);
-    padding: 43px 0 10px 0;
-    margin-bottom: 33px;
     display: flex;
-    align-items: flex-end;
     flex-wrap: wrap;
+    margin-bottom: 33px;
+    margin-right: 100px;
+    padding: 43px 0 10px 0;
+    width: 100%;
   }
 
   .header > span:nth-child(2) {
@@ -557,7 +556,7 @@
     margin-left: -102px;
   }
 
-  .comment .bubble {
+  .bubble {
     background-color: var(--secondary-bg-color-lighter);
     border: 1px solid var(--border-color);
     border-radius: var(--bubble-border-radius);
@@ -566,13 +565,13 @@
     min-height: 56px;
   }
 
-  .comment .bubble.active {
+  .bubble.active {
     position: relative;
     background-color: var(--primary-color-light);
     border-left: 0;
   }
 
-  .comment .bubble.active::before {
+  .bubble.active::before {
     content: '';
     position: absolute;
     top: 2px;
@@ -584,7 +583,7 @@
     border-bottom-left-radius: 5px;
   }
 
-  .comment .buttons {
+  .buttons {
     padding: 6px 10px 0 16px;
     display: flex;
   }
@@ -839,11 +838,11 @@
       margin-bottom: 10px;
     }
 
-    .comment .buttons {
+    .buttons {
       padding: 6px 10px 6px 10px;
     }
 
-    .comment .bubble {
+    .bubble {
       padding: 6px 10px 6px 10px;
     }
 
