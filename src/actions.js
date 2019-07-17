@@ -486,25 +486,27 @@ export const actions = (store) => ({
   }),
 
   onLike: (state, commentId, reactionId) => {
-    storeReactionLocally(commentId, reactionId);
-    state.api.createReaction(commentId, reactionId);
-    return {
-      ...withComments(state.comments, (comments) =>
-        updateById(comments, commentId, (c) => ({
-          ...c,
-          reactionId: reactionId,
-          reactions: c.reactions
-            ? {
-                ...c.reactions,
-                [reactionId]:
-                  (c.reactions[reactionId] ? c.reactions[reactionId] : 0) + 1,
-              }
-            : {
-                [reactionId]: 1,
-              },
-        })),
-      ),
-    };
+    return checkCaptcha(state.recaptchaRef).then((captchaResult) => {
+      state.api.createReaction(commentId, reactionId, captchaResult);
+      storeReactionLocally(commentId, reactionId);
+      store.setState({
+        ...withComments(state.comments, (comments) =>
+          updateById(comments, commentId, (c) => ({
+            ...c,
+            reactionId: reactionId,
+            reactions: c.reactions
+              ? {
+                  ...c.reactions,
+                  [reactionId]:
+                    (c.reactions[reactionId] ? c.reactions[reactionId] : 0) + 1,
+                }
+              : {
+                  [reactionId]: 1,
+                },
+          })),
+        ),
+      });
+    });
   },
 
   onSortChange(state, e) {

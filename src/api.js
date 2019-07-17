@@ -149,7 +149,7 @@ export class API {
     }));
   }
 
-  createReaction(commentId, reactionId) {
+  createReaction(commentId, reactionId, captchaResult) {
     return fetch(`/reactions?apiKey=${this.opts.apiKey}`, {
       method: 'POST',
       mode: 'cors',
@@ -158,6 +158,7 @@ export class API {
         commentId,
         reactionId,
         itemId: this.opts.effectiveItemId,
+        captchaResult: defaults(captchaResult, undefined),
       }),
     });
   }
