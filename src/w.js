@@ -5,13 +5,13 @@ import {
   findWidgetElement,
   scrollIntoView,
   onceVisible,
-  extractDataFromURL,
+  getPageData,
   isBot,
 } from './bootstrap';
 
 import { mapping } from './locales';
 
-let { jumpToComment } = extractDataFromURL();
+let { jumpToComment } = getPageData();
 
 let loaded = false;
 function loadCoreOnce(bundleLocale) {

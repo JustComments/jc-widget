@@ -1,6 +1,8 @@
-import { h, render, Component } from 'preact';
-import { __, substitute } from './i18n';
+import cls from 'classnames';
 import { Connect } from 'redux-zero/preact';
+import { h, render, Component } from 'preact';
+
+import { __, substitute } from './i18n';
 import { actions } from './actions';
 import {
   Anonymous,
@@ -20,20 +22,12 @@ import {
   getHumanReadableCommentTimestamp,
   getCommentUrl,
   getTopReactions,
+  commentCount,
 } from './comment-utils';
 import { Avatar } from './avatar';
 import Form from './form';
 import s from './style.css';
-import cls from 'classnames';
 import { reactions } from './actions';
-
-const WrapperComment = (origProps) => (
-  <Connect mapToProps={mapToProps} actions={actions}>
-    {(props) => <Comment {...props} {...origProps} />}
-  </Connect>
-);
-
-export default WrapperComment;
 
 const mapToProps = (state) => ({
   commentsIndex: state.commentsIndex,
@@ -41,16 +35,6 @@ const mapToProps = (state) => ({
   disableShareButton: state.config.disableShareButton,
   disableReactions: state.config.disableReactions,
 });
-
-function commentCount(comments) {
-  return comments.reduce((acc, c) => {
-    acc += c.hidden ? 0 : 1;
-    if (c.nested) {
-      acc += commentCount(c.nested);
-    }
-    return acc;
-  }, 0);
-}
 
 class Comment extends Component {
   onToggleComment = () => {
@@ -333,3 +317,11 @@ class Comment extends Component {
     );
   }
 }
+
+const WrapperComment = (origProps) => (
+  <Connect mapToProps={mapToProps} actions={actions}>
+    {(props) => <Comment {...props} {...origProps} />}
+  </Connect>
+);
+
+export default WrapperComment;

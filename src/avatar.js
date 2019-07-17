@@ -1,10 +1,10 @@
+import cls from 'classnames';
 import { h, Component } from 'preact';
-import { __ } from './i18n';
 
+import s from './style.css';
+import { __ } from './i18n';
 import { Anonymous, TwitterIcon, FacebookIcon, LogoutIcon } from './icons';
 import { supportsServiceWorkers } from './utils';
-import s from './style.css';
-import cls from 'classnames';
 
 const icons = {
   twitter: <TwitterIcon />,

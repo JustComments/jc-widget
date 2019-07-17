@@ -16,135 +16,73 @@ export class API {
   }
 
   twitterRedirect(callbackUrl) {
-    return `${TWITTER_URL}#apiKey=${encodeURIComponent(
-      this.opts.apiKey,
-    )}&callbackUrl=${encodeURIComponent(
-      callbackUrl,
-    )}&itemId=${encodeURIComponent(this.opts.effectiveItemId)}`;
+    return `${TWITTER_URL}#${qs({
+      apiKey: this.opts.apiKey,
+      callbackUrl: callbackUrl,
+      itemId: effectiveItemId,
+    })}`;
   }
 
   facebookRedirect(callbackUrl) {
-    return `${FB_URL}#apiKey=${encodeURIComponent(
-      this.opts.apiKey,
-    )}&callbackUrl=${encodeURIComponent(
-      callbackUrl,
-    )}&itemId=${encodeURIComponent(this.opts.effectiveItemId)}`;
+    return `${FB_URL}#${qs({
+      apiKey: this.opts.apiKey,
+      callbackUrl: callbackUrl,
+      itemId: effectiveItemId,
+    })}`;
   }
 
   authPopup(redirectUrl) {
-    const popup = window.open(
-      '',
-      '_blank',
-      'location=yes,height=600,width=800,scrollbars=yes,status=yes',
-    );
-    let resolve;
-    const promise = new Promise((r) => {
-      resolve = r;
-    });
-
+    const { promise, resolve } = openPopup(redirectUrl);
     LocalStorage.set('jcAuth', true);
-    const handler = (e) => {
-      if (e.key === 'jcOauthTokenVerifier' && e.newValue) {
-        const tokenVerifier = e.newValue;
-        window.removeEventListener('storage', handler);
-        const token = LocalStorage.get('jcOauthToken');
-        const tokenSecret = LocalStorage.get('jcOauthTokenSecret');
-        this.twitterCallback({
-          token,
-          tokenSecret,
-          tokenVerifier,
-        }).then(({ jwt }) => {
-          resolve(jwt);
-        });
-      }
-    };
-    window.addEventListener('storage', handler);
-    popup.location.href = redirectUrl;
-    popup.focus();
+    listenFor('jcOauthTokenVerifier', (tokenVerifier) => {
+      this.twitterCallback({
+        token: LocalStorage.get('jcOauthToken'),
+        tokenSecret: LocalStorage.get('jcOauthTokenSecret'),
+        tokenVerifier,
+      }).then(({ jwt }) => {
+        resolve(jwt);
+      });
+    });
     return promise;
   }
 
   authFbPopup(redirectUrl) {
-    const popup = window.open(
-      '',
-      '_blank',
-      'location=yes,height=600,width=800,scrollbars=yes,status=yes',
-    );
-    let resolve;
-    const promise = new Promise((r) => {
-      resolve = r;
-    });
-
+    const { promise, resolve } = openPopup(redirectUrl);
     LocalStorage.set('jcAuth', true);
-    const handler = (e) => {
-      if (e.key === 'jcOauthToken' && e.newValue) {
-        window.removeEventListener('storage', handler);
-        const jwt = LocalStorage.get('jcOauthToken');
-        resolve(jwt);
-      }
-    };
-    window.addEventListener('storage', handler);
-    popup.location.href = redirectUrl;
-    popup.focus();
+    listenFor('jcOauthToken', (jwt) => resolve(jwt));
     return promise;
   }
 
   pushPopup() {
-    const popup = window.open(
-      '',
-      '_blank',
-      'location=yes,height=600,width=800,scrollbars=yes,status=yes',
+    const { promise, resolve } = openPopup(
+      `${PUSH_URL}#${enc(window.location.href)}`,
     );
-    let resolve;
-    const promise = new Promise((r) => {
-      resolve = r;
-    });
-
     LocalStorage.set('jcPush', true);
-    const handler = (e) => {
-      if (e.key === 'jcPushSubscription' && e.newValue) {
-        const jcPushSubscription = e.newValue;
-        window.removeEventListener('storage', handler);
-        LocalStorage.delete('jcPushSubscription');
-        return resolve(jcPushSubscription);
-      }
-    };
-    window.addEventListener('storage', handler);
-    popup.location.href = `${PUSH_URL}#${encodeURIComponent(
-      window.location.href,
-    )}`;
-    popup.focus();
-
+    listenFor('jcPushSubscription', (jcPushSubscription) => {
+      LocalStorage.delete('jcPushSubscription');
+      return resolve(jcPushSubscription);
+    });
     return promise;
   }
 
   twitterCallback(data) {
-    return fetch(
-      `${BASE_URL}/auth/twitter/callback?apiKey=${this.opts.apiKey}`,
-      {
-        method: 'POST',
-        mode: 'cors',
-        redirect: 'follow',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'x-api-key': this.opts.apiKey,
-        }),
-        body: JSON.stringify({
-          itemId: this.opts.effectiveItemId,
-          ...data,
-        }),
-      },
-    ).then((json) => {
-      const { jwt } = json;
-      return {
-        jwt,
-      };
+    return fetch(`/auth/twitter/callback?apiKey=${this.opts.apiKey}`, {
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'follow',
+      headers: headers({
+        'x-api-key': this.opts.apiKey,
+      }),
+      body: toJson({
+        itemId: this.opts.effectiveItemId,
+        ...data,
+      }),
     });
   }
 
   getComments(cursor, sort) {
     return fetch(
-      `${BASE_URL}/v2/comments?${qs({
+      `/v2/comments?${qs({
         lastKey: cursor,
         pageUrl: window.location.href,
         apiKey: this.opts.apiKey,
@@ -159,53 +97,50 @@ export class API {
     }));
   }
 
-  saveComment(jwt, comment) {
-    return fetch(`${BASE_URL}/comments/create?apiKey=${this.opts.apiKey}`, {
+  saveComment(jwt, c) {
+    return fetch(`/comments/create?apiKey=${this.opts.apiKey}`, {
       method: 'POST',
       mode: 'cors',
-      headers: new Headers({
-        'Content-Type': 'application/json',
+      headers: headers({
         Authorization: ['Bearer', jwt].join(' '),
         'x-api-key': this.opts.apiKey,
       }),
-      body: JSON.stringify({
+      body: toJson({
         itemId: this.opts.effectiveItemId,
         originalItemId: this.opts.itemId,
-        itemProtocol: comment.itemProtocol,
-        itemPort: comment.itemPort,
-        parentId: comment.parentId ? comment.parentId : undefined,
-        replyTo: comment.replyToComment
-          ? comment.replyToComment.commentId
-          : undefined,
-        captchaResult: comment.captchaResult
-          ? comment.captchaResult
-          : undefined,
-        subscription: comment.subscription ? comment.subscription : undefined,
-        website: comment.website ? comment.website : undefined,
-        message: comment.message,
-        pageUrl: window.location.href || '',
-        pageTitle: document.title || '',
-        emailNotifications: comment.emailNotifications || false,
+        itemProtocol: c.itemProtocol,
+        itemPort: c.itemPort,
+        parentId: defaults(c.parentId, undefined),
+        replyTo: defaults(
+          c.replyToComment && c.replyToComment.commentId,
+          undefined,
+        ),
+        captchaResult: defaults(c.captchaResult, undefined),
+        subscription: defaults(c.subscription, undefined),
+        website: defaults(c.website, undefined),
+        message: c.message,
+        pageUrl: defaults(window.location.href, ''),
+        pageTitle: defaults(document.title, ''),
+        emailNotifications: defaults(c.emailNotifications, false),
         locale: getUserLocale(),
         timezone: getUserTimezone(),
-        loginProvider: comment.loginProvider,
+        loginProvider: c.loginProvider,
       }),
-    }).then((c) => ({
-      ...c,
-      htmlContent: c.htmlMessage,
+    }).then((comment) => ({
+      ...comment,
+      htmlContent: comment.htmlMessage,
     }));
   }
 
   previewComment(jwt, comment) {
-    return fetch(`${BASE_URL}/comments/preview?apiKey=${this.opts.apiKey}`, {
+    return fetch(`/comments/preview?apiKey=${this.opts.apiKey}`, {
       method: 'POST',
       mode: 'cors',
-      headers: new Headers({
-        'Content-Type': 'application/json',
+      headers: headers({
         Authorization: ['Bearer', jwt].join(' '),
         'x-api-key': this.opts.apiKey,
       }),
-      body: JSON.stringify({
+      body: toJson({
         message: comment.message,
       }),
     }).then((c) => ({
@@ -215,13 +150,11 @@ export class API {
   }
 
   createReaction(commentId, reactionId) {
-    return fetch(`${BASE_URL}/reactions?apiKey=${this.opts.apiKey}`, {
+    return fetch(`/reactions?apiKey=${this.opts.apiKey}`, {
       method: 'POST',
       mode: 'cors',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify({
+      headers: headers({}),
+      body: toJson({
         commentId,
         reactionId,
         itemId: this.opts.effectiveItemId,
@@ -230,14 +163,32 @@ export class API {
   }
 }
 
+function defaults(val, defaultVal) {
+  if (val) {
+    return val;
+  }
+  return defaultVal;
+}
+
+function headers(values) {
+  return new Headers({
+    ...values,
+    'Content-Type': 'application/json',
+  });
+}
+
+function toJson(obj) {
+  return JSON.stringify(obj);
+}
+
 function qs(p) {
   return Object.keys(p)
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(p[k])}`)
+    .map((k) => `${enc(k)}=${enc(p[k])}`)
     .join('&');
 }
 
 function fetch(url, params) {
-  const request = new Request(url, params);
+  const request = new Request(BASE_URL + url, params);
   return window
     .fetch(request)
     .then((response) => {
@@ -248,11 +199,15 @@ function fetch(url, params) {
     })
     .catch((err) => {
       console.error(
-        'Failed to fetch data. Check that your have enough credits on your account.',
+        'Failed to perform a network request. Check that your have enough credits on your account.',
         err,
       );
       throw err;
     });
+}
+
+function enc(uri) {
+  return encodeURIComponent(uri);
 }
 
 function getUserLocale() {
@@ -269,4 +224,29 @@ function getUserTimezone() {
   } catch (err) {
     return 'UTC';
   }
+}
+
+function openPopup(url) {
+  const popup = window.open(
+    '',
+    '_blank',
+    'location=yes,height=600,width=800,scrollbars=yes,status=yes',
+  );
+  let resolve;
+  const promise = new Promise((r) => {
+    resolve = r;
+  });
+  popup.location.href = url;
+  popup.focus();
+  return { promise, resolve };
+}
+
+function listenFor(key, cb) {
+  const handler = (e) => {
+    if (e.key === key && e.newValue) {
+      window.removeEventListener('storage', handler);
+      cb(e.newValue);
+    }
+  };
+  window.addEventListener('storage', handler);
 }

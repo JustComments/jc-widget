@@ -19,6 +19,7 @@ module.exports = function(env, args) {
     PUSH_URL: args.pushUrl || `${host}:8080/push.html`,
     TWITTER_URL: args.twitterUrl || `${host}:8080/twitter-start.html`,
     FB_URL: args.fbUrl || `${host}:8080/fb-start.html`,
+    RECAPTCHA_KEY: '6Lc9nTEUAAAAABlX72vOhEVdBUX_ULUY88e7Chkl',
   };
   const plugins = [
     new webpack.DefinePlugin(

@@ -45,3 +45,13 @@ export function getTopReactions(comment) {
 
   return reactions.slice(0, 3);
 }
+
+export function commentCount(comments) {
+  return comments.reduce((acc, c) => {
+    acc += c.hidden ? 0 : 1;
+    if (c.nested) {
+      acc += commentCount(c.nested);
+    }
+    return acc;
+  }, 0);
+}

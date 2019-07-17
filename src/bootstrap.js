@@ -117,7 +117,7 @@ function removeURLParameter(url, parameter) {
   return url;
 }
 
-export function extractDataFromURL(useQuery) {
+export function getPageData(useQuery) {
   const pathname = window.location.pathname;
   const hostname = window.location.hostname;
   const search = window.location.search;

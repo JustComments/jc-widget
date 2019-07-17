@@ -7,22 +7,13 @@ import { Connect } from 'redux-zero/preact';
 import { h, render, Component } from 'preact';
 import { Recaptcha } from './recaptcha';
 import { __ } from './i18n';
+import { commentCount } from './comment-utils';
 
 export default () => (
   <Connect mapToProps={mapToProps} actions={actions}>
     {(props) => <Widget {...props} />}
   </Connect>
 );
-
-function commentCount(comments) {
-  return comments.reduce((acc, c) => {
-    acc += c.hidden ? 0 : 1;
-    if (c.nested) {
-      acc += commentCount(c.nested);
-    }
-    return acc;
-  }, 0);
-}
 
 const mapToProps = ({ config, loading, cursor, comments }) => {
   const {
@@ -57,6 +48,18 @@ const mapToProps = ({ config, loading, cursor, comments }) => {
 };
 
 class Widget extends Component {
+  loadMore = () => {
+    this.props.loadComments();
+  };
+
+  componentDidMount() {
+    this.props.loadComments();
+  }
+
+  componentDidUpdate() {
+    this.props.tryJumpToComment();
+  }
+
   render({
     comments,
     count,
@@ -127,29 +130,15 @@ class Widget extends Component {
           />
         )}
         {shouldRenderForm && comments.length > 10 && <Form last={true} />}
-        {!hideAttribution && <Attribution />}
+        {!hideAttribution && (
+          <div className={cls(s.attribution, s.fontBody3)}>
+            <span>powered by &nbsp;</span>
+            <a href="https://just-comments.com" target="_blank">
+              just-comments.com
+            </a>
+          </div>
+        )}
       </div>
     );
   }
-
-  loadMore = () => {
-    this.props.loadComments();
-  };
-
-  componentDidMount() {
-    this.props.loadComments();
-  }
-
-  componentDidUpdate() {
-    this.props.tryJumpToComment();
-  }
 }
-
-const Attribution = () => (
-  <div className={cls(s.attribution, s.fontBody3)}>
-    <span>powered by &nbsp;</span>
-    <a href="https://just-comments.com" target="_blank">
-      just-comments.com
-    </a>
-  </div>
-);
