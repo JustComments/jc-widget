@@ -25,16 +25,7 @@ module.exports = function(api) {
     ],
     env: {
       test: {
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              targets: {
-                browsers: ['last 2 versions', 'safari >= 7'],
-              },
-            },
-          ],
-        ],
+        presets: [['@babel/preset-env']],
       },
     },
   };
