@@ -52,6 +52,10 @@
   --primary-button-hover-bg-color: var(--primary-bg-color);
   --primary-button-border: 2px solid var(--primary-button-bg-color);
 
+  .emojii circle {
+    stroke: var(--primary-bg-color);
+  }
+
   .fontHeading1 {
     font-style: normal;
     font-weight: 500;
