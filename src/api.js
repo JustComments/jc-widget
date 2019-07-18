@@ -19,7 +19,7 @@ export class API {
     return `${TWITTER_URL}#${qs({
       apiKey: this.opts.apiKey,
       callbackUrl: callbackUrl,
-      itemId: effectiveItemId,
+      itemId: this.opts.effectiveItemId,
     })}`;
   }
 
@@ -27,7 +27,7 @@ export class API {
     return `${FB_URL}#${qs({
       apiKey: this.opts.apiKey,
       callbackUrl: callbackUrl,
-      itemId: effectiveItemId,
+      itemId: this.opts.effectiveItemId,
     })}`;
   }
 
