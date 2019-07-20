@@ -29,12 +29,17 @@ import Form from './form';
 import s from './style.css';
 import { reactions } from './actions';
 
-const mapToProps = (state) => ({
-  commentsIndex: state.commentsIndex,
-  disableProfilePictures: state.config.disableProfilePictures,
-  disableShareButton: state.config.disableShareButton,
-  disableReactions: state.config.disableReactions,
-});
+const mapToProps = (state) => {
+  return {
+    showReply: !(
+      state.config.disableSocialLogin && state.config.disableAnonymousLogin
+    ),
+    commentsIndex: state.commentsIndex,
+    disableProfilePictures: state.config.disableProfilePictures,
+    disableShareButton: state.config.disableShareButton,
+    disableReactions: state.config.disableReactions,
+  };
+};
 
 class Comment extends Component {
   onToggleComment = () => {
@@ -104,6 +109,7 @@ class Comment extends Component {
     disableShareButton,
     first,
     level,
+    showReply,
   }) {
     const topReactions = getTopReactions(comment);
     const Reaction = comment.reactionId
@@ -196,14 +202,16 @@ class Comment extends Component {
           )}
         </div>
         <div className={s.buttons}>
-          <div className={s.reply}>
-            <button
-              onClick={this.onToggleCommentForm}
-              className={cls(s.linkBtn, s.fontButton2)}
-            >
-              {__('reply')}
-            </button>
-          </div>
+          {showReply && (
+            <div className={s.reply}>
+              <button
+                onClick={this.onToggleCommentForm}
+                className={cls(s.linkBtn, s.fontButton2)}
+              >
+                {__('reply')}
+              </button>
+            </div>
+          )}
           {!disableReactions && !Reaction && (
             <div className={s.react}>
               <button

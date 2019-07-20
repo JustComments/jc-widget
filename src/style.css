@@ -359,11 +359,15 @@
     padding: 10px;
   }
 
+  .reply {
+    margin-right: 18px;
+  }
+
   .react {
     position: relative;
-    margin-left: 18px;
     display: flex;
     align-items: center;
+    margin-right: 18px;
   }
 
   .react.reacted {
@@ -378,7 +382,6 @@
   .more {
     width: 18px;
     position: relative;
-    margin-left: 18px;
   }
 
   .linkBtn {
