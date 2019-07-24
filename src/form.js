@@ -81,6 +81,7 @@ class Form extends Component {
     disableAnonymousLogin,
     disableProfilePictures,
     disablePushNotifications,
+    disableSocialLogin,
     enableEmailNotifications,
     enableWebsite,
     form,
@@ -105,6 +106,8 @@ class Form extends Component {
         })
       : `${__('writeAComment')} (${__('ctrlEnterToSend')})`;
 
+    const renderLoginOptions = !(disableSocialLogin && disableAnonymousLogin);
+
     return (
       <div
         className={cls(s.form, {
@@ -116,7 +119,7 @@ class Form extends Component {
         <form ref={this.saveRef}>
           {!isLoggedIn && (
             <div className={s.row}>
-              {!disableAnonymousLogin && (
+              {renderLoginOptions && (
                 <div className={s.left}>
                   <div className={s.inputGroup}>
                     <div className={s.formPicContainer}>
@@ -169,32 +172,36 @@ class Form extends Component {
                         )}
                       </div>
                     </div>
-                    <label className={cls(s.fontBody2)}>
-                      {__('name')}
-                      <input
-                        value={form.username}
-                        required
-                        max={255}
-                        onInput={onUsernameInput}
-                        className={cls(s.inpt, s.fontBody2, {
-                          [s.dirty]: form.dirty,
-                        })}
-                      />
-                    </label>
-                    <label className={cls(s.fontBody2)}>
-                      {__('email')}
-                      <input
-                        type="email"
-                        value={form.email}
-                        className={cls(s.inpt, s.fontBody2, {
-                          [s.dirty]: form.dirty,
-                        })}
-                        max={255}
-                        onBlur={onEmailBlur}
-                        onInput={onEmailInput}
-                      />
-                    </label>
-                    {enableWebsite && (
+                    {!disableAnonymousLogin && (
+                      <label className={cls(s.fontBody2)}>
+                        {__('name')}
+                        <input
+                          value={form.username}
+                          required
+                          max={255}
+                          onInput={onUsernameInput}
+                          className={cls(s.inpt, s.fontBody2, {
+                            [s.dirty]: form.dirty,
+                          })}
+                        />
+                      </label>
+                    )}
+                    {!disableAnonymousLogin && (
+                      <label className={cls(s.fontBody2)}>
+                        {__('email')}
+                        <input
+                          type="email"
+                          value={form.email}
+                          className={cls(s.inpt, s.fontBody2, {
+                            [s.dirty]: form.dirty,
+                          })}
+                          max={255}
+                          onBlur={onEmailBlur}
+                          onInput={onEmailInput}
+                        />
+                      </label>
+                    )}
+                    {!disableAnonymousLogin && enableWebsite && (
                       <label className={cls(s.fontBody2)}>
                         {__('website')}
                         <input
@@ -252,48 +259,51 @@ class Form extends Component {
               </div>
             </div>
           )}
-          {!form.preview && !form.previewLoading && (
-            <div className={cls(s.row, s.textareaContainer)}>
-              <label className={cls(s.fontBody2)}>
-                {textareaPlaceholder}
-                <textarea
-                  className={cls(s.inpt, s.fontBody2, {
-                    [s.dirty]: form.dirty,
-                  })}
-                  value={form.text}
-                  required
-                  maxlength={5000}
-                  onInput={onTextInput}
-                  style={{ minHeight: '150px' }}
-                  onKeyDown={(e) => {
-                    if (e.ctrlKey && e.keyCode == 13) {
-                      this.onSend(e);
-                    } else if (e.metaKey && e.keyCode == 13) {
-                      this.onSend(e);
-                    }
-                  }}
-                />
-              </label>
-              <div className={s.textareaBtns}>
-                {supportsServiceWorkers() && !disablePushNotifications && (
-                  <Toggle
-                    icon={<PushIcon />}
-                    title={__('toggleNotificationsPush')}
-                    onClick={onPushToggle}
-                    value={form.pushNotifications}
+          {!form.preview &&
+            !form.previewLoading &&
+            ((!disableAnonymousLogin ||
+              (disableAnonymousLogin && isLoggedIn)) && (
+              <div className={cls(s.row, s.textareaContainer)}>
+                <label className={cls(s.fontBody2)}>
+                  {textareaPlaceholder}
+                  <textarea
+                    className={cls(s.inpt, s.fontBody2, {
+                      [s.dirty]: form.dirty,
+                    })}
+                    value={form.text}
+                    required
+                    maxlength={5000}
+                    onInput={onTextInput}
+                    style={{ minHeight: '150px' }}
+                    onKeyDown={(e) => {
+                      if (e.ctrlKey && e.keyCode == 13) {
+                        this.onSend(e);
+                      } else if (e.metaKey && e.keyCode == 13) {
+                        this.onSend(e);
+                      }
+                    }}
                   />
-                )}
-                {enableEmailNotifications && (
-                  <Toggle
-                    icon={<EmailIcon />}
-                    title={__('toggleNotificationsEmail')}
-                    onClick={onEmailToggle}
-                    value={form.emailNotifications}
-                  />
-                )}
+                </label>
+                <div className={s.textareaBtns}>
+                  {supportsServiceWorkers() && !disablePushNotifications && (
+                    <Toggle
+                      icon={<PushIcon />}
+                      title={__('toggleNotificationsPush')}
+                      onClick={onPushToggle}
+                      value={form.pushNotifications}
+                    />
+                  )}
+                  {enableEmailNotifications && (
+                    <Toggle
+                      icon={<EmailIcon />}
+                      title={__('toggleNotificationsEmail')}
+                      onClick={onEmailToggle}
+                      value={form.emailNotifications}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            ))}
           {Object.keys(form.errors).length > 0 && (
             <div className={s.row}>
               {Object.keys(form.errors).map((errorKey) =>
@@ -301,35 +311,38 @@ class Form extends Component {
               )}
             </div>
           )}
-          <div className={cls(s.row, s.last)}>
-            <button
-              role="button"
-              onClick={this.onSend}
-              disabled={form.blocked ? 'disabled' : ''}
-              type="button"
-              className={cls(s.btn, s.small, s.primary, s.fontButton3)}
-            >
-              <ReplyIcon />
-              <span>{form.blocked ? __('sending') : __('send')}</span>
-            </button>
-            {form.preview ? (
+          {(!disableAnonymousLogin ||
+            (disableAnonymousLogin && isLoggedIn)) && (
+            <div className={cls(s.row, s.last)}>
               <button
+                role="button"
+                onClick={this.onSend}
+                disabled={form.blocked ? 'disabled' : ''}
                 type="button"
-                onClick={this.onHidePreview}
-                className={cls(s.btn, s.secondary, s.fontButton3)}
+                className={cls(s.btn, s.small, s.primary, s.fontButton3)}
               >
-                {__('hidePreview')}
+                <ReplyIcon />
+                <span>{form.blocked ? __('sending') : __('send')}</span>
               </button>
-            ) : (
-              <button
-                type="button"
-                onClick={this.onPreview}
-                className={cls(s.btn, s.secondary, s.fontButton3)}
-              >
-                {__('preview')}
-              </button>
-            )}
-          </div>
+              {form.preview ? (
+                <button
+                  type="button"
+                  onClick={this.onHidePreview}
+                  className={cls(s.btn, s.secondary, s.fontButton3)}
+                >
+                  {__('hidePreview')}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={this.onPreview}
+                  className={cls(s.btn, s.secondary, s.fontButton3)}
+                >
+                  {__('preview')}
+                </button>
+              )}
+            </div>
+          )}
         </form>
       </div>
     );
