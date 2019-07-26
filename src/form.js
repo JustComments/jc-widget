@@ -24,7 +24,7 @@ export default (inlineProps) => (
   </Connect>
 );
 
-const mapToProps = ({ config, session, form }) => {
+const mapToProps = ({ config, session }) => {
   const {
     defaultUserPicUrl,
     disableAnonymousLogin,
@@ -35,8 +35,6 @@ const mapToProps = ({ config, session, form }) => {
     enableWebsite,
     localStorageSupported,
   } = config;
-  const showSocial = localStorageSupported && !disableSocialLogin;
-  const isLoggedIn = session.isAuthenticated();
 
   return {
     defaultUserPicUrl,
@@ -46,9 +44,7 @@ const mapToProps = ({ config, session, form }) => {
     disableSocialLogin,
     enableEmailNotifications,
     enableWebsite,
-    form,
-    isLoggedIn,
-    showSocial,
+    showSocial: localStorageSupported && !disableSocialLogin,
   };
 };
 
@@ -59,21 +55,53 @@ class Form extends Component {
 
   onSend = (e) => {
     e.preventDefault();
-    return this.props.sendComment(this.form, this.props.replyToComment);
+    return this.props.sendComment(
+      this.form,
+      this.props.replyToComment,
+      this.props.formIdx,
+    );
   };
 
   onPreview = (e) => {
     e.preventDefault();
-    return this.props.previewComment(this.form, this.props.replyToComment);
+    return this.props.previewComment(this.props.formIdx);
   };
 
   onHidePreview = (e) => {
     e.preventDefault();
-    return this.props.hideCommentPreview(this.form, this.props.replyToComment);
+    return this.props.hideCommentPreview(this.props.formIdx);
   };
 
   onImageError = () => {
-    this.props.onFormImageError();
+    this.props.onFormImageError(this.props.formIdx);
+  };
+
+  onEmailBlur = () => {
+    this.props.onEmailBlur(this.props.formIdx);
+  };
+
+  onEmailInput = (e) => {
+    this.props.onEmailInput(e, this.props.formIdx);
+  };
+
+  onEmailToggle = (e) => {
+    this.props.onEmailToggle(e, this.props.formIdx);
+  };
+
+  onPushToggle = (e) => {
+    this.props.onPushToggle(e, this.props.formIdx);
+  };
+
+  onTextInput = (e) => {
+    this.props.onTextInput(e, this.props.formIdx);
+  };
+
+  onUsernameInput = (e) => {
+    this.props.onUsernameInput(e, this.props.formIdx);
+  };
+
+  onWebsiteInput = (e) => {
+    this.props.onWebsiteInput(e, this.props.formIdx);
   };
 
   render({
@@ -85,18 +113,10 @@ class Form extends Component {
     enableEmailNotifications,
     enableWebsite,
     form,
-    isLoggedIn,
     last,
-    onEmailBlur,
-    onEmailInput,
-    onEmailToggle,
     onFacebookLogin,
     onLogout,
-    onPushToggle,
-    onTextInput,
     onTwitterLogin,
-    onUsernameInput,
-    onWebsiteInput,
     replyToComment,
     showSocial,
   }) {
@@ -117,7 +137,7 @@ class Form extends Component {
         })}
       >
         <form ref={this.saveRef}>
-          {!isLoggedIn && (
+          {!form.isLoggedIn && (
             <div className={s.row}>
               {renderLoginOptions && (
                 <div className={s.left}>
@@ -128,7 +148,7 @@ class Form extends Component {
                           userPic={
                             form.userPic
                               ? form.userPic
-                              : !isLoggedIn
+                              : !form.isLoggedIn
                               ? defaultUserPicUrl
                               : undefined
                           }
@@ -179,7 +199,7 @@ class Form extends Component {
                           value={form.username}
                           required
                           max={255}
-                          onInput={onUsernameInput}
+                          onInput={this.onUsernameInput}
                           className={cls(s.inpt, s.fontBody2, {
                             [s.dirty]: form.dirty,
                           })}
@@ -196,8 +216,8 @@ class Form extends Component {
                             [s.dirty]: form.dirty,
                           })}
                           max={255}
-                          onBlur={onEmailBlur}
-                          onInput={onEmailInput}
+                          onBlur={this.onEmailBlur}
+                          onInput={this.onEmailInput}
                         />
                       </label>
                     )}
@@ -210,7 +230,7 @@ class Form extends Component {
                           className={cls(s.inpt, s.fontBody2, {
                             [s.dirty]: form.dirty,
                           })}
-                          onInput={onWebsiteInput}
+                          onInput={this.onWebsiteInput}
                         />
                       </label>
                     )}
@@ -219,12 +239,12 @@ class Form extends Component {
               )}
             </div>
           )}
-          {!disableProfilePictures && isLoggedIn && (
+          {!disableProfilePictures && form.isLoggedIn && (
             <Avatar
               userPic={
                 form.userPic
                   ? form.userPic
-                  : !isLoggedIn
+                  : !form.isLoggedIn
                   ? defaultUserPicUrl
                   : undefined
               }
@@ -262,7 +282,7 @@ class Form extends Component {
           {!form.preview &&
             !form.previewLoading &&
             ((!disableAnonymousLogin ||
-              (disableAnonymousLogin && isLoggedIn)) && (
+              (disableAnonymousLogin && form.isLoggedIn)) && (
               <div className={cls(s.row, s.textareaContainer)}>
                 <label className={cls(s.fontBody2)}>
                   {textareaPlaceholder}
@@ -273,7 +293,7 @@ class Form extends Component {
                     value={form.text}
                     required
                     maxlength={5000}
-                    onInput={onTextInput}
+                    onInput={this.onTextInput}
                     style={{ minHeight: '150px' }}
                     onKeyDown={(e) => {
                       if (e.ctrlKey && e.keyCode == 13) {
@@ -289,7 +309,7 @@ class Form extends Component {
                     <Toggle
                       icon={<PushIcon />}
                       title={__('toggleNotificationsPush')}
-                      onClick={onPushToggle}
+                      onClick={this.onPushToggle}
                       value={form.pushNotifications}
                     />
                   )}
@@ -297,7 +317,7 @@ class Form extends Component {
                     <Toggle
                       icon={<EmailIcon />}
                       title={__('toggleNotificationsEmail')}
-                      onClick={onEmailToggle}
+                      onClick={this.onEmailToggle}
                       value={form.emailNotifications}
                     />
                   )}
@@ -312,7 +332,7 @@ class Form extends Component {
             </div>
           )}
           {(!disableAnonymousLogin ||
-            (disableAnonymousLogin && isLoggedIn)) && (
+            (disableAnonymousLogin && form.isLoggedIn)) && (
             <div className={cls(s.row, s.last)}>
               <button
                 role="button"

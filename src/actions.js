@@ -45,86 +45,81 @@ export const actions = (store) => ({
     });
   },
 
-  previewComment: (state) => {
-    if (!state.form.text) {
+  previewComment: (state, formIdx) => {
+    const { forms, session, config } = state;
+    const form = forms[formIdx];
+
+    if (!form.text) {
       return;
     }
 
-    const { session, config } = state;
     const jwt = session.get('jwt')
       ? session.get('jwt')
-      : createGuestJWT(state.form.username, state.form.email, config.apiKey);
+      : createGuestJWT(form.username, form.email, config.apiKey);
 
     store.setState({
-      form: {
-        ...state.form,
+      forms: updateFormByIdx(state.forms, formIdx, {
         previewLoading: true,
-      },
+      }),
     });
 
     return state.api
       .previewComment(jwt, {
-        message: state.form.text,
+        message: form.text,
       })
       .then(({ htmlMessage }) => {
         store.setState({
-          form: {
-            ...state.form,
+          forms: updateFormByIdx(state.forms, formIdx, {
             preview: htmlMessage,
             previewLoading: false,
-          },
+          }),
         });
       })
       .catch((err) => {
         store.setState({
-          form: {
-            ...state.form,
+          forms: updateFormByIdx(state.forms, formIdx, {
             previewLoading: false,
-          },
+          }),
         });
         throw err;
       });
   },
 
-  hideCommentPreview: (state) => {
-    store.setState({
-      form: {
-        ...state.form,
+  hideCommentPreview: (state, formIdx) => {
+    return {
+      forms: updateFormByIdx(state.forms, formIdx, {
         preview: undefined,
-      },
-    });
+      }),
+    };
   },
 
   setRecaptchaRef: (state, recaptchaRef) => {
-    store.setState({
+    return {
       recaptchaRef,
-    });
+    };
   },
 
-  sendComment: (state, formRef, replyToComment) => {
+  sendComment: (state, formRef, replyToComment, formIdx) => {
     const valid = formRef.checkValidity();
 
     if (!valid) {
-      store.setState({
-        form: {
-          ...state.form,
+      return {
+        forms: updateFormByIdx(state.forms, formIdx, {
           blocked: false,
           dirty: true,
-        },
-      });
-      return;
+        }),
+      };
     }
 
     store.setState({
-      form: {
-        ...state.form,
+      forms: updateFormByIdx(state.forms, formIdx, {
         dirty: false,
         blocked: true,
-      },
+      }),
     });
 
     const data = {
-      ...state.form,
+      ...state.forms[formIdx],
       replyToComment,
       parentId: replyToComment
         ? replyToComment.parentId || replyToComment.commentId
@@ -183,42 +178,40 @@ export const actions = (store) => ({
               )),
           jumpToComment: comment.commentId,
           jumped: false,
-          form: {
-            ...state.form,
+          forms: updateFormByIdx(state.forms, formIdx, {
             blocked: false,
             text: '',
             preview: undefined,
             previewLoading: false,
-          },
+          }),
         });
       })
       .catch((err) => {
         console.log(err);
         return store.setState({
-          form: {
-            ...state.form,
+          forms: updateFormByIdx(state.forms, formIdx, {
             blocked: false,
             errors: {
               form: __('networkError'),
             },
-          },
+          }),
         });
       });
   },
 
-  onPushToggle: (state, e) => {
+  onPushToggle: (state, e, formIdx) => {
     e.preventDefault();
 
-    const val = !state.form.pushNotifications;
+    const val = !state.forms[formIdx].pushNotifications;
 
     store.setState({
-      form: {
-        ...state.form,
+      forms: updateFormByIdx(state.forms, formIdx, {
         pushNotifications: val,
-      },
+      }),
     });
 
     const { session, api } = state;
+
     if (!session.get('subscription')) {
       return api.pushPopup().then((sub) => {
         session.set('subscription', sub);
@@ -227,54 +220,56 @@ export const actions = (store) => ({
           session: session.clone(),
         });
       });
+    } else {
+      session.set('notifications', val);
     }
   },
 
-  onEmailToggle: (state, e) => {
+  onEmailToggle: (state, e, formIdx) => {
     e.preventDefault();
-
-    const val = !state.form.emailNotifications;
-
-    store.setState({
-      form: {
-        ...state.form,
-        emailNotifications: val,
-      },
-    });
+    return {
+      forms: updateFormByIdx(state.forms, formIdx, {
+        emailNotifications: !state.forms[formIdx].emailNotifications,
+      }),
+    };
   },
+
   onFacebookLogin: (state) => {
     const { api, session } = state;
-
     api.authFbPopup(api.facebookRedirect(window.location.href)).then((jwt) => {
       setJWT(session, jwt, 'fb');
       store.setState({
         session: session.clone(),
-        form: {
-          errors: {},
-          dirty: false,
-          pushNotifications: !!session.get('subscription'),
-          userPic: session.get('userPic'),
-          loginProvider: session.get('loginProvider'),
-        },
+        forms: state.forms.map((f) => {
+          return updateForm(f, {
+            errors: {},
+            dirty: false,
+            pushNotifications: !!session.get('subscription'),
+            userPic: session.get('userPic'),
+            loginProvider: session.get('loginProvider'),
+            isLoggedIn: session.isAuthenticated(),
+          });
+        }),
       });
     });
   },
 
   onTwitterLogin: (state) => {
     const { api, session } = state;
-
     api.authPopup(api.twitterRedirect(window.location.href)).then((jwt) => {
       setJWT(session, jwt, 'twitter');
-
       store.setState({
         session: session.clone(),
-        form: {
-          errors: {},
-          dirty: false,
-          pushNotifications: !!session.get('subscription'),
-          userPic: session.get('userPic'),
-          loginProvider: session.get('loginProvider'),
-        },
+        forms: state.forms.map((f) => {
+          return updateForm(f, {
+            errors: {},
+            dirty: false,
+            pushNotifications: !!session.get('subscription'),
+            userPic: session.get('userPic'),
+            loginProvider: session.get('loginProvider'),
+            isLoggedIn: session.isAuthenticated(),
+          });
+        }),
       });
     });
   },
@@ -285,50 +280,49 @@ export const actions = (store) => ({
     session.clear();
     store.setState({
       session: session.clone(),
-      form: {
-        errors: {},
-        dirty: false,
-        pushNotifications: !!session.get('subscription'),
-        userPic: session.get('userPic'),
-        loginProvider: session.get('loginProvider'),
-      },
+      forms: state.forms.map((f) => {
+        return updateForm(f, {
+          errors: {},
+          dirty: false,
+          pushNotifications: !!session.get('subscription'),
+          userPic: session.get('userPic'),
+          loginProvider: session.get('loginProvider'),
+          isLoggedIn: session.isAuthenticated(),
+        });
+      }),
     });
   },
 
-  onUsernameInput: (state, e) => ({
-    form: {
-      ...state.form,
+  onUsernameInput: (state, e, formIdx) => ({
+    forms: updateFormByIdx(state.forms, formIdx, {
       username: e.target.value,
-    },
+    }),
   }),
 
-  onEmailInput: (state, e) => ({
-    form: {
-      ...state.form,
+  onEmailInput: (state, e, formIdx) => ({
+    forms: updateFormByIdx(state.forms, formIdx, {
       email: e.target.value,
-    },
+    }),
   }),
 
-  onEmailBlur: (state) => {
-    const { email } = state.form;
+  onEmailBlur: (state, formIdx) => {
+    const { email } = state.forms[formIdx];
     if (email) {
       return {
-        form: {
-          ...state.form,
+        forms: updateFormByIdx(state.forms, formIdx, {
           userPic: getUserPic(email),
-        },
+        }),
       };
     }
   },
 
-  onWebsiteInput: (state, e) => ({
-    form: {
-      ...state.form,
+  onWebsiteInput: (state, e, formIdx) => ({
+    forms: updateFormByIdx(state.forms, formIdx, {
       website: e.target.value,
-    },
+    }),
   }),
 
-  onTextInput: (state, e) => {
+  onTextInput: (state, e, formIdx) => {
     const element = e.target;
     element.style.height = 'inherit';
     const newHeight =
@@ -336,11 +330,11 @@ export const actions = (store) => ({
         ? element.scrollHeight + 25
         : element.scrollHeight;
     element.style.height = newHeight + 'px';
+
     return {
-      form: {
-        ...state.form,
+      forms: updateFormByIdx(state.forms, formIdx, {
         text: e.target.value,
-      },
+      }),
     };
   },
 
@@ -467,13 +461,12 @@ export const actions = (store) => ({
     return hideMenuForComment(state, commentId);
   },
 
-  onFormImageError: (state) => {
-    store.setState({
-      form: {
-        ...state.form,
+  onFormImageError: (state, formIdx) => {
+    return {
+      forms: updateFormByIdx(state.forms, formIdx, {
         userPic: undefined,
-      },
-    });
+      }),
+    };
   },
 
   onCommentImageError: (state, commentId) => ({
@@ -630,6 +623,22 @@ function updateByIdWithReset(comments, commentId, fn, resetFn) {
   });
 }
 
+function updateFormByIdx(forms, idx, update) {
+  return [...forms].map((f, i) => {
+    if (i === idx) {
+      return updateForm(f, update);
+    }
+    return f;
+  });
+}
+
+function updateForm(form, update) {
+  return {
+    ...form,
+    ...update,
+  };
+}
+
 function createComment(
   api,
   session,
@@ -755,3 +764,20 @@ export const reactions = [
     name: 'Heart',
   },
 ];
+
+export function createForm(session) {
+  const email = session.get('userEmail');
+  return {
+    dirty: false,
+    email: email,
+    errors: {},
+    loginProvider: session.get('loginProvider'),
+    previewLoading: false,
+    pushNotifications: !!session.get('notifications'),
+    username: session.get('username'),
+    userPic: session.get('userPic') || (email && getUserPic(email)),
+    userUrl: session.get('userUrl'),
+    website: session.get('userUrl'),
+    isLoggedIn: session.isAuthenticated(),
+  };
+}

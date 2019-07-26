@@ -15,7 +15,7 @@ export default () => (
   </Connect>
 );
 
-const mapToProps = ({ config, loading, cursor, comments }) => {
+const mapToProps = ({ config, forms, loading, cursor, comments }) => {
   const {
     disableSocialLogin,
     disableAnonymousLogin,
@@ -37,6 +37,7 @@ const mapToProps = ({ config, loading, cursor, comments }) => {
     countText,
     cursor,
     disableLoadMore,
+    forms,
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
@@ -66,6 +67,7 @@ class Widget extends Component {
     countText,
     cursor,
     disableLoadMore,
+    forms,
     hideAttribution,
     hideCommentHeader,
     hideNoCommentsText,
@@ -78,7 +80,7 @@ class Widget extends Component {
   }) {
     return (
       <div className={s.widget}>
-        {shouldRenderForm && <Form />}
+        {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         {!hideCommentHeader && (
           <div className={cls(s.header)}>
             <span className={cls(s.fontHeading1)}>
@@ -129,7 +131,9 @@ class Widget extends Component {
             ref={(c) => setRecaptchaRef(c)}
           />
         )}
-        {shouldRenderForm && comments.length > 10 && <Form last={true} />}
+        {shouldRenderForm && comments.length > 10 && (
+          <Form form={forms[1]} formIdx={1} last={true} />
+        )}
         {!hideAttribution && (
           <div className={cls(s.attribution, s.fontBody3)}>
             <span>powered by &nbsp;</span>

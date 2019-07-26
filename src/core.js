@@ -15,7 +15,7 @@ import Widget from './widget';
 import { API } from './api';
 import { bootstrapRecaptcha } from './recaptcha';
 import { LocalStorage } from './storage';
-import { getUserPic } from './actions';
+import { createForm } from './actions';
 
 export function renderWidget(
   widget,
@@ -57,7 +57,6 @@ export function renderWidget(
     fetchData,
   });
 
-  const email = session.get('userEmail');
   const initialState = {
     api,
     comments: [],
@@ -67,18 +66,7 @@ export function renderWidget(
     loading: false,
     session,
     subscription: null,
-    form: {
-      dirty: false,
-      email: email,
-      errors: {},
-      loginProvider: session.get('loginProvider'),
-      previewLoading: false,
-      pushNotifications: !!session.get('subscription'),
-      username: session.get('username'),
-      userPic: session.get('userPic') || (email && getUserPic(email)),
-      userUrl: session.get('userUrl'),
-      website: session.get('userUrl'),
-    },
+    forms: [createForm(session), createForm(session)],
     config: {
       ...data,
       localStorageSupported: LocalStorage.supported(),
