@@ -46,6 +46,16 @@ export function getTopReactions(comment) {
   return reactions.slice(0, 3);
 }
 
+export function getReactionsCount(comment) {
+  if (!comment.reactions) {
+    return 0;
+  }
+
+  return Object.keys(comment.reactions).reduce((acc, reactionId) => {
+    return acc + comment.reactions[reactionId];
+  }, 0);
+}
+
 export function commentCount(comments) {
   return comments.reduce((acc, c) => {
     acc += c.hidden ? 0 : 1;

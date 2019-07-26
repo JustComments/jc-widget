@@ -23,6 +23,7 @@ import {
   getCommentUrl,
   getTopReactions,
   commentCount,
+  getReactionsCount,
 } from './comment-utils';
 import { Avatar } from './avatar';
 import Form from './form';
@@ -112,6 +113,7 @@ class Comment extends Component {
     showReply,
   }) {
     const topReactions = getTopReactions(comment);
+    const reactionsCount = getReactionsCount(comment);
     const Reaction = comment.reactionId
       ? reactions.find((r) => r.id === comment.reactionId)
       : undefined;
@@ -287,7 +289,7 @@ class Comment extends Component {
           </div>
           {comment.reactions && (
             <span className={cls(s.reactionsCount, s.fontBody2)}>
-              {topReactions.reduce((acc, n) => acc + n.value, 0)}
+              {reactionsCount}
             </span>
           )}
           {comment.reactions && (
