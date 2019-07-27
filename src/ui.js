@@ -21,22 +21,24 @@ export function Toggle({ icon, title, value, onClick }) {
 }
 
 export function Btn(props) {
-  return <_btn {...props} classes={[s.btn, ...props.classes]} />;
+  return <B {...props} classes={[s.btn, ...props.classes]} />;
 }
 
 export function Btn3(props) {
-  return <_btn {...props} classes={[s.btn, s.fontButton3, ...props.classes]} />;
+  return <B {...props} classes={[s.btn, s.fontButton3, ...props.classes]} />;
 }
 
 export function LinkBtn(props) {
-  return <_btn {...props} classes={[s.linkBtn, s.fontButton2]} />;
+  return (
+    <B {...props} classes={[s.linkBtn, s.fontButton2, ...props.classes]} />
+  );
 }
 
 export function MenuBtn(props) {
-  return <_btn {...props} classes={[s.menuBtn, s.fontBody3]} />;
+  return <B {...props} classes={[s.menuBtn, s.fontBody3, ...props.classes]} />;
 }
 
-function _btn(props) {
+function B(props) {
   return (
     <button
       type="button"
