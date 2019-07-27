@@ -84,6 +84,7 @@ module.exports = function(env, args) {
                       transition: 'unset',
                       fontWeight: 'normal',
                       textDecoration: 'none',
+                      width: 'unset',
                     },
                   }),
                   require('postcss-nested')(),
