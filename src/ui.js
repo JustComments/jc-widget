@@ -21,15 +21,19 @@ export function Toggle({ icon, title, value, onClick }) {
 }
 
 export function Btn(props) {
-  return <_btn {...props} baseCls={s.btn} />;
+  return <_btn {...props} classes={[s.btn, ...props.classes]} />;
+}
+
+export function Btn3(props) {
+  return <_btn {...props} classes={[s.btn, s.fontButton3, ...props.classes]} />;
 }
 
 export function LinkBtn(props) {
-  return <_btn {...props} baseCls={s.linkBtn} />;
+  return <_btn {...props} classes={[s.linkBtn, s.fontButton2]} />;
 }
 
 export function MenuBtn(props) {
-  return <_btn {...props} baseCls={s.menuBtn} />;
+  return <_btn {...props} classes={[s.menuBtn, s.fontBody3]} />;
 }
 
 function _btn(props) {
@@ -41,7 +45,7 @@ function _btn(props) {
       aria-label={props.title}
       disabled={props.disabled}
       onClick={props.onClick}
-      className={cls(props.baseCls, ...props.classes)}
+      className={cls(props.classes)}
     >
       {props.children}
     </button>

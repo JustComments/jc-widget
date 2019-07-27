@@ -15,7 +15,7 @@ import {
 } from './icons';
 import { Avatar } from './avatar';
 import { supportsServiceWorkers } from './utils';
-import { Toggle, Btn } from './ui';
+import { Toggle, Btn3 } from './ui';
 
 import s from './style.css';
 
@@ -172,20 +172,18 @@ class Form extends Component {
                         </span>
                         {showSocial && (
                           <span className={cls(s.socialContainer)}>
-                            <Btn
+                            <Btn3
                               title={__('loginWithFacebook')}
                               onClick={onFacebookLogin}
-                              classes={[s.fontButton3]}
                             >
                               <FacebookIcon />
-                            </Btn>
-                            <Btn
+                            </Btn3>
+                            <Btn3
                               title={__('loginWithTwitter')}
                               onClick={onTwitterLogin}
-                              classes={[s.fontButton3]}
                             >
                               <TwitterIcon />
-                            </Btn>
+                            </Btn3>
                           </span>
                         )}
                       </div>
@@ -332,26 +330,21 @@ class Form extends Component {
           {(!disableAnonymousLogin ||
             (disableAnonymousLogin && form.isLoggedIn)) && (
             <div className={cls(s.row, s.last)}>
-              <Btn
+              <Btn3
                 onClick={this.onSend}
                 disabled={form.blocked}
-                classes={[s.small, s.primary, s.fontButton3]}
+                classes={[s.small, s.primary]}
               >
                 <ReplyIcon />
                 <span>{form.blocked ? sendingText : sendText}</span>
-              </Btn>
+              </Btn3>
               {form.preview && (
-                <Btn onClick={this.onHidePreview} classes={[s.fontButton3]}>
-                  {hidePreviewText}
-                </Btn>
+                <Btn3 onClick={this.onHidePreview}>{hidePreviewText}</Btn3>
               )}
               {!form.preview && (
-                <Btn
-                  onClick={this.onPreview}
-                  classes={[s.secondary, s.fontButton3]}
-                >
+                <Btn3 onClick={this.onPreview} classes={[s.secondary]}>
                   {previewText}
-                </Btn>
+                </Btn3>
               )}
             </div>
           )}

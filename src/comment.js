@@ -207,22 +207,14 @@ class Comment extends Component {
         <div className={s.buttons}>
           {showReply && (
             <div className={s.reply}>
-              <LinkBtn
-                onClick={this.onToggleCommentForm}
-                classes={[s.fontButton2]}
-              >
+              <LinkBtn onClick={this.onToggleCommentForm}>
                 {__('reply')}
               </LinkBtn>
             </div>
           )}
           {!disableReactions && !Reaction && (
             <div className={s.react}>
-              <LinkBtn
-                onClick={this.onToggleLikeMenu}
-                classes={[s.fontButton2]}
-              >
-                {__('react')}
-              </LinkBtn>
+              <LinkBtn onClick={this.onToggleLikeMenu}>{__('react')}</LinkBtn>
               {comment.reactMenuOpened && (
                 <div className={cls(s.menu, s.reactMenu, s.horizontal)}>
                   {reactions.map((r) => {
@@ -242,32 +234,24 @@ class Comment extends Component {
             </div>
           )}
           <div className={s.more}>
-            <LinkBtn onClick={this.onToggleMenu} classes={[s.fontButton2]}>
-              ⋯
-            </LinkBtn>
+            <LinkBtn onClick={this.onToggleMenu}>⋯</LinkBtn>
             {comment.menuOpened && (
               <div className={s.menu}>
                 <div>
-                  <MenuBtn
-                    onClick={this.onCopyToClipboard}
-                    classes={[s.fontBody3]}
-                  >
+                  <MenuBtn onClick={this.onCopyToClipboard}>
                     {__('copyLink')}
                   </MenuBtn>
                 </div>
                 {!disableShareButton && (
                   <div>
-                    <MenuBtn onClick={this.shareOnFb} classes={[s.fontBody3]}>
+                    <MenuBtn onClick={this.shareOnFb}>
                       {__('share')} <FacebookIcon />
                     </MenuBtn>
                   </div>
                 )}
                 {!disableShareButton && (
                   <div>
-                    <MenuBtn
-                      onClick={this.shareOnTwitter}
-                      classes={[s.fontBody3]}
-                    >
+                    <MenuBtn onClick={this.shareOnTwitter}>
                       <span>{__('share')}</span> <TwitterIcon />
                     </MenuBtn>
                   </div>
