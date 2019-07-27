@@ -191,7 +191,7 @@
   }
   /* End of Input Style*/
 
-  /* Button Style */
+  /* Btn Style */
   .btn {
     box-sizing: border-box;
     cursor: pointer;
@@ -414,7 +414,7 @@
     fill: var(--primary-color);
   }
 
-  /* End Button Style */
+  /* End Btn Style */
   .userPicContainer {
     margin-left: -86px;
     width: 56px;

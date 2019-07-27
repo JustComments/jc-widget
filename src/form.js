@@ -1,9 +1,9 @@
 import { h, Component } from 'preact';
-import { __, substitute } from './i18n';
-
 import { Connect } from 'redux-zero/preact';
-import { actions } from './actions';
+import cls from 'classnames';
 
+import { __, substitute } from './i18n';
+import { actions } from './actions';
 import {
   Anonymous,
   ReplyIcon,
@@ -15,8 +15,9 @@ import {
 } from './icons';
 import { Avatar } from './avatar';
 import { supportsServiceWorkers } from './utils';
+import { Toggle, Btn } from './ui';
+
 import s from './style.css';
-import cls from 'classnames';
 
 export default (inlineProps) => (
   <Connect mapToProps={mapToProps} actions={actions}>
@@ -126,6 +127,11 @@ class Form extends Component {
         })
       : `${__('writeAComment')} (${__('ctrlEnterToSend')})`;
 
+    const sendingText = __('sending');
+    const sendText = __('send');
+    const hidePreviewText = __('hidePreview');
+    const previewText = __('preview');
+
     const renderLoginOptions = !(disableSocialLogin && disableAnonymousLogin);
 
     return (
@@ -166,28 +172,20 @@ class Form extends Component {
                         </span>
                         {showSocial && (
                           <span className={cls(s.socialContainer)}>
-                            <button
-                              tabindex="0"
-                              role="button"
+                            <Btn
                               title={__('loginWithFacebook')}
-                              aria-label={__('loginWithFacebook')}
                               onClick={onFacebookLogin}
-                              className={cls(s.btn, s.fontButton3)}
-                              type="button"
+                              classes={[s.fontButton3]}
                             >
                               <FacebookIcon />
-                            </button>
-                            <button
-                              tabindex="0"
-                              role="button"
+                            </Btn>
+                            <Btn
                               title={__('loginWithTwitter')}
-                              aria-label={__('loginWithTwitter')}
                               onClick={onTwitterLogin}
-                              className={cls(s.btn, s.fontButton3)}
-                              type="button"
+                              classes={[s.fontButton3]}
                             >
                               <TwitterIcon />
-                            </button>
+                            </Btn>
                           </span>
                         )}
                       </div>
@@ -334,32 +332,26 @@ class Form extends Component {
           {(!disableAnonymousLogin ||
             (disableAnonymousLogin && form.isLoggedIn)) && (
             <div className={cls(s.row, s.last)}>
-              <button
-                role="button"
+              <Btn
                 onClick={this.onSend}
-                disabled={form.blocked ? 'disabled' : ''}
-                type="button"
-                className={cls(s.btn, s.small, s.primary, s.fontButton3)}
+                disabled={form.blocked}
+                classes={[s.small, s.primary, s.fontButton3]}
               >
                 <ReplyIcon />
-                <span>{form.blocked ? __('sending') : __('send')}</span>
-              </button>
-              {form.preview ? (
-                <button
-                  type="button"
-                  onClick={this.onHidePreview}
-                  className={cls(s.btn, s.secondary, s.fontButton3)}
-                >
-                  {__('hidePreview')}
-                </button>
-              ) : (
-                <button
-                  type="button"
+                <span>{form.blocked ? sendingText : sendText}</span>
+              </Btn>
+              {form.preview && (
+                <Btn onClick={this.onHidePreview} classes={[s.fontButton3]}>
+                  {hidePreviewText}
+                </Btn>
+              )}
+              {!form.preview && (
+                <Btn
                   onClick={this.onPreview}
-                  className={cls(s.btn, s.secondary, s.fontButton3)}
+                  classes={[s.secondary, s.fontButton3]}
                 >
-                  {__('preview')}
-                </button>
+                  {previewText}
+                </Btn>
               )}
             </div>
           )}
@@ -367,21 +359,4 @@ class Form extends Component {
       </div>
     );
   }
-}
-
-function Toggle({ icon, title, value, onClick }) {
-  return (
-    <button
-      aria-checked={value ? 'true' : 'false'}
-      className={cls(s.btn, s.toggle, { [s.on]: value })}
-      onClick={onClick}
-      role="switch"
-      tabindex="0"
-      aria-label={title}
-      title={title}
-      type="button"
-    >
-      {icon}
-    </button>
-  );
 }

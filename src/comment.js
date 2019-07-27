@@ -27,8 +27,10 @@ import {
 } from './comment-utils';
 import { Avatar } from './avatar';
 import Form from './form';
-import s from './style.css';
 import { reactions } from './actions';
+import { Btn, LinkBtn, MenuBtn } from './ui';
+
+import s from './style.css';
 
 const mapToProps = (state) => {
   return {
@@ -186,16 +188,12 @@ class Comment extends Component {
                     })}
                   </span>
                 )}
-                <button
+                <Btn
                   title={comment.collapsed ? __('uncollapse') : __('collapse')}
-                  aria-label={
-                    comment.collapsed ? __('uncollapse') : __('collapse')
-                  }
                   onClick={this.onToggleComment}
-                  className={s.btn}
                 >
                   {comment.collapsed ? <CollapseIcon /> : <UncollapseIcon />}
-                </button>
+                </Btn>
               </div>
             </div>
           </div>
@@ -209,36 +207,29 @@ class Comment extends Component {
         <div className={s.buttons}>
           {showReply && (
             <div className={s.reply}>
-              <button
+              <LinkBtn
                 onClick={this.onToggleCommentForm}
-                className={cls(s.linkBtn, s.fontButton2)}
+                classes={[s.fontButton2]}
               >
                 {__('reply')}
-              </button>
+              </LinkBtn>
             </div>
           )}
           {!disableReactions && !Reaction && (
             <div className={s.react}>
-              <button
+              <LinkBtn
                 onClick={this.onToggleLikeMenu}
-                className={cls(s.linkBtn, s.fontButton2)}
+                classes={[s.fontButton2]}
               >
                 {__('react')}
-              </button>
+              </LinkBtn>
               {comment.reactMenuOpened && (
                 <div className={cls(s.menu, s.reactMenu, s.horizontal)}>
                   {reactions.map((r) => {
                     return (
-                      <button
-                        tabindex="0"
-                        role="button"
-                        className={s.btn}
-                        onClick={() => this.onLike(r.id)}
-                        type="button"
-                        title={r.name}
-                      >
+                      <Btn onClick={() => this.onLike(r.id)} title={r.name}>
                         <r.icon />
-                      </button>
+                      </Btn>
                     );
                   })}
                 </div>
@@ -251,40 +242,34 @@ class Comment extends Component {
             </div>
           )}
           <div className={s.more}>
-            <button
-              onClick={this.onToggleMenu}
-              className={cls(s.linkBtn, s.fontButton2)}
-            >
+            <LinkBtn onClick={this.onToggleMenu} classes={[s.fontButton2]}>
               ⋯
-            </button>
+            </LinkBtn>
             {comment.menuOpened && (
               <div className={s.menu}>
                 <div>
-                  <button
+                  <MenuBtn
                     onClick={this.onCopyToClipboard}
-                    className={cls(s.menuBtn, s.fontBody3)}
+                    classes={[s.fontBody3]}
                   >
                     {__('copyLink')}
-                  </button>
+                  </MenuBtn>
                 </div>
                 {!disableShareButton && (
                   <div>
-                    <button
-                      onClick={this.shareOnFb}
-                      className={cls(s.menuBtn, s.fontBody3)}
-                    >
+                    <MenuBtn onClick={this.shareOnFb} classes={[s.fontBody3]}>
                       {__('share')} <FacebookIcon />
-                    </button>
+                    </MenuBtn>
                   </div>
                 )}
                 {!disableShareButton && (
                   <div>
-                    <button
+                    <MenuBtn
                       onClick={this.shareOnTwitter}
-                      className={cls(s.menuBtn, s.fontBody3)}
+                      classes={[s.fontBody3]}
                     >
                       <span>{__('share')}</span> <TwitterIcon />
-                    </button>
+                    </MenuBtn>
                   </div>
                 )}
               </div>
