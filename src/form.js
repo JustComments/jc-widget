@@ -379,6 +379,7 @@ function Toggle({ icon, title, value, onClick }) {
       tabindex="0"
       aria-label={title}
       title={title}
+      type="button"
     >
       {icon}
     </button>
