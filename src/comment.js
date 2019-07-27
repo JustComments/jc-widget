@@ -32,6 +32,7 @@ import { reactions } from './actions';
 
 const mapToProps = (state) => {
   return {
+    forms: state.forms,
     showReply: !(
       state.config.disableSocialLogin && state.config.disableAnonymousLogin
     ),
@@ -54,6 +55,7 @@ class Comment extends Component {
     this.props.onToggleCommentForm(
       this.props.comment.commentId,
       !this.props.comment.formOpened,
+      this.props.comment.formIdx,
     );
   };
 
@@ -111,6 +113,7 @@ class Comment extends Component {
     first,
     level,
     showReply,
+    forms,
   }) {
     const topReactions = getTopReactions(comment);
     const reactionsCount = getReactionsCount(comment);
@@ -316,7 +319,13 @@ class Comment extends Component {
           )}
         </div>
 
-        {comment.formOpened && <Form replyToComment={comment} />}
+        {comment.formOpened && (
+          <Form
+            form={forms[comment.formIdx]}
+            formIdx={comment.formIdx}
+            replyToComment={comment}
+          />
+        )}
         {!comment.collapsed &&
           (comment.nested || [])
             .filter((c) => !c.hidden)

@@ -183,6 +183,8 @@ export const actions = (store) => ({
             text: '',
             preview: undefined,
             previewLoading: false,
+          }).map((f) => {
+            return updateForm(f, createForm(state.session));
           }),
         });
       })
@@ -347,30 +349,37 @@ export const actions = (store) => ({
     ),
   }),
 
-  onToggleCommentForm: (state, commentId, formOpened) => ({
-    form: {
-      ...state.form,
-      text: formOpened ? '' : state.form.text,
-    },
-    ...withComments(state.comments, (comments) =>
-      updateByIdWithReset(
-        comments,
-        commentId,
-        (c) => ({
-          ...c,
-          formOpened,
-          menuOpened: false,
-          reactMenuOpened: false,
-        }),
-        (c) => ({
-          ...c,
-          reactMenuOpened: false,
-          formOpened: false,
-          menuOpened: false,
-        }),
+  onToggleCommentForm: (state, commentId, formOpened, formIdx) => {
+    const { session, forms } = state;
+    const newForms = [...forms];
+    if (formOpened && !formIdx) {
+      newForms.push(createForm(session));
+      formIdx = newForms.length - 1;
+    }
+
+    return {
+      forms: newForms,
+      ...withComments(state.comments, (comments) =>
+        updateByIdWithReset(
+          comments,
+          commentId,
+          (c) => ({
+            ...c,
+            formOpened,
+            formIdx,
+            menuOpened: false,
+            reactMenuOpened: false,
+          }),
+          (c) => ({
+            ...c,
+            reactMenuOpened: false,
+            formOpened: false,
+            menuOpened: false,
+          }),
+        ),
       ),
-    ),
-  }),
+    };
+  },
 
   onToggleCommentMenu: (state, commentId, menuOpened) => ({
     ...withComments(state.comments, (comments) =>
