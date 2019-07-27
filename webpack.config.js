@@ -78,8 +78,12 @@ module.exports = function(env, args) {
                     reset: {
                       margin: 0,
                       padding: 0,
-                      border: 0,
+                      border: 'unset',
                       textAlign: 'left',
+                      boxShadow: 'unset',
+                      transition: 'unset',
+                      fontWeight: 'normal',
+                      textDecoration: 'none',
                     },
                   }),
                   require('postcss-nested')(),
