@@ -7,11 +7,6 @@ export function handleBootstrapParams() {
   if (LocalStorage.get('jcAuth')) {
     LocalStorage.delete('jcAuth');
     LocalStorage.set('jcOauthToken', getUrlParameter('oauth_token'));
-    LocalStorage.set(
-      'jcOauthTokenSecret',
-      getUrlParameter('oauth_token_secret'),
-    );
-    LocalStorage.set('jcOauthTokenVerifier', getUrlParameter('oauth_verifier'));
     window.close();
   }
   if (LocalStorage.get('jcPush')) {
