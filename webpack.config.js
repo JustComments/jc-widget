@@ -85,7 +85,6 @@ module.exports = function(env, args) {
                       fontWeight: 'normal',
                       textDecoration: 'none',
                       width: 'unset',
-                      '-webkit-appearance': 'unset',
                       backgroundImage: 'unset',
                       backgroundPosition: 'unset',
                       backgroundRepeat: 'unset',
