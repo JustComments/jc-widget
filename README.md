@@ -1,6 +1,6 @@
 <h1 align="center">
   JustComments Widget
-  <a href="https://travis-ci.org/JustComments/widget"><img src="https://travis-ci.org/JustComments/widget.svg?branch=master" alt="build"></a>
+  <a href="https://travis-ci.org/JustComments/jc-widget"><img src="https://travis-ci.org/JustComments/jc-widget.svg?branch=master" alt="build"></a>
 </h1>
 <p align="center">
   <a href="https://just-comments.com/demo.html"> <img src="https://just-comments.com/assets/demo4.png" alt="JustComments demo"> </a>
