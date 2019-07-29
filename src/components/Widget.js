@@ -208,7 +208,6 @@ export class Widget extends Component {
       <div className={formStyle}>
         <CommentsForm
           theme={this.theme}
-          twitterCallback={this.props.twitterCallback}
           twitterRedirect={this.props.twitterRedirect}
           getTwitterRedirectUrl={this.props.getTwitterRedirectUrl}
           disableSocialLogin={disableSocialLogin}

@@ -5,7 +5,6 @@ import extractDataFromURL from './utils/extractDataFromURL';
 import { Widget } from './components/Widget';
 import { getComments } from './api/getComments';
 import { saveComment } from './api/saveComment';
-import { twitterCallback } from './api/twitterCallback';
 import { twitterRedirect } from './api/twitterRedirect';
 import scrollparent from 'scrollparent';
 import isBot from './utils/isBot';
@@ -74,7 +73,6 @@ export function renderWidget(
     h(Widget, {
       getComments: api.getComments,
       saveComment: api.saveComment,
-      twitterCallback: api.twitterCallback,
       twitterRedirect: api.twitterRedirect,
       subscription,
       jumpToComment,
@@ -125,12 +123,7 @@ function buildApi(
     effectiveItemId,
     originalItemId,
   );
-  const boundTwitterCallback = twitterCallback.bind(
-    null,
-    `${BASE_URL}/auth/twitter/callback`,
-    apiKey,
-    effectiveItemId,
-  );
+
   const boundTwitterRedirect = twitterRedirect.bind(
     null,
     TWITTER_URL,
@@ -141,7 +134,6 @@ function buildApi(
   return {
     getComments: boundGetComments,
     saveComment: boundSaveComment,
-    twitterCallback: boundTwitterCallback,
     twitterRedirect: boundTwitterRedirect,
   };
 }

@@ -114,13 +114,6 @@ export class CommentsForm extends Component {
     }`);
   }
 
-  callbackTwitter(data) {
-    const { twitterCallback } = this.props;
-    twitterCallback(data).then(({ jwt }) => {
-      this.props.onLogin(jwt, 'twitter');
-    });
-  }
-
   onTwitter() {
     const { twitterRedirect } = this.props;
     const popup = window.open(
@@ -130,16 +123,10 @@ export class CommentsForm extends Component {
     );
     LocalStorage.set('jcAuth', true);
     const handler = (e) => {
-      if (e.key === 'jcOauthTokenVerifier' && e.newValue) {
-        const tokenVerifier = e.newValue;
+      if (e.key === 'jcOauthToken' && e.newValue) {
+        const jwt = e.newValue;
         window.removeEventListener('storage', handler);
-        const token = LocalStorage.get('jcOauthToken');
-        const tokenSecret = LocalStorage.get('jcOauthTokenSecret');
-        this.callbackTwitter({
-          token,
-          tokenSecret,
-          tokenVerifier,
-        });
+        this.props.onLogin(jwt, 'twitter');
       }
     };
     window.addEventListener('storage', handler);
