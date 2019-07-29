@@ -263,7 +263,7 @@
   .form {
     color: var(--primary-text-color);
     margin-left: 86px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
   }
 
   .form.last {
@@ -495,7 +495,7 @@
     flex-wrap: wrap;
     margin-bottom: 33px;
     margin-right: 100px;
-    padding: 43px 0 10px 0;
+    padding: 28px 0 10px 0;
     width: 100%;
   }
 
