@@ -34,21 +34,6 @@ export class API {
   authPopup(redirectUrl) {
     const { promise, resolve } = openPopup(redirectUrl);
     LocalStorage.set('jcAuth', true);
-    listenFor('jcOauthTokenVerifier', (tokenVerifier) => {
-      this.twitterCallback({
-        token: LocalStorage.get('jcOauthToken'),
-        tokenSecret: LocalStorage.get('jcOauthTokenSecret'),
-        tokenVerifier,
-      }).then(({ jwt }) => {
-        resolve(jwt);
-      });
-    });
-    return promise;
-  }
-
-  authFbPopup(redirectUrl) {
-    const { promise, resolve } = openPopup(redirectUrl);
-    LocalStorage.set('jcAuth', true);
     listenFor('jcOauthToken', (jwt) => resolve(jwt));
     return promise;
   }
@@ -63,21 +48,6 @@ export class API {
       return resolve(jcPushSubscription);
     });
     return promise;
-  }
-
-  twitterCallback(data) {
-    return fetch(`/auth/twitter/callback?apiKey=${this.opts.apiKey}`, {
-      method: 'POST',
-      mode: 'cors',
-      redirect: 'follow',
-      headers: headers({
-        'x-api-key': this.opts.apiKey,
-      }),
-      body: toJson({
-        itemId: this.opts.effectiveItemId,
-        ...data,
-      }),
-    });
   }
 
   getComments(cursor, sort) {
