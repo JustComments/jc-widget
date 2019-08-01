@@ -162,7 +162,6 @@
     margin-left: 10px;
   }
 
-  /* Input Style */
   .inpt {
     background-color: var(--primary-bg-color);
     border-radius: var(--input-border-radius);
@@ -189,9 +188,7 @@
   .inpt.dirty:invalid {
     border: 1px solid red;
   }
-  /* End of Input Style*/
 
-  /* Btn Style */
   .btn {
     box-sizing: border-box;
     cursor: pointer;
@@ -353,9 +350,6 @@
 
   .comment .form {
     margin-top: 33px;
-  }
-
-  .comment .form {
     padding: 10px;
   }
 
@@ -647,16 +641,16 @@
     margin-right: 3px;
   }
 
-  .comment .content {
+  .content {
     color: var(--primary-text-color);
     margin-top: 7px;
   }
 
-  .comment .content * {
+  .content * {
     word-wrap: break-word;
   }
 
-  .comment .content p {
+  .content p {
     display: block;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -664,31 +658,31 @@
     margin-right: 0;
   }
 
-  .comment .content > *:first-child {
+  .content > *:first-child {
     margin-top: 0;
   }
 
-  .comment .content > *:last-child {
+  .content > *:last-child {
     margin-bottom: 7px;
   }
 
-  .comment .content strong {
+  .content strong {
     font-weight: bold;
   }
 
-  .comment .content ul {
+  .content ul {
     margin-left: 20px;
   }
 
-  .comment .content ol {
+  .content ol {
     margin-left: 20px;
   }
 
-  .comment .content li {
+  .content li {
     margin: 0;
   }
 
-  .comment .content blockquote {
+  .content blockquote {
     box-sizing: inherit;
     margin: 0;
     padding-left: 5px;
@@ -696,7 +690,7 @@
     border-left: 5px solid var(--primary-text-color);
   }
 
-  .comment .content a {
+  .content a {
     box-sizing: inherit;
     color: var(--primary-text-color);
     border-bottom: 1px dotted var(--primary-text-color);
@@ -704,30 +698,30 @@
     text-decoration: none;
   }
 
-  .comment .content a:hover {
+  .content a:hover {
     color: var(--primary-text-color);
   }
 
-  .comment .content pre {
+  .content pre {
     line-height: 1.6;
     margin: 0.5em 0px;
     box-sizing: inherit;
   }
 
-  .comment .content pre code {
+  .content pre code {
     box-sizing: inherit;
   }
 
-  .comment .collapse {
+  .collapse {
     white-space: nowrap;
   }
 
-  .comment .collapse .btn {
+  .collapse .btn {
     width: 18px;
     height: 18px;
   }
 
-  .comment .collapse span {
+  .collapse span {
     color: var(--secondary-text-color);
     margin-right: 10px;
   }
@@ -763,20 +757,20 @@
     }
   }
 
-  .form .row {
+  .row {
     display: flex;
     flex-wrap: wrap;
   }
 
-  .form .row.last {
+  .row.last {
     align-items: center;
   }
 
-  .form .row.last > .btn {
+  .row.last > .btn {
     margin-right: 10px;
   }
 
-  .form .row.last > .btn.secondary {
+  .row.last > .btn.secondary {
     margin-left: 40px;
   }
 

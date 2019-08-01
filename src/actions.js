@@ -237,43 +237,21 @@ export const actions = (store) => ({
   },
 
   onFacebookLogin: (state) => {
-    const { api, session } = state;
-    api.authPopup(api.facebookRedirect(window.location.href)).then((jwt) => {
-      setJWT(session, jwt, 'fb');
-      store.setState({
-        session: session.clone(),
-        forms: state.forms.map((f) => {
-          return updateForm(f, {
-            errors: {},
-            dirty: false,
-            pushNotifications: !!session.get('subscription'),
-            userPic: session.get('userPic'),
-            loginProvider: session.get('loginProvider'),
-            isLoggedIn: session.isAuthenticated(),
-          });
-        }),
-      });
-    });
+    authPopup(
+      store,
+      state,
+      state.api.facebookRedirect(window.location.href),
+      'fb',
+    );
   },
 
   onTwitterLogin: (state) => {
-    const { api, session } = state;
-    api.authPopup(api.twitterRedirect(window.location.href)).then((jwt) => {
-      setJWT(session, jwt, 'twitter');
-      store.setState({
-        session: session.clone(),
-        forms: state.forms.map((f) => {
-          return updateForm(f, {
-            errors: {},
-            dirty: false,
-            pushNotifications: !!session.get('subscription'),
-            userPic: session.get('userPic'),
-            loginProvider: session.get('loginProvider'),
-            isLoggedIn: session.isAuthenticated(),
-          });
-        }),
-      });
-    });
+    authPopup(
+      store,
+      state,
+      state.api.twitterRedirect(window.location.href),
+      'twitter',
+    );
   },
 
   onLogout: (state, e) => {
@@ -283,14 +261,7 @@ export const actions = (store) => ({
     store.setState({
       session: session.clone(),
       forms: state.forms.map((f) => {
-        return updateForm(f, {
-          errors: {},
-          dirty: false,
-          pushNotifications: !!session.get('subscription'),
-          userPic: session.get('userPic'),
-          loginProvider: session.get('loginProvider'),
-          isLoggedIn: session.isAuthenticated(),
-        });
+        return updateFormWithSession(f, session);
       }),
     });
   },
@@ -789,4 +760,28 @@ export function createForm(session) {
     website: session.get('userUrl'),
     isLoggedIn: session.isAuthenticated(),
   };
+}
+
+function updateFormWithSession(form, session) {
+  return updateForm(form, {
+    errors: {},
+    dirty: false,
+    pushNotifications: !!session.get('subscription'),
+    userPic: session.get('userPic'),
+    loginProvider: session.get('loginProvider'),
+    isLoggedIn: session.isAuthenticated(),
+  });
+}
+
+function authPopup(store, state, url, provider = 'fb') {
+  const { api, session } = state;
+  api.authPopup(url).then((jwt) => {
+    setJWT(session, jwt, provider);
+    store.setState({
+      session: session.clone(),
+      forms: state.forms.map((f) => {
+        return updateFormWithSession(f, session);
+      }),
+    });
+  });
 }
