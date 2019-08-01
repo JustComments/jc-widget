@@ -95,6 +95,7 @@ function readWidgetData(widget) {
     disableReactions: bstr(d.disablereactions),
     disableShareButton: bstr(d.disablesharebutton),
     disableSocialLogin: bstr(d.disablesociallogin),
+    disableReply: bstr(d.disablereply),
     enableEmailNotifications: bstr(d.enableemailnotifications),
     enableWebsite: bstr(d.enablewebsite),
     hideAttribution: bstr(d.hideattribution),

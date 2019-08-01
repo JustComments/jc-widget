@@ -33,15 +33,17 @@ import { Btn, LinkBtn, MenuBtn } from './ui';
 import s from './style.css';
 
 const mapToProps = (state) => {
+  const cfg = state.config;
   return {
     forms: state.forms,
     showReply: !(
-      state.config.disableSocialLogin && state.config.disableAnonymousLogin
+      (cfg.disableSocialLogin && cfg.disableAnonymousLogin) ||
+      cfg.disableReply
     ),
     commentsIndex: state.commentsIndex,
-    disableProfilePictures: state.config.disableProfilePictures,
-    disableShareButton: state.config.disableShareButton,
-    disableReactions: state.config.disableReactions,
+    disableProfilePictures: cfg.disableProfilePictures,
+    disableShareButton: cfg.disableShareButton,
+    disableReactions: cfg.disableReactions,
   };
 };
 
