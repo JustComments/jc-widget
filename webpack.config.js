@@ -50,7 +50,7 @@ module.exports = function(env, args) {
             {
               loader: 'style-loader',
               options: {
-                attrs: {
+                attributes: {
                   id: 'jcStyle',
                 },
               },

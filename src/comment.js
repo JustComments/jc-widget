@@ -108,6 +108,25 @@ class Comment extends Component {
     this.props.onCommentImageError(this.props.comment.commentId);
   };
 
+  shouldComponentUpdate(nextProps) {
+    const prevForm = this.props.forms[this.props.comment.formIdx];
+    const nextForm = nextProps.forms[nextProps.comment.formId];
+    const attrs = [
+      'comment',
+      'commentsIndex',
+      'disableProfilePictures',
+      'disableReactions',
+      'disableShareButton',
+      'first',
+      'level',
+      'showReply',
+    ];
+    return (
+      prevForm !== nextForm ||
+      attrs.some((key) => this.props[key] !== nextProps[key])
+    );
+  }
+
   render({
     comment,
     commentsIndex,
