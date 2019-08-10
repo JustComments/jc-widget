@@ -158,23 +158,26 @@ function qs(p) {
     .join('&');
 }
 
+export class InvalidRequestError extends Error {}
+
 function fetch(url, params) {
   const request = new Request(BASE_URL + url, params);
-  return window
-    .fetch(request)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
+  return window.fetch(request).then((response) => {
+    if (!response.ok) {
+      if (response.status === 400) {
+        return response.json().then(({ error }) => {
+          throw new InvalidRequestError(error);
+        });
       }
-      return response.json();
-    })
-    .catch((err) => {
+      const err = new Error(`${response.status} ${response.statusText}`);
       console.error(
-        'Failed to perform a network request. Check that your have enough credits on your account.',
+        'Request failed. Check your account configuration (blacklist/authentication etc) and make sure your balance is positive',
         err,
       );
       throw err;
-    });
+    }
+    return response.json();
+  });
 }
 
 function enc(uri) {

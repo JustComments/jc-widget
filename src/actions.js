@@ -4,6 +4,7 @@ import * as md5 from 'md5';
 import { __ } from './i18n';
 import { LikeIcon, HappyIcon, InLoveIcon, SadIcon, HeartIcon } from './icons';
 import { LocalStorage } from './storage';
+import { InvalidRequestError } from './api';
 
 export const actions = (store) => ({
   tryJumpToComment: (state) => {
@@ -194,7 +195,10 @@ export const actions = (store) => ({
           forms: updateFormByIdx(state.forms, formIdx, {
             blocked: false,
             errors: {
-              form: __('networkError'),
+              form:
+                err instanceof InvalidRequestError
+                  ? `Request failed: ${err.message}`
+                  : __('networkError'),
             },
           }),
         });
