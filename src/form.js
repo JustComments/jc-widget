@@ -339,7 +339,9 @@ class Form extends Component {
                 <span>{form.blocked ? sendingText : sendText}</span>
               </Btn3>
               {form.preview && (
-                <Btn3 onClick={this.onHidePreview}>{hidePreviewText}</Btn3>
+                <Btn3 onClick={this.onHidePreview} classes={[s.secondary]}>
+                  {hidePreviewText}
+                </Btn3>
               )}
               {!form.preview && (
                 <Btn3 onClick={this.onPreview} classes={[s.secondary]}>
