@@ -62,7 +62,7 @@ module.exports = function(env, args) {
                 modules: {
                   localIdentName: !env.production
                     ? '[name]_[local]___[hash:base64:10]'
-                    : '[hash:base64:16]',
+                    : '[sha512:hash:base64:7]',
                   hashPrefix: 'jc',
                 },
               },
@@ -91,6 +91,9 @@ module.exports = function(env, args) {
                     },
                   }),
                   require('postcss-nested')(),
+                  require('cssnano')({
+                    preset: 'default',
+                  }),
                 ],
               },
             },
