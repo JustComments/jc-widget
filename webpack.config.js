@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const localizedBundles = require('./src/locales').bundles;
+const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 Object.keys(localizedBundles).forEach((bundleKey) => {
   const bundle = localizedBundles[bundleKey];
@@ -28,11 +31,17 @@ module.exports = function(env, args) {
         return acc;
       }, defineParams),
     ),
+    new MiniCssExtractPlugin({
+      filename: env.production ? '[name]-[contenthash].css' : '[name].css',
+    }),
   ];
 
   const standardOptions = {
     mode: env.production ? 'production' : 'development',
     devtool: env.production ? false : 'source-map',
+    optimization: {
+      minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    },
     module: {
       rules: [
         {
@@ -48,12 +57,7 @@ module.exports = function(env, args) {
           test: /\.css$/,
           use: [
             {
-              loader: 'style-loader',
-              options: {
-                attributes: {
-                  id: 'jcStyle',
-                },
-              },
+              loader: MiniCssExtractPlugin.loader,
             },
             {
               loader: 'css-loader',
