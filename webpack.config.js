@@ -72,9 +72,13 @@ module.exports = function(env, args) {
               options: {
                 ident: 'postcss',
                 plugins: [
-                  require('autoprefixer')(),
+                  require('postcss-nested')(),
                   require('postcss-autoreset')({
-                    rulesMatcher: (rule) => rule.selector.match(/^[.]\w+$/),
+                    rulesMatcher: (rule) => {
+                      return rule.selector.match(
+                        /^:global\([.]just-comments\)\s+[.]\w+$/,
+                      );
+                    },
                     reset: {
                       margin: 0,
                       padding: 0,
@@ -90,7 +94,7 @@ module.exports = function(env, args) {
                       backgroundRepeat: 'unset',
                     },
                   }),
-                  require('postcss-nested')(),
+                  require('autoprefixer')(),
                   require('cssnano')({
                     preset: 'default',
                   }),
