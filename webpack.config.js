@@ -92,6 +92,7 @@ module.exports = function(env, args) {
                       backgroundImage: 'unset',
                       backgroundPosition: 'unset',
                       backgroundRepeat: 'unset',
+                      borderRadius: 'unset',
                     },
                   }),
                   require('autoprefixer')(),
