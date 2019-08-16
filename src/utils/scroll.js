@@ -17,16 +17,21 @@ export function onceVisible(el, fn) {
   const scrollable = scrollparent(el);
   const scrollContainers = !scrollable.parentElement
     ? [window]
-    : [window, scrollable];
+    : [window, scrollable, scrollable.parentElement];
+
   const handler = () => {
     if (isInViewport(el)) {
       scrollContainers.forEach((container) => {
-        container.removeEventListener('scroll', handler, false);
+        if (container) {
+          container.removeEventListener('scroll', handler, false);
+        }
       });
       fn();
     }
   };
   scrollContainers.forEach((container) => {
-    container.addEventListener('scroll', handler, false);
+    if (container) {
+      container.addEventListener('scroll', handler, false);
+    }
   });
 }
