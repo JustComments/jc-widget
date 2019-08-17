@@ -105,13 +105,13 @@ class Widget extends Component {
             </span>
           </div>
         )}
+        {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         <div className={s.noComments}>
           {loading && <div className={s.loading}>{__('loadingComments')}</div>}
           {!loading && count === 0 && !hideNoCommentsText && (
             <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
           )}
         </div>
-        {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         {comments
           .filter((c) => !c.hidden)
           .map((c) => (
