@@ -80,7 +80,6 @@ class Widget extends Component {
   }) {
     return (
       <div className={s.widget}>
-        {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         {!hideCommentHeader && (
           <div className={cls(s.header)}>
             <span className={cls(s.fontHeading1)}>
@@ -106,10 +105,13 @@ class Widget extends Component {
             </span>
           </div>
         )}
-        {loading && <div className={s.loading}>{__('loadingComments')}</div>}
-        {!loading && count === 0 && !hideNoCommentsText && (
-          <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
-        )}
+        <div className={s.noComments}>
+          {loading && <div className={s.loading}>{__('loadingComments')}</div>}
+          {!loading && count === 0 && !hideNoCommentsText && (
+            <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
+          )}
+        </div>
+        {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         {comments
           .filter((c) => !c.hidden)
           .map((c) => (

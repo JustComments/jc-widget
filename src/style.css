@@ -118,6 +118,10 @@
     padding: 5px;
   }
 
+  .noComments {
+    margin-bottom: 40px;
+  }
+
   .widget * {
     box-sizing: border-box;
   }
