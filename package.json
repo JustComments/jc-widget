@@ -85,7 +85,7 @@
     "js-base64": "2.5.1",
     "jwt-decode": "2.2.0",
     "md5": "2.2.1",
-    "preact": "8.5.1",
+    "preact": "8.5.2",
     "redux-zero": "5.0.5",
     "scrollparent": "2.0.1",
     "timeago.js": "3.0.2"
