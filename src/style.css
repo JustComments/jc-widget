@@ -652,6 +652,7 @@
 
   .content * {
     word-wrap: break-word;
+    color: var(--primary-text-color);
   }
 
   .content p {
@@ -691,7 +692,7 @@
     margin: 0;
     padding-left: 5px;
     margin-left: 5px;
-    border-left: 5px solid var(--primary-text-color);
+    border-left: 2.5px solid var(--primary-color);
   }
 
   .content a {
