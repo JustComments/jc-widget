@@ -286,12 +286,16 @@ class Form extends Component {
                     className={cls(s.inpt, s.fontBody2, {
                       [s.dirty]: form.dirty,
                     })}
+                    disabled={form.blocked}
                     value={form.text}
                     required
                     maxlength={5000}
                     onInput={this.onTextInput}
                     style={{ minHeight: '150px' }}
                     onKeyDown={(e) => {
+                      if (form.blocked) {
+                        return;
+                      }
                       if (e.ctrlKey && e.keyCode == 13) {
                         this.onSend(e);
                       } else if (e.metaKey && e.keyCode == 13) {
