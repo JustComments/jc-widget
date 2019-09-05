@@ -60,7 +60,7 @@
     "concurrently": "4.1.2",
     "css-loader": "3.2.0",
     "cssnano": "4.1.10",
-    "eslint": "6.2.2",
+    "eslint": "6.3.0",
     "husky": "3.0.5",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
