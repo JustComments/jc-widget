@@ -39,8 +39,9 @@ function bootstrap() {
     scrollIntoView(widget);
   }
 
+  const preload = widget.dataset.preload === 'true';
   const locale = widget.dataset.locale || 'en';
-  const loadImmediately = isBot();
+  const loadImmediately = preload || isBot();
   const lang = locale.split('_').shift();
   const bundleLocale = mapping[locale] || mapping[lang] || 'en';
 
