@@ -652,7 +652,6 @@
 
   .content * {
     word-wrap: break-word;
-    color: var(--primary-text-color);
   }
 
   .content p {
