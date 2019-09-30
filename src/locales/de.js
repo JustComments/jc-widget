@@ -1,5 +1,5 @@
 module.exports = {
-  anonymousCommentHeader: 'Gebe deine Daten zu kommentieren',
+  anonymousCommentHeader: 'Gib Deine Daten ein, um zu kommentieren',
   collapse: 'Collapse Gewinde',
   collapsedComments: '%{n} Kommentar (e) kollabiert',
   commentRemovedByModerator: 'Der Kommentar wurde vom Moderator entfernt.',
@@ -16,7 +16,7 @@ module.exports = {
   name: 'Dein Name',
   networkError: 'Ein Netzwerkfehler ist aufgetreten. Bitte versuche es erneut.',
   newestFirst: 'neue zuerst',
-  noComments: 'Sei der erste der kommentiert.',
+  noComments: 'Sei die/der Erste, die/der kommentiert.',
   oldestFirst: 'alte zuerst',
   preview: 'Vorschau',
   react: 'Reagieren',
