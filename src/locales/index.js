@@ -12,6 +12,7 @@ exports.mapping = {
   ru: 'ru',
   sv: 'sv',
   uk: 'uk',
+  vi: 'vi',
   zh: 'zh_CN',
   zh_CN: 'zh_CN',
   zh_HK: 'zh_HK',
@@ -82,5 +83,9 @@ exports.bundles = {
   uk: {
     textLocale: 'uk',
     timeAgoLocale: 'uk',
+  },
+  vi: {
+    textLocale: 'vi',
+    timeAgoLocale: 'vi',
   },
 };
