@@ -10,7 +10,10 @@ export function formatDate(date) {
   return ago.format(date, 'locale');
 }
 
-export function __(key) {
+export function __(key, customLocale) {
+  if (customLocale && key in customLocale) {
+    return customLocale[key];
+  }
   return bundleLocale[key] || key;
 }
 

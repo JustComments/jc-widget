@@ -44,6 +44,7 @@ const mapToProps = (state) => {
     disableProfilePictures: cfg.disableProfilePictures,
     disableShareButton: cfg.disableShareButton,
     disableReactions: cfg.disableReactions,
+    customLocale: cfg.customLocale,
   };
 };
 
@@ -161,6 +162,7 @@ class Comment extends Component {
                 userPic={comment.userPic}
                 loginProvider={comment.loginProvider}
                 onImageError={this.onImageError}
+                customLocale={this.props.customLocale}
               />
             )}
             <div className={s.title}>
@@ -204,13 +206,20 @@ class Comment extends Component {
               <div className={s.collapse}>
                 {comment.collapsed && (
                   <span className={cls(s.fontBody3)}>
-                    {substitute(__('collapsedComments'), {
-                      n: commentCount([comment]),
-                    })}
+                    {substitute(
+                      __('collapsedComments', this.props.customLocale),
+                      {
+                        n: commentCount([comment]),
+                      },
+                    )}
                   </span>
                 )}
                 <Btn
-                  title={comment.collapsed ? __('uncollapse') : __('collapse')}
+                  title={
+                    comment.collapsed
+                      ? __('uncollapse', this.props.customLocale)
+                      : __('collapse', this.props.customLocale)
+                  }
                   onClick={this.onToggleComment}
                 >
                   {comment.collapsed ? <CollapseIcon /> : <UncollapseIcon />}
@@ -229,13 +238,15 @@ class Comment extends Component {
           {showReply && (
             <div className={s.reply}>
               <LinkBtn onClick={this.onToggleCommentForm}>
-                {__('reply')}
+                {__('reply', this.props.customLocale)}
               </LinkBtn>
             </div>
           )}
           {!disableReactions && !Reaction && (
             <div className={s.react}>
-              <LinkBtn onClick={this.onToggleLikeMenu}>{__('react')}</LinkBtn>
+              <LinkBtn onClick={this.onToggleLikeMenu}>
+                {(__('react'), this.props.customLocale)}
+              </LinkBtn>
               {comment.reactMenuOpened && (
                 <div className={cls(s.menu, s.reactMenu, s.horizontal)}>
                   {reactions.map((r) => {
@@ -260,20 +271,21 @@ class Comment extends Component {
               <div className={s.menu}>
                 <div>
                   <MenuBtn onClick={this.onCopyToClipboard}>
-                    {__('copyLink')}
+                    {__('copyLink', this.props.customLocale)}
                   </MenuBtn>
                 </div>
                 {!disableShareButton && (
                   <div>
                     <MenuBtn onClick={this.shareOnFb}>
-                      {__('share')} <FacebookIcon />
+                      {__('share', this.props.customLocale)} <FacebookIcon />
                     </MenuBtn>
                   </div>
                 )}
                 {!disableShareButton && (
                   <div>
                     <MenuBtn onClick={this.shareOnTwitter}>
-                      <span>{__('share')}</span> <TwitterIcon />
+                      <span>{__('share', this.props.customLocale)}</span>{' '}
+                      <TwitterIcon />
                     </MenuBtn>
                   </div>
                 )}

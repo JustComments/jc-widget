@@ -25,6 +25,7 @@ const mapToProps = ({ config, forms, loading, cursor, comments }) => {
     recaptchaSitekey,
     hideCommentHeader,
     hideNoCommentsText,
+    customLocale,
   } = config;
   const shouldRenderForm = !(disableSocialLogin && disableAnonymousLogin);
   const hasMore = !!cursor;
@@ -45,6 +46,7 @@ const mapToProps = ({ config, forms, loading, cursor, comments }) => {
     recaptchaSitekey,
     shouldRenderForm,
     sort,
+    customLocale,
   };
 };
 
@@ -77,13 +79,14 @@ class Widget extends Component {
     setRecaptchaRef,
     shouldRenderForm,
     sort,
+    customLocale,
   }) {
     return (
       <div className={s.widget}>
         {!hideCommentHeader && (
           <div className={cls(s.header)}>
             <span className={cls(s.fontHeading1)}>
-              {__('comments')}
+              {__('comments', customLocale)}
               {countText}
             </span>
             <span className={cls(s.fontBody2)}>
@@ -93,13 +96,13 @@ class Widget extends Component {
                 className={cls(s.select, s.fontBody2)}
               >
                 <option value="desc" selected={sort === 'desc'}>
-                  {__('newestFirst')}
+                  {__('newestFirst', customLocale)}
                 </option>
                 <option value="asc" selected={sort === 'asc'}>
-                  {__('oldestFirst')}
+                  {__('oldestFirst', customLocale)}
                 </option>
                 <option value="top" selected={sort === 'top'}>
-                  {__('topFirst')}
+                  {__('topFirst', customLocale)}
                 </option>
               </select>
             </span>
@@ -107,9 +110,15 @@ class Widget extends Component {
         )}
         {shouldRenderForm && <Form form={forms[0]} formIdx={0} />}
         <div className={s.noComments}>
-          {loading && <div className={s.loading}>{__('loadingComments')}</div>}
+          {loading && (
+            <div className={s.loading}>
+              {__('loadingComments', customLocale)}
+            </div>
+          )}
           {!loading && count === 0 && !hideNoCommentsText && (
-            <p className={cls(s.text, s.fontBody2)}>{__('noComments')}</p>
+            <p className={cls(s.text, s.fontBody2)}>
+              {__('noComments', customLocale)}
+            </p>
           )}
         </div>
         {comments
@@ -123,7 +132,7 @@ class Widget extends Component {
               onClick={this.loadMore}
               className={cls(s.btn, s.primary, s.large, s.fontButton1)}
             >
-              {__('loadMoreButton')}
+              {__('loadMoreButton', customLocale)}
             </button>
           </div>
         )}

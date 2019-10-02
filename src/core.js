@@ -85,6 +85,7 @@ export function renderWidget(
 
 function readWidgetData(widget) {
   const d = widget.dataset;
+  const customLocale = d.customlocale;
   return {
     apiKey: d.apikey,
     defaultUserPicUrl: d.defaultuserpicurl,
@@ -106,6 +107,7 @@ function readWidgetData(widget) {
     pageSize: validate(d.pagesize, toInt, invalidPageSize, 100),
     recaptchaSitekey: bstr(d.recaptcha) && RECAPTCHA_KEY,
     sort: validate(d.sort, (v) => v, invalidSort, 'asc'),
+    customLocale: window[customLocale],
     ...getPageData(bstr(d.usequery)),
   };
 }
