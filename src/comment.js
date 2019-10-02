@@ -245,7 +245,7 @@ class Comment extends Component {
           {!disableReactions && !Reaction && (
             <div className={s.react}>
               <LinkBtn onClick={this.onToggleLikeMenu}>
-                {(__('react'), this.props.customLocale)}
+                {__('react', this.props.customLocale)}
               </LinkBtn>
               {comment.reactMenuOpened && (
                 <div className={cls(s.menu, s.reactMenu, s.horizontal)}>
