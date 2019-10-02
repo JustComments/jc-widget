@@ -198,7 +198,7 @@ export const actions = (store) => ({
               form:
                 err instanceof InvalidRequestError
                   ? `Request failed: ${err.message}`
-                  : __('networkError'),
+                  : __('networkError', state.config.customLocale),
             },
           }),
         });

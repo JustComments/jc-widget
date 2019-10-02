@@ -35,6 +35,7 @@ const mapToProps = ({ config, session }) => {
     enableEmailNotifications,
     enableWebsite,
     localStorageSupported,
+    customLocale,
   } = config;
 
   return {
@@ -46,6 +47,7 @@ const mapToProps = ({ config, session }) => {
     enableEmailNotifications,
     enableWebsite,
     showSocial: localStorageSupported && !disableSocialLogin,
+    customLocale,
   };
 };
 
@@ -120,17 +122,21 @@ class Form extends Component {
     onTwitterLogin,
     replyToComment,
     showSocial,
+    customLocale,
   }) {
     const textareaPlaceholder = replyToComment
-      ? substitute(__('replyTo'), {
+      ? substitute(__('replyTo', customLocale), {
           name: replyToComment.username,
         })
-      : `${__('writeAComment')} (${__('ctrlEnterToSend')})`;
+      : `${__('writeAComment', customLocale)} (${__(
+          'ctrlEnterToSend',
+          customLocale,
+        )})`;
 
-    const sendingText = __('sending');
-    const sendText = __('send');
-    const hidePreviewText = __('hidePreview');
-    const previewText = __('preview');
+    const sendingText = __('sending', customLocale);
+    const sendText = __('send', customLocale);
+    const hidePreviewText = __('hidePreview', customLocale);
+    const previewText = __('preview', customLocale);
 
     const renderLoginOptions = !(disableSocialLogin && disableAnonymousLogin);
 
@@ -167,19 +173,19 @@ class Form extends Component {
                       <div className={cls(s.formHeader, s.fontBody1)}>
                         <span>
                           {showSocial
-                            ? __('socialCommentHeader')
-                            : __('anonymousCommentHeader')}
+                            ? __('socialCommentHeader', customLocale)
+                            : __('anonymousCommentHeader', customLocale)}
                         </span>
                         {showSocial && (
                           <span className={cls(s.socialContainer)}>
                             <Btn3
-                              title={__('loginWithFacebook')}
+                              title={__('loginWithFacebook', customLocale)}
                               onClick={onFacebookLogin}
                             >
                               <FacebookIcon />
                             </Btn3>
                             <Btn3
-                              title={__('loginWithTwitter')}
+                              title={__('loginWithTwitter', customLocale)}
                               onClick={onTwitterLogin}
                             >
                               <TwitterIcon />
@@ -190,7 +196,7 @@ class Form extends Component {
                     </div>
                     {!disableAnonymousLogin && (
                       <label className={cls(s.fontBody2)}>
-                        {__('name')}
+                        {__('name', customLocale)}
                         <input
                           value={form.username}
                           required
@@ -204,7 +210,7 @@ class Form extends Component {
                     )}
                     {!disableAnonymousLogin && (
                       <label className={cls(s.fontBody2)}>
-                        {__('email')}
+                        {__('email', customLocale)}
                         <input
                           type="email"
                           value={form.email}
@@ -219,7 +225,7 @@ class Form extends Component {
                     )}
                     {!disableAnonymousLogin && enableWebsite && (
                       <label className={cls(s.fontBody2)}>
-                        {__('website')}
+                        {__('website', customLocale)}
                         <input
                           type="url"
                           value={form.website}
@@ -270,7 +276,7 @@ class Form extends Component {
                   {textareaPlaceholder}
                 </label>
                 <p className={cls(s.fontBody2, s.previewLoading)}>
-                  {__('loadingPreview')}
+                  {__('loadingPreview', customLocale)}
                 </p>
               </div>
             </div>
@@ -308,7 +314,7 @@ class Form extends Component {
                   {supportsServiceWorkers() && !disablePushNotifications && (
                     <Toggle
                       icon={<PushIcon />}
-                      title={__('toggleNotificationsPush')}
+                      title={__('toggleNotificationsPush', customLocale)}
                       onClick={this.onPushToggle}
                       value={form.pushNotifications}
                     />
@@ -316,7 +322,7 @@ class Form extends Component {
                   {enableEmailNotifications && (
                     <Toggle
                       icon={<EmailIcon />}
-                      title={__('toggleNotificationsEmail')}
+                      title={__('toggleNotificationsEmail', customLocale)}
                       onClick={this.onEmailToggle}
                       value={form.emailNotifications}
                     />

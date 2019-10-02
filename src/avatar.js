@@ -12,11 +12,12 @@ const icons = {
 };
 
 export function Avatar({
-  userPic,
-  onImageError,
-  userUrl,
+  customLocale,
   loginProvider,
+  onImageError,
   onLogout,
+  userPic,
+  userUrl,
 }) {
   const icon = icons[loginProvider];
   return (
@@ -29,7 +30,7 @@ export function Avatar({
         <img
           className={s.img}
           onError={onImageError}
-          alt={__('userPic')}
+          alt={__('userPic', customLocale)}
           src={userPic}
         />
       )}
