@@ -1,13 +1,12 @@
 import timeagoLocale from 'TIMEAGO_LOCALE_MODULE';
 import bundleLocale from 'BUNDLE_LOCALE_MODULE';
 
-import timeago from 'timeago.js';
+import { format, register } from 'timeago.js';
 
-timeago.register('locale', timeagoLocale);
-const ago = timeago();
+register('locale', timeagoLocale);
 
 export function formatDate(date) {
-  return ago.format(date, 'locale');
+  return format(date, 'locale');
 }
 
 export function __(key, customLocale) {
