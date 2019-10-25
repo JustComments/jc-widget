@@ -131,7 +131,7 @@ module.exports = function(env, args) {
           }),
           new webpack.NormalModuleReplacementPlugin(
             /TIMEAGO_LOCALE_MODULE/,
-            'timeago.js/locales/' + bundle.timeAgoLocale,
+            'timeago.js/lib/lang/' + bundle.timeAgoLocale,
           ),
           new webpack.NormalModuleReplacementPlugin(
             /BUNDLE_LOCALE_MODULE/,
