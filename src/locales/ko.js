@@ -35,4 +35,5 @@ module.exports = {
   usernameRemoved: '삭제했음',
   website: '웹 사이트',
   writeAComment: '여기서 댓글 쓰기',
+  show: 'Show:',
 };

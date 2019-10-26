@@ -36,4 +36,5 @@ module.exports = {
   newestFirst: 'newest first',
   oldestFirst: 'oldest first',
   topFirst: 'top first',
+  show: 'Show:',
 };

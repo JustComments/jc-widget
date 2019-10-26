@@ -23,8 +23,7 @@ module.exports = {
   sending: 'Lähettää',
   share: 'jaa',
   socialCommentHeader: 'Syötä tietosi tai kirjaudu kommentoidaksesi',
-  toggleNotificationsEmail:
-    'lähetä sähköposti kun joku vastaa kommenttiisi',
+  toggleNotificationsEmail: 'lähetä sähköposti kun joku vastaa kommenttiisi',
   toggleNotificationsPush:
     'lähetä push-notifikaatio kun joku vastaa kommenttiisi',
   uncollapse: 'Avaa kommenttiketju',
@@ -36,4 +35,5 @@ module.exports = {
   newestFirst: 'uusimmat ensin',
   oldestFirst: 'vanhimmat ensin',
   topFirst: 'parhaimmat ensin',
+  show: 'Show:',
 };

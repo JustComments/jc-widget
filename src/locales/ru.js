@@ -37,4 +37,5 @@ module.exports = {
   usernameRemoved: 'скрыто модератором',
   website: 'Веб-сайт (необязательно)',
   writeAComment: 'Написать комментарий',
+  show: 'Порядок:',
 };

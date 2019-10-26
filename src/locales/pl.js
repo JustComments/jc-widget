@@ -36,4 +36,5 @@ module.exports = {
   usernameRemoved: 'oddalony',
   website: 'Strona internetowa (opcjonalnie)',
   writeAComment: 'Komentarz',
+  show: 'Show:',
 };
