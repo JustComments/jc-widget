@@ -34,4 +34,5 @@ module.exports = {
   usernameRemoved: 'Borttagen',
   website: 'Hemsida (valfritt)',
   writeAComment: 'Skriv en kommentar',
+  show: 'Show:',
 };

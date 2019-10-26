@@ -34,4 +34,5 @@ module.exports = {
   usernameRemoved: '已删除',
   website: '网站（可选）',
   writeAComment: '写评论',
+  show: 'Show:',
 };

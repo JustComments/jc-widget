@@ -36,4 +36,5 @@ module.exports = {
   usernameRemoved: 'حذف شده',
   website: 'وبسایت شما (اختیاری)',
   writeAComment: 'یک کامنت جدید بنویسید',
+  show: 'Show:',
 };

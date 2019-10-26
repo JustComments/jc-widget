@@ -35,4 +35,5 @@ module.exports = {
   usernameRemoved: '已被移除',
   website: '網站（可選）',
   writeAComment: '寫低你嘅評論…',
+  show: 'Show:',
 };

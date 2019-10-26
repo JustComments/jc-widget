@@ -13,7 +13,7 @@ module.exports = {
   loadMoreButton: 'További hozzászólások betöltése',
   loginWithFacebook: 'Bejelentkezés Facebook fiókkal',
   loginWithTwitter: 'Bejelentkezés Twitter fiókkal',
-  name: 'Neved',
+  name: 'Név',
   networkError: 'Hálózati hiba történt, kérlek próbáld újból.',
   noComments: 'Szólj hozzá elsőként!',
   preview: 'Előnézet',
@@ -23,7 +23,7 @@ module.exports = {
   sending: 'Küldés',
   share: 'Megosztás:',
   socialCommentHeader:
-    'Hozzászóláshoz add meg kérlek az adataidat vagy jelentkezz be',
+    'Hozzászóláshoz kérlek add meg az adataidat vagy jelentkezz be:',
   toggleNotificationsEmail:
     'emailben értesítünk, ha valaki reagált a hozzászólásodra',
   toggleNotificationsPush:
@@ -37,4 +37,5 @@ module.exports = {
   newestFirst: 'újabbak előre',
   oldestFirst: 'régebbiek előre',
   topFirst: 'legjobbak előre',
+  show: 'Rendezés',
 };

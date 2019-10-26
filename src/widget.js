@@ -90,7 +90,7 @@ class Widget extends Component {
               {countText}
             </span>
             <span className={cls(s.fontBody2)}>
-              Show:{' '}
+              {__('show')}{' '}
               <select
                 onChange={onSortChange}
                 className={cls(s.select, s.fontBody2)}

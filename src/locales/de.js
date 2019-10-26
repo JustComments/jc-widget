@@ -34,4 +34,5 @@ module.exports = {
   usernameRemoved: 'entfernt',
   website: 'Website (optional)',
   writeAComment: 'Schreib einen Kommentar',
+  show: 'Zeigen:',
 };

@@ -34,4 +34,5 @@ module.exports = {
   usernameRemoved: '削除しました',
   website: 'ウエブサイト',
   writeAComment: 'コメントを入力して下さい',
+  show: 'Show:',
 };

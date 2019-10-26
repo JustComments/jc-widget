@@ -37,4 +37,5 @@ module.exports = {
   newestFirst: 'Từ mới đến cũ',
   oldestFirst: 'Từ cũ đến mới',
   topFirst: 'Bình luận liên quan nhất',
+  show: 'Show:',
 };
