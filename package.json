@@ -72,7 +72,7 @@
     "preact-render-spy": "1.3.0",
     "preact-render-to-string": "5.1.1",
     "prettier": "1.18.2",
-    "pretty-quick": "2.0.0",
+    "pretty-quick": "2.0.1",
     "style-loader": "1.0.0",
     "stylelint": "11.1.1",
     "stylelint-config-recommended": "3.0.0",
