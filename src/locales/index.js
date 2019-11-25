@@ -1,6 +1,7 @@
 exports.mapping = {
   de: 'de',
   en: 'en',
+  es_MX: 'es_MX',
   fa: 'fa',
   fi: 'fi',
   fr: 'fr',
@@ -28,6 +29,10 @@ exports.bundles = {
   en: {
     textLocale: 'en',
     timeAgoLocale: 'en_US',
+  },
+  es_MX: {
+    textLocale: 'es_MX',
+    timeAgoLocale: 'es',
   },
   fa: {
     textLocale: 'fa',
