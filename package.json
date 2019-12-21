@@ -88,6 +88,6 @@
     "preact": "10.1.1",
     "redux-zero": "5.1.1",
     "scrollparent": "2.0.1",
-    "timeago.js": "4.0.1"
+    "timeago.js": "4.0.2"
   }
 }
