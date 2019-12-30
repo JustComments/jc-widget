@@ -30,12 +30,54 @@
         margin: 0 auto !important;
       }
     </style>
+    <script>
+      window.customLocale = {
+        anonymousCommentHeader: 'Enigu viajn datumojn por komenti',
+        collapse: 'Kaŝu la konversacion',
+        collapsedComments: '%{n} komento(j)n kaŝanta',
+        commentRemovedByModerator: 'Tiun komenton foriĝis pro moderatoro.',
+        comments: 'Komentoj',
+        copyLink: 'kopiu ligilo',
+        ctrlEnterToSend: 'premu Ctrl + Enter pri sendi; vi povas uzi Markdown',
+        email: 'Retpoŝtadreso (malnepra)',
+        hidePreview: 'Kaŝu la antaŭrigardo',
+        loadingComments: 'ŝarĝanta komentojn',
+        loadingPreview: 'ŝarĝanta la antaŭrigardon',
+        loadMoreButton: 'premu por ŝarĝi pli da komentoj',
+        loginWithFacebook: 'Ensaluti per Facebook',
+        loginWithTwitter: 'Ensaluti per Twitter',
+        name: 'Via nomo',
+        networkError: 'Okazis eraro en la reto. Bonvolu reprovi.',
+        noComments: 'Estu la unua komentisto.',
+        preview: 'Antaŭrigardo',
+        reply: 'Respondu',
+        replyTo: 'Skribu publika respondo pri %{name}',
+        send: 'Afiŝu',
+        sending: 'Afiŝanta',
+        share: 'dividi pri',
+        socialCommentHeader: 'Enigu viajn datumojn aŭ ensaluti por komenti',
+        toggleNotificationsEmail:
+          'Abonu retpoŝton kiam iu respondas al via komento',
+        toggleNotificationsPush:
+          'Abonu puŝan sciigon kiam iu respondas vian komenton',
+        uncollapse: 'Malkaŝu la konversacion',
+        usernameRemoved: 'foriĝinta',
+        userPic: 'Foto',
+        website: 'Retejo (malnepra)',
+        writeAComment: 'Skribu publikan komenton',
+        react: 'Reagu',
+        newestFirst: 'plej nova unue',
+        oldestFirst: 'plej malnova unue',
+        topFirst: 'plej bona unue',
+        show: 'Aranĝu laŭ:',
+      };
+    </script>
   </head>
   <body>
     <main>
       <div
         class="just-comments"
-        data-locale="en"
+        data-customlocale="customLocale"
         data-apikey="development"
         data-sort="desc"
         data-pagesize="30"
