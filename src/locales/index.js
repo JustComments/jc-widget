@@ -8,6 +8,7 @@ exports.mapping = {
   hu: 'hu',
   ja: 'ja',
   ko: 'ko',
+  nb_NO: 'nb_NO',
   pl: 'pl',
   pt: 'pt',
   pt_BR: 'pt_BR',
@@ -57,6 +58,10 @@ exports.bundles = {
   ko: {
     textLocale: 'ko',
     timeAgoLocale: 'ko',
+  },
+  nb_NO: {
+    textLocale: 'nb_NO',
+    timeAgoLocale: 'nb_NO',
   },
   pl: {
     textLocale: 'pl',
