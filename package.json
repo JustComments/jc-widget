@@ -65,7 +65,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
     "jest-transform-stub": "2.0.0",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "postcss-autoreset": "2.0.2",
     "postcss-loader": "3.0.0",
     "postcss-nested": "4.2.1",
